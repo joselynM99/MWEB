@@ -1,0 +1,66 @@
+#buscarPN {
+    display: inline-block;
+}
+
+#barraBusc {
+    width: 500px;
+}
+
+#contenedor {
+    display: flex;
+    height: 100%;
+    flex: 1;
+
+}
+
+#cont1 {
+    height: 100%;
+    flex: 1;
+    border: double #582733;
+    background-color: #f4c397;
+
+}
+
+#cont2 {
+    height: 100%;
+    flex: 1;
+    border: double #582733;
+    background-color: #f4c397;
+
+
+}
+
+#busqueda {
+    padding-bottom: 10px;
+}
+
+
+#contenedor>div {
+    width: 50%;
+    height: 100%;
+}
+
+#venta {
+    position: absolute;
+    top: 400px;
+
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 500px;
+    overflow: auto;
+    font-size: 13px;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+#cantidad {
+    width: 50px;
+}
+
+#tab_busqueda {
+    height: 550px;
+}

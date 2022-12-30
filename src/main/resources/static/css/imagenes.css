@@ -1,0 +1,24 @@
+.iconos {
+    width: 150px;
+    height: 150px;
+
+}
+
+.fondos {
+    width: 500px;
+    height: 597px;
+
+}
+
+#ic {
+    width: 110px;
+    height: 110px;
+    text-align: center;
+    margin: 4px;
+
+}
+
+.tit-btn {
+    text-align: center;
+    margin: auto 10px;
+}

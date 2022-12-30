@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Cobrar</title>
+
+	<script src="../js/busqueda.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>Cobrar</h1>
+				<form th:action="@{/ventas/realizarVenta}" th:method="post">
+					<div class="form-group">
+						<label>Total: </label>
+						<input id="total" class="form-control" th:value=${total} placeholder="0.00" readonly>
+					</div>
+
+					<div class="form-group">
+						<label>Entrega: </label>
+						<input id="entrega" class="form-control" placeholder="0.00" readonly>
+					</div>
+
+					<div class="form-group">
+						<label for="cambio">Cambio: </label>
+						<input id="cambio" class="form-control" placeholder="0.00" readonly>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Terminar Venta</button>
+					</div>
+				</form>
+				<div class="form-group">
+					<label>Efectivo: </label>
+					<input id="entrada" onkeydown="cambio()" name="entrega" type="text" class="form-control" required
+						autofocus="autofocus" placeholder="0.00">
+				</div>
+
+			</div>
+			
+		</div>
+	</div>
+
+
+</body>
+
+</html>
