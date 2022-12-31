@@ -36,110 +36,98 @@
 		<div id="cont1" class=container my-5>
 			<div th:classappend="'alert'" th:if="${mensaje1 != null}" th:text="${mensaje1}" class="alert" id="mensaje1">
 			</div>
-		
-			<form id="buscarNombre" style="display:none;" th:action="@{/ventas/buscarProducto}" th:object="${producto}"
-				method="get">
-				<div class="input-group mb-3">
-					<input autofocus autocomplete="off" th:field="*{nombre}" id="barraBusc"
-						placeholder="Escribe el nombre del producto" type="text" class="form-control">
 
-					<div class="input-group-append"><input type="submit" class="btn btn-dark" value="Buscar"></div>
-				</div>
-			</form>
 
-			<form id="ingresoProducto" th:object="${producto}" th:action="@{/inventario/agregar}" method="post">
-				<input autofocus autocomplete="off" th:field="*{codigoBarras}" id="buscadorC"
-					placeholder="Escanea el código" type="text" class="form-control">
-
-			</form>
-			<form id="buscarCodigo" th:object="${producto}" th:action="@{/ventas/agregar}" method="post">
-				<table style="border-collapse: collapse; width: 100%;" border="1">
+			<form id="datos_producto" th:object="${producto}" th:action="@{/inventario/agregarProducto}" method="post">
+				<table style="float: left;width: 50%;">
 					<tbody>
 						<tr>
-							<td style="width: 100%;"><label for="name">Codigo de barras:</label></td>
+							<td><label for="name">Codigo de barras:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="text" th:field="*{codigoBarras}" /></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Costo promedio</label></td>
+							<td><label for="name">Costo promedio</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="text" th:field="*{costoPromedio}" /></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Descripcion:</label></td>
+							<td><label for="name">Descripcion:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><textarea th:field="*{descripcion}"></textarea></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Nombre:</label></td>
+							<td><label for="name">Nombre:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="text" th:field="*{nombre}" /></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Precio venta:</label></td>
+							<td><label for="name">Precio venta:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="text" th:field="*{precioVenta}" /></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Stock actual:</label></td>
+							<td><label for="name">Stock actual:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="number" th:field="*{stockActual}" /></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><label for="name">Impu:</label></td>
+							<td><label for="name">supr cantidad relacionada:</label></td>
 						</tr>
 						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
+							<td><input required="" type="text" /></td>
 						</tr>
-						<tr>
-							<td style="width: 100%;"><label for="name">Marc:</label></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><label for="name">Prov:</label></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><label for="name">Secc:</label></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><label for="name">Cantidad relacionada:</label></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><label for="name">supr cantidad relacionada:</label></td>
-						</tr>
-						<tr>
-							<td style="width: 100%;"><input id="nombre" required="" type="text" /></td>
-						</tr>
+
 					</tbody>
 				</table>
+				<table width="50%">
+					<tbody>
+						<tr>
+							<td><label for="name">Impuesto:</label></td>
+						</tr>
+						<tr>
+							<td><select name="impuesto" id="list_impuesto">
+									<option th:each=" impuesto : ${T(ec.edu.uce.modelo.TipoImpuesto).values()}"
+										th:value="${impuesto}" th:text="${impuesto}"></option>
+								</select></td>
+						</tr>
+						<tr>
+							<td><label for="name">Marca:</label></td>
+						</tr>
+						<tr>
+							<td><input required="" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label for="name">Prov:</label></td>
+						</tr>
+						<tr>
+							<td><input required="" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label for="name">Secc:</label></td>
+						</tr>
+						<tr>
+							<td><input required="" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label for="name">Cantidad relacionada:</label></td>
+						</tr>
+						<tr>
+							<td><input required="" type="text" /></td>
+						</tr>
 
+					</tbody>
+				</table>
+				<input type="submit" class="btn btn-dark" id="btn_agr_producto" value="Guardar">
 			</form>
-
 		</div>
-
-
-
-
 	</div>
-
-
 </body>
 
 </html>
