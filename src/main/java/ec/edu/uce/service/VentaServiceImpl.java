@@ -162,4 +162,9 @@ public class VentaServiceImpl implements IVentaService {
 		return this.ventaRepo.buscarPorFechaTO(fechaInicio, fechaFinal);
 	}
 
+	@Override
+	public List<Venta> buscarPorVentasCaja(Integer caja, LocalDateTime fechaCajaAbierta) {
+		return this.ventaRepo.buscarPorVentasCaja(caja, fechaCajaAbierta);
+	}
+
 }

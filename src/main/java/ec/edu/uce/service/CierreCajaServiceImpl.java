@@ -66,5 +66,22 @@ public class CierreCajaServiceImpl implements ICierreCajaService {
 		this.insertarCierreCaja(cierreNuevo);
 
 	}
+	
+	@Override
+	public void cerrarCaja(Usuario usuario, BigDecimal diferencia, BigDecimal valorContable, BigDecimal valorCierre) {
+
+		CierreCaja cierreNuevo = this.obtenerCierreCajaActivo(usuario);
+		cierreNuevo.setId(cierreNuevo.getId());
+
+		cierreNuevo.setEstado(false);
+		cierreNuevo.setDiferencia(diferencia);
+		cierreNuevo.setFechaCierre(LocalDateTime.now());
+		cierreNuevo.setValorContable(valorContable);
+		cierreNuevo.setValorCierre(valorCierre);
+		
+
+		this.actualizarCierreCaja(cierreNuevo);
+
+	}
 
 }

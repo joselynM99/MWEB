@@ -19,4 +19,6 @@ public interface IVentaRepo {
 
 	List<Venta> buscarPorFechaTO(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
 
+	List<Venta> buscarPorVentasCaja(Integer caja, LocalDateTime fechaCajaAbierta);
+
 }

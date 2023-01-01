@@ -3,13 +3,17 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Cobrar</title>
+	<title>Cerrar Caja</title>
 
 	<script src="../js/busqueda.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+	<link rel="stylesheet" href="../css/encabezado.css">
+	<link rel="stylesheet" href="../css/imagenes.css">
+	<link rel="stylesheet" href="../css/colores_pag.css">
+	<link rel="stylesheet" href="../css/contenedores.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
 		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -17,73 +21,148 @@
 
 <body>
 
+	<div id="contenedor">
 
-	<div class="container">
-		<div class="row">
-			<h1>Contador de Efectivo</h1>
-			<div class="col-md-6 col-md-offset-3">
-				
-				<div>
-					<label>$ 100</label>
-					<input id="100" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 50</label>
-					<input id="50" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 20</label>
-					<input id="20" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 10</label>
-					<input id="10" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 5</label>
-					<input id="5" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 2</label>
-					<input id="2" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>$ 1</label>
-					<input id="1" class="form-control" value=0 placeholder="0" readonly>
-				</div>
+		<div id="cont1" class="container">
+			<div class="row">
+				<table>
+					<thead>
+						<h1>Contador de Efectivo</h1>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<label>$ 100</label>
+								<input onkeyup="contarEfectivo()" id="100" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 1.00</label>
+								<input onkeyup="contarEfectivo()" id="1.00" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 50</label>
+								<input onkeyup="contarEfectivo()" id="50" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 0.50</label>
+								<input onkeyup="contarEfectivo()" id="0.50" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 20</label>
+								<input onkeyup="contarEfectivo()" id="20" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 0.25</label>
+								<input onkeyup="contarEfectivo()" id="0.25" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 10</label>
+								<input onkeyup="contarEfectivo()" id="10" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 0.10</label>
+								<input onkeyup="contarEfectivo()" id="0.10" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 5</label>
+								<input onkeyup="contarEfectivo()" id="5" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 0.05</label>
+								<input onkeyup="contarEfectivo()" id="0.05" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 2</label>
+								<input onkeyup="contarEfectivo()" id="2" class="form-control" value=0 placeholder="0">
+							</td>
+							<td>
+								<label>ctvs 0.01</label>
+								<input onkeyup="contarEfectivo()" id="0.01" class="form-control" value=0
+									placeholder="0">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>$ 1</label>
+								<input onkeyup="contarEfectivo()" id="1" class="form-control" value=0 placeholder="0">
+							</td>
 
-
+						</tr>
+						<tr>
+							<td>
+								<label>Valor Efectivo</label>
+								<input id="valorContable" class="form-control" value=0 placeholder="0.00" readonly>
+							</td>
+							<td>
+								<label id="valorFS">Valor Faltante</label>
+								<input id="valorFaltante" class="form-control" placeholder="0.00" readonly>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="col-md-6 col-md-offset-3">
-				<div>
-					<label>ctvs 1.00</label>
-					<input id="1.00" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>ctvs 0.50</label>
-					<input id="0.50" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>ctvs 0.25</label>
-					<input id="0.20" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>ctvs 0.10</label>
-					<input id="0.10" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>ctvs 0.05</label>
-					<input id="5" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				<div>
-					<label>ctvs 0.01</label>
-					<input id="2" class="form-control" value=0 placeholder="0" readonly>
-				</div>
-				
+		</div>
+		<div id='cont2' class="container">
+			<div class="row">
+				<table class="table">
+					<thead>
+						<tr>
+							<td>
+								<h1>Transacciones</h1>
+								</t1d>
+						</tr>
+						<tr>
+							<td><label>Ingresos</label></td>
+							<td><label>Egresos</label></td>
+							<td><label>Saldo Final</label></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><label th:text=${ingresos}></label></td>
+							<td><label th:text=${gastos}></label></td>
+							<td><label id="saldoFinal" th:text=${saldoFinal}></label></td>
+						</tr>
+						<tr>
+							<td><label>Saldo Total Registrado: </label>
+								<label th:text='${saldoFinal}'></label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label>Efectivo + Saldo Inicial: </label>
+								<label th:text='${ingresos}'></label>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+			<div>				
+					<form th:action="@{/ventas/cerrarCaja}" th:object="${cierre}" th:method="put">
+						<input value= 0 id="pValCont" type="hidden"  th:field='*{valorContable}'readonly>
+						<input value= 0 id="pValCierre" type="hidden" th:field='*{valorCierre}'readonly>
+						<input  value= 0 id="pValDif" type="hidden"  th:field='*{diferencia}'readonly>
+						<button  value= 0 type="submit" class="btn btn-success">Cerrar Caja</button>
+					</form>				
 			</div>
 		</div>
 	</div>
-
 
 </body>
 

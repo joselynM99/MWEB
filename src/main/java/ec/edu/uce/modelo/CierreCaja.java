@@ -27,40 +27,42 @@ public class CierreCaja {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cica")
 	@SequenceGenerator(name = "seq_cica", sequenceName = "seq_cica", allocationSize = 1)
-	@Column(name="cica_id")
+	@Column(name = "cica_id")
 	private Integer id;
 
-	@Column(name="cica_estado")
+	@Column(name = "cica_estado")
 	private boolean estado;
 
-	@Column(name="cica_fecha_apertura")
+	@Column(name = "cica_fecha_apertura")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime fechaApertura;
 
-	@Column(name="cica_fecha_cierre")
+	@Column(name = "cica_fecha_cierre")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime fechaCierre;
 
-	@Column(name="cica_valor_apertura")
+	@Column(name = "cica_valor_apertura")
 	private BigDecimal valorApertura;
 
-	@Column(name="cica_valor_contable")
+	@Column(name = "cica_valor_contable")
 	private BigDecimal valorContable;
 
-	@Column(name="cica_diferencia")
+	@Column(name = "cica_valor_cierre")
+	private BigDecimal valorCierre;
+
+	@Column(name = "cica_diferencia")
 	private BigDecimal diferencia;
-	
-	
+
 	@OneToMany(mappedBy = "cierreCaja", cascade = CascadeType.ALL)
 	private List<IngresoAdicional> ingresos;
-	
+
 	@OneToMany(mappedBy = "cierreCaja", cascade = CascadeType.ALL)
 	private List<GastoAdicional> gastos;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "caja_id")
 	private Caja caja;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usua_id")
 	private Usuario usuario;
@@ -153,7 +155,13 @@ public class CierreCaja {
 		this.usuario = usuario;
 	}
 
-	
+	public BigDecimal getValorCierre() {
+		return valorCierre;
+	}
+
+	public void setValorCierre(BigDecimal valorCierre) {
+		this.valorCierre = valorCierre;
+	}
 	
 	
 

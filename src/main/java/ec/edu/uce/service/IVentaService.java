@@ -25,5 +25,7 @@ public interface IVentaService {
 	BigDecimal calcularValorAPagar(List<DetalleVenta> detalles);
 
 	List<Venta> buscarPorFechaTO(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
+	
+	List<Venta> buscarPorVentasCaja(Integer caja, LocalDateTime fechaCajaAbierta);
 
 }
