@@ -35,6 +35,7 @@ public class CierreCajaRepoImpl implements ICierreCajaRepo {
 		TypedQuery<CierreCaja> myQuery = this.entityManager.createQuery("SELECT c FROM CierreCaja c", CierreCaja.class);
 		return myQuery.getResultList();
 	}
+	
 
 	@Override
 	public boolean buscarCierreCajaActivo(Usuario usuario) {
@@ -58,6 +59,8 @@ public class CierreCajaRepoImpl implements ICierreCajaRepo {
 		}
 
 	}
+	
+
 
 	@Override
 	public CierreCaja obtenerCierreCajaActivo(Usuario usuario) {

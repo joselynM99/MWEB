@@ -24,4 +24,7 @@ public interface ICierreCajaService {
 	CierreCaja obtenerCierreCajaActivo(Usuario usuario);
 
 
+	void cerrarCaja(Usuario usuario, BigDecimal diferencia, BigDecimal valorContable, BigDecimal valorCierre);
+
+
 }

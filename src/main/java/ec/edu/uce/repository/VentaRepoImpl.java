@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.Venta;
 
 @Repository
@@ -43,6 +44,19 @@ public class VentaRepoImpl implements IVentaRepo {
 
 		myQuery.setParameter("fechaInicio", fechaInicio);
 		myQuery.setParameter("fechaFinal", fechaFinal);
+
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Venta> buscarPorVentasCaja(Integer caja, LocalDateTime fechaCajaAbierta) {
+
+		TypedQuery<Venta> myQuery = this.entityManager.createQuery(
+				"SELECT v FROM Venta v JOIN FETCH v.caja c WHERE c.id =: caja AND  v.fecha >=: fechaCajaAbierta",
+				Venta.class);
+
+		myQuery.setParameter("fechaCajaAbierta", fechaCajaAbierta);
+		myQuery.setParameter("caja", caja);
 
 		return myQuery.getResultList();
 	}

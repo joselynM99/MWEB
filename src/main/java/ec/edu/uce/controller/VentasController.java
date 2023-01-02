@@ -19,14 +19,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ec.edu.uce.controller.dto.Adicional;
 import ec.edu.uce.controller.dto.DescuentoTO;
+import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
+import ec.edu.uce.modelo.GastoAdicional;
+import ec.edu.uce.modelo.IngresoAdicional;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
+import ec.edu.uce.service.ICajaService;
 import ec.edu.uce.service.ICierreCajaService;
 import ec.edu.uce.service.IDetalleVentaService;
+import ec.edu.uce.service.IGastoAdicionalService;
+import ec.edu.uce.service.IIngresoAdicionalService;
 import ec.edu.uce.service.IProductoService;
 import ec.edu.uce.service.IProveedorService;
 import ec.edu.uce.service.ISubProductoService;
@@ -57,14 +65,131 @@ public class VentasController {
 	@Autowired
 	private ISubProductoService subProductoService;
 
+	@Autowired
+	private ICajaService cajaService;
+	
+	@Autowired
+	private IIngresoAdicionalService ingresoAdicionalService;
+	
+	@Autowired
+	private IGastoAdicionalService gastoAdicionalService;
+
 	@GetMapping("/ventas")
 	public String obtenerMenuVentas() {
 		return "pages/ventas";
 	}
 	
+	
+	@GetMapping("ventas/adicionales")
+	public String obtenerVentanaAdicionales(Model model, Adicional adicional){
+		
+		return "pages/adicionales";
+		
+	}
+	
+	@PostMapping("ventas/registarAdicional")
+	public String registrarAdicional(Model model, @ModelAttribute Adicional adicional) {
+		System.out.println(adicional.getNombre());
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+
+		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
+
+		Caja caja = usuario.getCaja();
+		CierreCaja cierre = this.cierreCajaService.obtenerCierreCajaActivo(usuario);
+		
+		if(adicional.getNombre().contains("Ingreso")) {
+			IngresoAdicional ingreso = new IngresoAdicional();
+			ingreso.setMotivo(adicional.getMotivo());
+			ingreso.setMonto(adicional.getMonto());
+			ingreso.setCierreCaja(cierre);
+			this.ingresoAdicionalService.insertarIngresoAdicional(ingreso);
+		}else {
+			GastoAdicional gasto = new GastoAdicional();
+			gasto.setMotivo(adicional.getMotivo());
+			gasto.setMonto(adicional.getMonto());
+			gasto.setCierreCaja(cierre);
+			this.gastoAdicionalService.insertarGastoAdicional(gasto);
+		}
+		return "redirect:/ventas/ventaNueva";
+	}
+
 	@GetMapping("/ventas/cierreCaja")
-	public String obtenerVantanaCierreCaja() {
+	public String obtenerVantanaCierreCaja(Model model, @ModelAttribute CierreCaja cierre) {
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+
+		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
+
+		Caja caja = usuario.getCaja();
+		cierre = this.cierreCajaService.obtenerCierreCajaActivo(usuario);
+
+		List<Venta> ventasCaja = this.ventaService.buscarPorVentasCaja(caja.getId(), cierre.getFechaApertura());
+		List<IngresoAdicional> listIngresos = cierre.getIngresos();
+		
+		List<GastoAdicional> listGastos = cierre.getGastos();
+
+		BigDecimal totalVentas = new BigDecimal(0);
+		BigDecimal ingresos = new BigDecimal(0);
+		BigDecimal gastos = new BigDecimal(0);
+		BigDecimal saldoFinal = new BigDecimal(0);
+
+		for (Venta v : ventasCaja) {
+			totalVentas = totalVentas.add(v.getTotal());
+		}
+
+		for (IngresoAdicional i : listIngresos) {
+			ingresos = ingresos.add(i.getMonto());
+			System.out.println(i.getMotivo());
+		}
+
+		for (GastoAdicional g : listGastos) {
+			gastos = gastos.add(g.getMonto());
+			System.out.println(g.getMotivo());
+		}
+
+		ingresos = ingresos.add(totalVentas).add(cierre.getValorApertura());
+		saldoFinal = ingresos.subtract(gastos);
+
+		System.out.print(totalVentas);
+		System.out.print(ingresos);
+		System.out.print(gastos);
+
+		model.addAttribute("cierre", cierre);
+		model.addAttribute("saldoFinal", saldoFinal);
+		model.addAttribute("gastos", gastos);
+		model.addAttribute("ingresos", ingresos);
+		model.addAttribute("totalVentas", totalVentas);
 		return "pages/cerrarCaja";
+	}
+	
+	@PutMapping("/ventas/cerrarCaja")
+	public String cerrarCaja(@ModelAttribute CierreCaja cierre, Producto producto, Model model) {
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+
+		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
+		this.cierreCajaService.cerrarCaja(usuario,cierre.getDiferencia(), cierre.getValorContable(), cierre.getValorCierre());
+
+		return "redirect:/ventas/ventaNueva";
 	}
 
 	@GetMapping("/ventas/ventaNueva")
@@ -106,6 +231,8 @@ public class VentasController {
 		}
 
 	}
+	
+	
 
 	@GetMapping("/ventas/abrirCaja")
 	public String abrirCaja(@ModelAttribute CierreCaja cierre, Producto producto, Model model) {
@@ -286,13 +413,14 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/cobrar")
-	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto, Model model) {
+	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
+			Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
-		
+
 		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
-		
+
 		model.addAttribute("total", total);
-		
+
 		return "pages/cobrar";
 
 	}
