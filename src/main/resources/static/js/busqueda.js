@@ -65,14 +65,32 @@ function calcularValorFaltante() {
     if (valor < 0) {
         document.getElementById('valorFS').innerHTML = 'Valor Sobrante'
         document.getElementById('valorFaltante').value = -valor
-    }else{
+    } else {
         document.getElementById('valorFS').innerHTML = 'Valor Faltante'
         document.getElementById('valorFaltante').value = valor
     }
 
-    document.getElementById('pValCont').value=efectivo
-    document.getElementById('pValCierre').value=saldoFinal
+    document.getElementById('pValCont').value = efectivo
+    document.getElementById('pValCierre').value = saldoFinal
     document.getElementById('pValDif').value = valor
 
-    
+
 }
+
+function descuento() {
+    let selected = document.getElementById('porDes').checked
+
+    let total = parseFloat(document.getElementById('total').value)
+    let descuento = parseFloat(document.getElementById('valDes').value)
+
+    if (selected == true) {
+        total = total - (total * descuento / 100)
+    } else {
+        total = total - descuento
+    }
+
+    document.getElementById('total').value = total
+
+
+}
+

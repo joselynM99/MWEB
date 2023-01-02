@@ -67,10 +67,10 @@ public class VentasController {
 
 	@Autowired
 	private ICajaService cajaService;
-	
+
 	@Autowired
 	private IIngresoAdicionalService ingresoAdicionalService;
-	
+
 	@Autowired
 	private IGastoAdicionalService gastoAdicionalService;
 
@@ -78,19 +78,18 @@ public class VentasController {
 	public String obtenerMenuVentas() {
 		return "pages/ventas";
 	}
-	
-	
+
 	@GetMapping("ventas/adicionales")
-	public String obtenerVentanaAdicionales(Model model, Adicional adicional){
-		
+	public String obtenerVentanaAdicionales(Model model, Adicional adicional) {
+
 		return "pages/adicionales";
-		
+
 	}
-	
+
 	@PostMapping("ventas/registarAdicional")
 	public String registrarAdicional(Model model, @ModelAttribute Adicional adicional) {
 		System.out.println(adicional.getNombre());
-		
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -103,14 +102,14 @@ public class VentasController {
 
 		Caja caja = usuario.getCaja();
 		CierreCaja cierre = this.cierreCajaService.obtenerCierreCajaActivo(usuario);
-		
-		if(adicional.getNombre().contains("Ingreso")) {
+
+		if (adicional.getNombre().contains("Ingreso")) {
 			IngresoAdicional ingreso = new IngresoAdicional();
 			ingreso.setMotivo(adicional.getMotivo());
 			ingreso.setMonto(adicional.getMonto());
 			ingreso.setCierreCaja(cierre);
 			this.ingresoAdicionalService.insertarIngresoAdicional(ingreso);
-		}else {
+		} else {
 			GastoAdicional gasto = new GastoAdicional();
 			gasto.setMotivo(adicional.getMotivo());
 			gasto.setMonto(adicional.getMonto());
@@ -138,7 +137,7 @@ public class VentasController {
 
 		List<Venta> ventasCaja = this.ventaService.buscarPorVentasCaja(caja.getId(), cierre.getFechaApertura());
 		List<IngresoAdicional> listIngresos = cierre.getIngresos();
-		
+
 		List<GastoAdicional> listGastos = cierre.getGastos();
 
 		BigDecimal totalVentas = new BigDecimal(0);
@@ -174,7 +173,7 @@ public class VentasController {
 		model.addAttribute("totalVentas", totalVentas);
 		return "pages/cerrarCaja";
 	}
-	
+
 	@PutMapping("/ventas/cerrarCaja")
 	public String cerrarCaja(@ModelAttribute CierreCaja cierre, Producto producto, Model model) {
 
@@ -187,7 +186,8 @@ public class VentasController {
 		}
 
 		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
-		this.cierreCajaService.cerrarCaja(usuario,cierre.getDiferencia(), cierre.getValorContable(), cierre.getValorCierre());
+		this.cierreCajaService.cerrarCaja(usuario, cierre.getDiferencia(), cierre.getValorContable(),
+				cierre.getValorCierre());
 
 		return "redirect:/ventas/ventaNueva";
 	}
@@ -231,8 +231,6 @@ public class VentasController {
 		}
 
 	}
-	
-	
 
 	@GetMapping("/ventas/abrirCaja")
 	public String abrirCaja(@ModelAttribute CierreCaja cierre, Producto producto, Model model) {
@@ -414,19 +412,20 @@ public class VentasController {
 
 	@GetMapping("/ventas/cobrar")
 	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
-			Model model) {
+			DescuentoTO descuento, Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 
 		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 
 		model.addAttribute("total", total);
-
+		model.addAttribute("descuento", descuento);
 		return "pages/cobrar";
 
 	}
 
 	@PostMapping("/ventas/realizarVenta")
-	public String terminarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto) {
+	public String terminarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
+			DescuentoTO descuento) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -440,8 +439,11 @@ public class VentasController {
 		if (carrito == null || carrito.size() <= 0) {
 			return "pages/ventaNueva";
 		}
+		
+		System.out.println(descuento.getTipoDesceunto());
+		System.out.println(descuento.getValorDesceunto());
 
-		this.ventaService.realizarVenta(carrito);
+		this.ventaService.realizarVenta(carrito, descuento);
 		this.limpiarCarrito(request);
 
 		redirectAttrs.addFlashAttribute("mensaje1", "Venta realizada correctamente");
@@ -482,28 +484,6 @@ public class VentasController {
 		}
 		redirectAttrs.addFlashAttribute("mensaje1", "Venta cancelada");
 		return "redirect:/ventas/ventaNueva";
-	}
-
-	@GetMapping("/ventas/descuento")
-	public String obtenerDescuento(RedirectAttributes redirectAttrs, Producto producto, Model model,
-			HttpServletRequest request) {
-		DescuentoTO descuento = this.obtenerDescuento(request);
-		List<DetalleVenta> carrito = this.obtenerCarrito(request);
-		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
-
-		if (descuento.getTipoDesceunto()) {
-			total = total.subtract(
-					total.multiply(new BigDecimal(descuento.getValorDesceunto())).divide(new BigDecimal(100)));
-			model.addAttribute("total", total);
-			model.addAttribute("producto", producto);
-		} else {
-			total = total.subtract(new BigDecimal(descuento.getValorDesceunto()));
-			model.addAttribute("total", total);
-			model.addAttribute("producto", producto);
-		}
-
-		return "pages/ventaNueva";
-
 	}
 
 //Metodos de apoyo

@@ -34,15 +34,17 @@
 	<div id="contenedor">
 
 		<div id="cont1" class=container my-5>
-			<div th:classappend="'alert'" th:if="${mensaje1 != null}" th:text="${mensaje1}" class="alert" id="mensaje1">
-			</div>
+
 			<div id="busqueda">
 				<label>Buscar por: </label>
 				<button type="menu" class="btn btn-dark" onclick="cambiarModoBusquedaCodigo()">Código</button>
 				<button type="menu" class="btn btn-dark" onclick="cambiarModoBusquedaNombre()">Nombre</button>
+				<div class="alert alert-warning" role="alert" th:classappend="'alert'" th:if="${mensaje1 != null}"
+					th:text="${mensaje1}" id="mensaje1">
+				</div>
 			</div>
 			<form id="buscarNombre" style="display:none;" th:action="@{/ventas/buscarProducto}" th:object="${producto}"
-				method="get">
+				th:method="get">
 				<div class="input-group mb-3">
 					<input autofocus autocomplete="off" th:field="*{nombre}" id="barraBusc"
 						placeholder="Escribe el nombre del producto" type="text" class="form-control">
@@ -159,6 +161,11 @@
 							<td>
 								<form th:action="@{/ventas/adicionales}" th:method="get">
 									<input id="ic" type="image" class="btn btn-info" src="../images/ic_adicionales.png">
+								</form>
+							</td>
+							<td>
+								<form th:action="@{/ventas}" th:method="get">
+									<input id="ic" type="image" class="btn btn-info" src="../images/ic_volver.png">
 								</form>
 							</td>
 						</tr>

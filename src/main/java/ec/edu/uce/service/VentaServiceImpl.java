@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import ec.edu.uce.controller.dto.DescuentoTO;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
@@ -91,7 +92,7 @@ public class VentaServiceImpl implements IVentaService {
 
 	@Override
 	@Transactional(value = TxType.REQUIRED)
-	public void realizarVenta(List<DetalleVenta> detalles) {
+	public void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -135,7 +136,25 @@ public class VentaServiceImpl implements IVentaService {
 		Venta venta = new Venta();
 		venta.setDetalles(detalles);
 		venta.setFecha(LocalDateTime.now());
-		venta.setTotal(calcularValorAPagar(detalles));
+		
+		
+		if(descuento == null || descuento.getValorDesceunto()==null || descuento.getValorDesceunto()==0) {
+			venta.setTotal(calcularValorAPagar(detalles));
+		}else {
+			BigDecimal total = this.calcularValorAPagar(detalles);
+			
+			if (descuento.getTipoDesceunto()) {
+				total = total.subtract(
+						total.multiply(new BigDecimal(descuento.getValorDesceunto())).divide(new BigDecimal(100)));			
+				
+			} else {
+				total = total.subtract(new BigDecimal(descuento.getValorDesceunto()));				
+			
+			}
+			
+			venta.setTotal(total);
+		}
+		
 		Caja caja = cierreCajaAbierto.getCaja();
 		
 		List<Venta> listaV = caja.getVentas();

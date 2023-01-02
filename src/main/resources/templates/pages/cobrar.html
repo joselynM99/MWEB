@@ -22,7 +22,7 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<h1>Cobrar</h1>
-				<form th:action="@{/ventas/realizarVenta}" th:method="post">
+				<form th:action="@{/ventas/realizarVenta}" th:object=${descuento} th:method="post">
 					<div class="form-group">
 						<label>Total: </label>
 						<input id="total" class="form-control" th:value=${total} placeholder="0.00" readonly>
@@ -38,6 +38,16 @@
 						<input id="cambio" class="form-control" placeholder="0.00" readonly>
 					</div>
 					<div class="form-group">
+						<label>Descuento</label>
+						<label><input type="radio" id="porDes" name="estado" value='true' th:value="true"
+								th:field="*{tipoDesceunto}">Porcentaje</label>
+						<label for=""><input id="cantDes" type="radio" name="estado" value='false' th:value="false"
+								th:field="*{tipoDesceunto}">Valor</label>
+
+						<input id='valDes' type="text" class="form-control" th:field="*{valorDesceunto}">
+						<input onclick="descuento()" id='aplicarD' type="button" class="btn btn-dark" value="Aplicar">
+					</div>
+					<div class="form-group">
 						<button type="submit" class="btn btn-success">Terminar Venta</button>
 					</div>
 				</form>
@@ -48,9 +58,17 @@
 				</div>
 
 			</div>
-			
+
+
+
+
+
 		</div>
 	</div>
+
+
+
+
 
 
 </body>
