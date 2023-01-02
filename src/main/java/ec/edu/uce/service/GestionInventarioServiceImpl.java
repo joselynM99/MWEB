@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 
 @Service
-public class GestionInventarioServiceImpl implements IGestionInventarioService{
+public class GestionInventarioServiceImpl implements IGestionInventarioService {
 
 	@Autowired
 	private IProductoService productoService;
@@ -23,10 +24,10 @@ public class GestionInventarioServiceImpl implements IGestionInventarioService{
 
 	@Autowired
 	private ISeccionService seccionService;
-	
+
 	@Override
 	public void agregarProducto(ProductoDTO productoDTO) {
-		
+
 		Producto producto = new Producto(null, productoDTO.getCodigoBarras(), productoDTO.getNombre(),
 				productoDTO.getDescripcion(), productoDTO.getCostoPromedio(), productoDTO.getPrecioVenta(),
 				productoDTO.getStockActual(),
@@ -34,9 +35,13 @@ public class GestionInventarioServiceImpl implements IGestionInventarioService{
 				this.impuestoService.buscarImpuesto(Integer.valueOf(productoDTO.getImpuesto())),
 				this.seccionService.buscarSeccion(Integer.valueOf(productoDTO.getSeccion())),
 				this.marcaService.buscarMarca(Integer.valueOf(productoDTO.getMarca())));
-
 		this.productoService.insertarProducto(producto);
-		
+	}
+
+	@Override
+	public void agregarProveedor(Proveedor proveedor) {
+		this.proveedorService.insertarProveedor(proveedor);
+
 	}
 
 }
