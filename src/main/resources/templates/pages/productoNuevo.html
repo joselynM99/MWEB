@@ -38,7 +38,8 @@
 			</div>
 
 
-			<form id="datos_producto" th:object="${producto}" th:action="@{/inventario/agregarProducto}" method="post">
+			<form id="datos_producto" th:object="${productoDTO}" th:action="@{/inventario/agregarProducto}"
+				method="post">
 				<table style="float: left;width: 50%;">
 					<tbody>
 						<tr>
@@ -51,7 +52,7 @@
 							<td><label for="name">Costo promedio</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" th:field="*{costoPromedio}" /></td>
+							<td><input required="" step="any" type="number" th:field="*{costoPromedio}" /></td>
 						</tr>
 						<tr>
 							<td><label for="name">Descripcion:</label></td>
@@ -69,7 +70,7 @@
 							<td><label for="name">Precio venta:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" th:field="*{precioVenta}" /></td>
+							<td><input required="" type="number" step="any" th:field="*{precioVenta}" /></td>
 						</tr>
 						<tr>
 							<td><label for="name">Stock actual:</label></td>
@@ -81,7 +82,7 @@
 							<td><label for="name">supr cantidad relacionada:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" /></td>
+							<td><input required="" type="number" step="any" /></td>
 						</tr>
 
 					</tbody>
@@ -93,27 +94,36 @@
 						</tr>
 						<tr>
 							<td><select name="impuesto" id="list_impuesto">
-									<option th:each=" impuesto : ${T(ec.edu.uce.modelo.TipoImpuesto).values()}"
-										th:value="${impuesto}" th:text="${impuesto}"></option>
+									<option th:each=" impu : ${listImpuestos}"
+										th:value="${impu.id}" th:text="${impu.TipoImpuesto}"></option>
 								</select></td>
 						</tr>
 						<tr>
 							<td><label for="name">Marca:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" /></td>
+							<td><select name="marca" id="listMarcas">
+									<option th:each=" marca : ${listMarcas}" th:value="${marca.id}"
+										th:text="${marca.nombre}"></option>
+								</select></td>
 						</tr>
 						<tr>
-							<td><label for="name">Prov:</label></td>
+							<td><label for="name">Proveedor:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" /></td>
+							<td><select name="proveedor" id="listProveedores">
+									<option th:each=" prov : ${listProveedores}" th:value="${prov.id}"
+										th:text="${prov.nombreComercial}"></option>
+								</select></td>
 						</tr>
 						<tr>
 							<td><label for="name">Secc:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" type="text" /></td>
+							<td><select name="seccion" id="listSeccion">
+									<option th:each=" seccion : ${listSeccion}" th:value="${seccion.id}"
+										th:text="${seccion.categoria}"></option>
+								</select></td>
 						</tr>
 						<tr>
 							<td><label for="name">Cantidad relacionada:</label></td>
