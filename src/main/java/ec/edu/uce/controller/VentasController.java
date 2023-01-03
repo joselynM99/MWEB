@@ -75,7 +75,17 @@ public class VentasController {
 	private IGastoAdicionalService gastoAdicionalService;
 
 	@GetMapping("/ventas")
-	public String obtenerMenuVentas() {
+	public String obtenerMenuVentas(Model model) {
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+		
+		model.addAttribute("nombreUser", userDetails.getUsername());
 		return "pages/ventas";
 	}
 
@@ -88,8 +98,7 @@ public class VentasController {
 
 	@PostMapping("ventas/registarAdicional")
 	public String registrarAdicional(Model model, @ModelAttribute Adicional adicional) {
-		System.out.println(adicional.getNombre());
-
+	
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {

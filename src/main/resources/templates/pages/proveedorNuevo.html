@@ -31,6 +31,23 @@
 
 <body id="proveedorNuevoPag">
 	<header></header>
+	<nav class="nav">
+
+		<ul class="nav nav-tabs">
+			<label id="titulo_sis">MARK WEB</label>
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page">Registrar Proveedor</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/inventario/actualizarProveedor}">Actualizar Proveedor</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/inventario/listaProveedores}">Lista de Proveedores </a>
+			</li>
+		</ul>
+		<span id="user_ic" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
+		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
+	</nav>
 	<section></section>
 	<div id="contenedor">
 
@@ -47,20 +64,20 @@
 							<td><label for="nombreComercial">Nombre Comercial:</label></td>
 						</tr>
 						<tr>
-							<td><input id="nombreComercial" required="" type="text" th:field="*{nombreComercial}" />
+							<td><input class='form-control' id="nombreComercial" required="" type="text" th:field="*{nombreComercial}" />
 							</td>
 						</tr>
 						<tr>
-							<td><label for="razonSocial">Razon Social:</label></td>
+							<td><label   for="razonSocial">Razon Social:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" id="razonSocial" type="text" th:field="*{razonSocial}" /></td>
+							<td><input class='form-control' required="" id="razonSocial" type="text" th:field="*{razonSocial}" /></td>
 						</tr>
 						<tr>
 							<td><label for="tipo_identificacion">Tipo identificación:</label></td>
 						</tr>
 						<tr>
-							<td><select id="tipo_identificacion" name="tipoId">
+							<td><select class='form-select' id="tipo_identificacion" name="tipoId">
 									<option th:each=" tipo : ${T(ec.edu.uce.modelo.TipoIdentificacion).values()}"
 										th:value="${tipo}" th:text="${tipo}"></option>
 								</select></td>
@@ -69,26 +86,26 @@
 							<td><label for="identificacion">Numero de identificacion:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" id="identificacion" type="text" th:field="*{identificacion}"></input>
+							<td><input class='form-control' required="" id="identificacion" type="text" th:field="*{identificacion}"></input>
 							</td>
 						</tr>
 						<tr>
 							<td><label for="telefono">Telefono:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" id="telefono" type="text" th:field="*{telefono}" /></td>
+							<td><input class='form-control' required="" id="telefono" type="text" th:field="*{telefono}" /></td>
 						</tr>
 						<tr>
 							<td><label for="direccion">Direccion:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" id="direccion" type="text" th:field="*{direccion}" /></td>
+							<td><input class='form-control' required="" id="direccion" type="text" th:field="*{direccion}" /></td>
 						</tr>
 						<tr>
 							<td><label for="correo">Correo:</label></td>
 						</tr>
 						<tr>
-							<td><input required="" id="correo" type="email" th:field="*{correo}" /></td>
+							<td><input class='form-control' required="" id="correo" type="email" th:field="*{correo}" /></td>
 						</tr>
 					</tbody>
 				</table>

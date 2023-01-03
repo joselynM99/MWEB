@@ -12,11 +12,12 @@ public interface IProveedorService {
 
 	List<Proveedor> buscarTodosProveedor();
 
-	Proveedor buscarProveedorNombre(String nombreEmpresa);
-
+	
 	void eliminarProveedor(Integer id);
 
 	void actualizarProveedor(Proveedor proveedor);
 	
 	List<Proveedor> buscarProveedorPorNombre(String nombreEmpresa);
+
+	Proveedor buscarProveedorIdentificacion(String identificacion);
 }

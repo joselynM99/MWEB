@@ -67,6 +67,49 @@ public class SubProducto {
 	
 	@OneToMany(mappedBy = "subProducto", cascade = CascadeType.ALL)
 	private List<DetalleVenta> ventas;
+	
+	
+
+	/**
+	 * 
+	 */
+	public SubProducto() {
+		super();
+	}
+
+	/**
+	 * @param id
+	 * @param codigoBarras
+	 * @param nombre
+	 * @param descripcion
+	 * @param cantidadRelacionada
+	 * @param costoPromedio
+	 * @param precioVenta
+	 * @param stockActual
+	 * @param impuesto
+	 * @param producto
+	 * @param proveedor
+	 * @param marca
+	 * @param seccion
+	 */
+	public SubProducto(Integer id, String codigoBarras, String nombre, String descripcion, Integer cantidadRelacionada,
+			BigDecimal costoPromedio, BigDecimal precioVenta, Integer stockActual, Impuesto impuesto, Producto producto,
+			Proveedor proveedor, Marca marca, Seccion seccion) {
+		super();
+		this.id = id;
+		this.codigoBarras = codigoBarras;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.cantidadRelacionada = cantidadRelacionada;
+		this.costoPromedio = costoPromedio;
+		this.precioVenta = precioVenta;
+		this.stockActual = stockActual;
+		this.impuesto = impuesto;
+		this.producto = producto;
+		this.proveedor = proveedor;
+		this.marca = marca;
+		this.seccion = seccion;
+	}
 
 	public Integer getId() {
 		return id;

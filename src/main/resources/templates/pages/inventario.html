@@ -30,17 +30,18 @@
 				<a class="nav-link" href="#" th:href="@{/}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Ventas</a>
+				<a class="nav-link" href="#" th:href="@{/ventas}">Ventas</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/registro}">Registro</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/compras/nueva}">Compras</a>
+				<a class="nav-link" href="#" th:href="@{/compras}">Compras</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/ventas/nueva}">Ventas</a>
+				<a class="nav-link active" aria-current="page">Inventario</a>
 			</li>
+			 
 		</ul>
 		<span id="user_ic" class="bi bi-file-person-fill">Usuario</span>
 		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
@@ -58,6 +59,13 @@
 							<button type="button" class="btn btn-outline-warning"><img class="iconos"
 									src="../images/ge_productos.png" alt="Gestión Productos"><label
 									class="txt_ic">Gestión Productos</label></button></a>
+					</th>
+
+					<th>
+						<a href="#" th:href="@{/inventario/subproductoNuevo}">
+							<button type="button" class="btn btn-outline-warning"><img class="iconos"
+									src="../images/ge_productos.png" alt="Gestión SubProductos"><label
+									class="txt_ic">Gestión SubProductos</label></button></a>
 					</th>
 
 					<th>

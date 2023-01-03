@@ -14,10 +14,10 @@ public interface IProveedorRepo {
 
 	void eliminarProveedor(Integer id);
 
-	Proveedor buscarProveedorNombre(String nombreEmpresa);
-
 	void actualizarProveedor(Proveedor proveedor);
 
 	List<Proveedor> buscarProveedorPorNombre(String nombreEmpresa);
+
+	Proveedor buscarProveedorIdentificacion(String identificacion);
 
 }

@@ -38,11 +38,11 @@ public class ProveedorRepoImpl implements IProveedorRepo {
 	}
 
 	@Override
-	public Proveedor buscarProveedorNombre(String nombreEmpresa) {
+	public Proveedor buscarProveedorIdentificacion(String identificacion) {
 
 		TypedQuery<Proveedor> myQuery = this.entityManager
-				.createQuery("SELECT p FROM Proveedor p WHERE p.nombreEmpresa=:nombreEmpresa", Proveedor.class);
-		myQuery.setParameter("nombreEmpresa", nombreEmpresa);
+				.createQuery("SELECT p FROM Proveedor p WHERE p.identificacion=:identificacion", Proveedor.class);
+		myQuery.setParameter("identificacion", identificacion);
 
 		try {
 			myQuery.setFirstResult(0);
@@ -56,11 +56,11 @@ public class ProveedorRepoImpl implements IProveedorRepo {
 	}
 
 	@Override
-	public List<Proveedor> buscarProveedorPorNombre(String nombreEmpresa) {
+	public List<Proveedor> buscarProveedorPorNombre(String nombreComercial) {
 		TypedQuery<Proveedor> myQuery = this.entityManager
-				.createQuery("SELECT p FROM Proveedor p WHERE UPPER(p.nombreEmpresa) LIKE UPPER(:nombreEmpresa)", Proveedor.class);
+				.createQuery("SELECT p FROM Proveedor p WHERE UPPER(p.nombreComercial) LIKE UPPER(:nombreComercial)", Proveedor.class);
 
-		myQuery.setParameter("nombreEmpresa", nombreEmpresa);
+		myQuery.setParameter("nombreComercial", nombreComercial);
 		try {
 
 			return myQuery.getResultList();
