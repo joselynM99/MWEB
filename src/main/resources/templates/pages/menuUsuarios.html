@@ -27,20 +27,15 @@
 		<ul class="nav nav-tabs">
 			<label id="titulo_sis">MARK WEB</label>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/}">Inicio</a>
+				<a class="nav-link" href="#" th:href="@{/gestionUsuarios}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/ventas}">Ventas</a>
+				<a class="nav-link" href="#" th:href="@{/registro}">Registrar Usuario</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/registro}">Registro</a>
+				<a class="nav-link" href="#" th:href="@{/gestionUsuarios/modificarUsuario}">Modificar Usuario</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/compras}">Compras</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Inventario</a>
-			</li>
+			
 			 
 		</ul>
 		<span id="user_ic" class="bi bi-file-person-fill">Usuario</span>
@@ -54,25 +49,19 @@
 		<div class="btn_lista">
 			<table>
 				<tr>
+				
 					<th>
-						<a href="#" th:href="@{/inventario/productoNuevo}">
+						<a href="#" th:href="@{/registro}">
 							<button type="button" class="btn btn-outline-warning"><img class="iconos"
-									src="../images/ge_productos.png" alt="Gestión Productos"><label
-									class="txt_ic">Gestión Productos</label></button></a>
+									src="../images/ic_agregar_user.png" alt="Gestión SubProductos"><label
+									class="txt_ic">Registrar Usuarios</label></button></a>
 					</th>
 
 					<th>
-						<a href="#" th:href="@{/inventario/subproductoNuevo}">
+						<a href="#" th:href="@{/gestionUsuarios/modificarUsuario}">
 							<button type="button" class="btn btn-outline-warning"><img class="iconos"
-									src="../images/ge_productos.png" alt="Gestión SubProductos"><label
-									class="txt_ic">Gestión SubProductos</label></button></a>
-					</th>
-
-					<th>
-						<a href="#" th:href="@{/inventario/proveedorNuevo}">
-							<button type="button" class="btn btn-outline-warning"><img class="iconos"
-									src="../images/ge_proveedores.png" alt="Gestión Proveedores"><label
-									class="txt_ic">Gestión Proveedores</label></button></a>
+									src="../images/ic_modificar_user.png" alt="Gestión Proveedores"><label
+									class="txt_ic">Modificar Usuarios</label></button></a>
 					</th>
 
 				</tr>

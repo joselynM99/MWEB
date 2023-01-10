@@ -27,6 +27,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	private ICajaService cajaService;
 
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	
+	@Autowired 
+	private IUsuarioService usuarioService;
 
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -44,7 +48,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		Caja caja = this.cajaService.buscarCajaPorNombre(registroDTO.getCaja());
 			
 		Perfil perfil = this.iPerfilService.buscarPerfilNombre(registroDTO.getPerfil());
-		System.out.println(registroDTO.getPassword());
 		
 		Usuario usuario = new Usuario(registroDTO.getTipoId(), registroDTO.getIdentificacion(), 
 				registroDTO.getApellidos(), registroDTO.getNombres(), 
@@ -52,6 +55,22 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 				passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(perfil));
 		usuario.setCaja(caja);
 		return usuarioRepositorio.save(usuario);
+	}
+	
+	@Override
+	public void actualizar(UsuarioRegistroDTO registroDTO) {
+		Caja caja = this.cajaService.buscarCajaPorNombre(registroDTO.getCaja());
+		
+		Perfil perfil = this.iPerfilService.buscarPerfilNombre(registroDTO.getPerfil());
+		
+		Usuario usuario = new Usuario(registroDTO.getTipoId(), registroDTO.getIdentificacion(), 
+				registroDTO.getApellidos(), registroDTO.getNombres(), 
+				registroDTO.getEmail(), registroDTO.isEstado(),
+				passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(perfil));
+		usuario.setCaja(caja);
+		
+//		usuario.setId(Integer(registroDTO.getId()));
+		this.usuarioService.actualizarUsuario(usuario);
 	}
 
 	@Override

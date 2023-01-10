@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -335,7 +336,7 @@ public class InventarioController {
 	}
 
 	@GetMapping("/actualizarSubProducto")
-	public String obtenerPaginaActualizarSubProducto(SubProducto subproducto, Model model) {
+	public String obtenerPaginaActualizarSubProducto(@ModelAttribute SubProducto subproducto, Model model) {
 
 		System.out.println(subproducto.getId());
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -352,6 +353,7 @@ public class InventarioController {
 		model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 		model.addAttribute("listProductos", this.productoService.buscarTodosProductos());
 		model.addAttribute("subproducto",subproducto);
+		
 
 		return "pages/subproductoActualizar";
 

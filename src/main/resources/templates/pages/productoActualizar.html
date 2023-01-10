@@ -38,7 +38,7 @@
 		<ul class="nav nav-tabs">
 			<label id="titulo_sis">MARK WEB</label>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/}">Inicio</a>
+				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inicio</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/inventario/productoNuevo}">Registrar Producto</a>
@@ -113,11 +113,12 @@
 						<tr>
 							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
 						</tr>
+
 						<tr>
-							<td><label for="name">Nombre:</label></td>
+							<td><label for="name">Stock actual:</label></td>
 						</tr>
 						<tr>
-							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
+							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
 						</tr>
 						<tr>
 							<td><label for="name">Precio venta:</label></td>
@@ -126,18 +127,19 @@
 							<td><input class="form-control" required="" type="number" step="any"
 									th:field="*{precioVenta}" /></td>
 						</tr>
-						<tr>
-							<td><label for="name">Stock actual:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
-						</tr>
 
 
 					</tbody>
 				</table>
 				<table width="50%">
 					<tbody>
+						<tr>
+							<td><label for="name">Nombre:</label></td>
+						</tr>
+						<tr>
+							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
+						</tr>
+						
 						<tr>
 							<td><label for="name">Impuesto:</label></td>
 						</tr>
@@ -153,8 +155,7 @@
 							<td><label for="name">Marca:</label></td>
 						</tr>
 						<tr>
-							<td><select th:name="listMarcas" id="listMarcas" class="form-select"
-									th:field="*{marca.id}">
+							<td><select th:name="listMarcas" id="listMarcas" class="form-select" th:field="*{marca.id}">
 									<option th:each="option : ${listMarcas}" th:value="${option.id}"
 										th:text="${option.nombre}">
 									</option>
@@ -188,8 +189,6 @@
 					</tbody>
 				</table>
 				<input type="submit" class="btn btn-dark" id="boton2" value="Actualizar">
-
-
 			</form>
 
 			<form th:action="@{/inventario/eliminarProducto/{id}(id=${producto.id})}" th:object="${producto}"
