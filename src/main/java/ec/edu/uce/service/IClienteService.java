@@ -14,6 +14,8 @@ public interface IClienteService {
 
 	void actualizarCliente(Cliente cliente);
 
+	Cliente buscarClienteIdentificacion(String identificacion);
+	
 	void eliminarCliente(Integer id);
 
 }

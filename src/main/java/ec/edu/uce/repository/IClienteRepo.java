@@ -16,4 +16,6 @@ public interface IClienteRepo {
 
 	void eliminarCliente(Integer id);
 
+	Cliente buscarClienteIdentificacion(String identificacion);
+
 }

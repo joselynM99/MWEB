@@ -39,4 +39,10 @@ public class ClienteServiceImpl implements IClienteService {
 		this.clienteRepo.eliminarCliente(id);
 	}
 
+	@Override
+	public Cliente buscarClienteIdentificacion(String identificacion) {
+		return this.clienteRepo.buscarClienteIdentificacion(identificacion);
+	}
+
+	
 }

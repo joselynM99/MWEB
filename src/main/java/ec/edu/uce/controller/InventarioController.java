@@ -429,10 +429,7 @@ public class InventarioController {
 			return "pages/login";
 		}
 		model.addAttribute("nombreUser", userDetails.getUsername());
-		model.addAttribute("listImpuestos", this.impuestoService.buscarTodosImpuesto());
-		model.addAttribute("listMarcas", this.marcaService.buscarTodosMarca());
-		model.addAttribute("listSeccion", this.seccionService.buscarTodosSeccion());
-		model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
+		
 		return "pages/proveedorNuevo";
 	}
 

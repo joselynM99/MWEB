@@ -58,19 +58,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	}
 	
 	@Override
-	public void actualizar(UsuarioRegistroDTO registroDTO) {
-		Caja caja = this.cajaService.buscarCajaPorNombre(registroDTO.getCaja());
+	public void eliminar(UsuarioRegistroDTO registroDTO) {
 		
-		Perfil perfil = this.iPerfilService.buscarPerfilNombre(registroDTO.getPerfil());
 		
-		Usuario usuario = new Usuario(registroDTO.getTipoId(), registroDTO.getIdentificacion(), 
-				registroDTO.getApellidos(), registroDTO.getNombres(), 
-				registroDTO.getEmail(), registroDTO.isEstado(),
-				passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(perfil));
-		usuario.setCaja(caja);
+		Usuario usuario = this.usuarioRepositorio.findByEmail(registroDTO.getEmail());
 		
 //		usuario.setId(Integer(registroDTO.getId()));
-		this.usuarioService.actualizarUsuario(usuario);
+		this.usuarioService.eliminarUsuario(usuario.getId());
 	}
 
 	@Override

@@ -46,8 +46,10 @@
 				<a class="nav-link active" aria-current="page">Lista de productos </a>
 			</li>
 		</ul>
-		<span id="user_ic" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
-		<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
+		<div id="user_ic">
+			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
+			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
+		</div>
 	</nav>
 	<div class=container my-5>
 		<div class="card-body">
@@ -63,7 +65,7 @@
 								<th>Costo Promedio</th>
 								<th>Precio de venta</th>
 								<th>Stock Actual</th>
-								
+
 								<th>Eliminar</th>
 								<th>Actualizar</th>
 							</tr>
@@ -76,7 +78,7 @@
 								<td th:text="${producto.costoPromedio}"></td>
 								<td th:text="${producto.precioVenta}"></td>
 								<td th:text="${producto.stockActual}"></td>
-								
+
 								<td>
 									<form th:action="@{/inventario/borrarProducto/{id}(id=${producto.id})}"
 										th:method="delete" , th:object=${producto}>

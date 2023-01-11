@@ -1,14 +1,19 @@
 package ec.edu.uce.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ec.edu.uce.controller.dto.UsuarioRegistroDTO;
 import ec.edu.uce.modelo.Usuario;
 import ec.edu.uce.service.IUsuarioService;
 import ec.edu.uce.service.UsuarioServicio;
@@ -60,32 +65,13 @@ public class LogginController {
 
 	}
 
-	@GetMapping("/gestionUsuarios/modificarUsuario")
-	public String modificarUsuarioVentana(Usuario usuario, Model model) {
-		return "pages/modificarUsuario";
-
+	@DeleteMapping("/gestionUsuarios/eliminar/{id}")
+	public String eliminarUsuario(@PathVariable Integer id, Model model, Usuario usuario, RedirectAttributes redirectAttributes) {
+		
+		this.usuarioService.eliminarUsuario(id);
+		redirectAttributes.addFlashAttribute("mensaje", "Producto eliminado");
+		
+		return "redirect:/gestionUsuarios";
 	}
 
-	@GetMapping("/gestionUsuarios/buscarUsuario")
-	public String buscarUsuario(Usuario usuario, Model model, RedirectAttributes redirect) {
-
-		Usuario user = this.usuarioService.buscarUsuarioPorNombreUsuario(usuario.getNombreUsuario());
-
-		if (user == null || user.getId().equals(null)) {
-			redirect.addFlashAttribute("error", "Usuario no encontrado");
-			return "redirect:/gestionUsuarios/modificarUsuario";
-		} else {
-
-			model.addAttribute("usuario", user);
-
-			return "pages/modificarUsuario";
-
-		}
-	}
-	
-//	@PutMapping("/gestionUsuarios/buscarUsuario")
-//	public String actualizarUser(Usuario usuario, Model model, RedirectAttributes redirectAttributes) {
-//		usuario.get
-//		return "";
-//	}
 }

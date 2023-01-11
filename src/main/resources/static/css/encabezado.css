@@ -13,11 +13,17 @@
 }
 
 #user_ic {
-    margin-left: 130px;
-    margin-top: 9px;
-    margin-right: 20px;
-    width: 230px;
+	margin-top: 9px;
+	position: relative;
+   	left: 300px;
+   	display: flex;
+   	
    
+}
+
+#us{
+	position: relative;
+	margin-right: 15px;
 }
 
 .nav-link{

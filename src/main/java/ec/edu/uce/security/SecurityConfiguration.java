@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/ventas/**").permitAll()
 				.antMatchers("/registro/**").hasRole("ADMIN")
 				.antMatchers("/inventario/**").hasRole("ADMIN")
-			
+				.antMatchers("/clientes/**").permitAll()
 				.anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
