@@ -36,6 +36,27 @@ public class DetalleCompra {
 	@JoinColumn(name = "prod_id")
 	private Producto producto;
 
+
+
+	/**
+	 * 
+	 */
+	public DetalleCompra() {
+		super();
+	}
+
+	/**
+	 * @param cantidad
+	 * @param total
+	 * @param producto
+	 */
+	public DetalleCompra(Integer cantidad, BigDecimal total, Producto producto) {
+		super();
+		this.cantidad = cantidad;
+		this.total = total;
+		this.producto = producto;
+	}
+
 	public Integer getId() {
 		return id;
 	}

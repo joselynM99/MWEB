@@ -76,7 +76,7 @@ public class VentasController {
 
 	@GetMapping("/ventas")
 	public String obtenerMenuVentas(Model model) {
-		
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -84,7 +84,7 @@ public class VentasController {
 		} else {
 			return "pages/login";
 		}
-		
+
 		model.addAttribute("nombreUser", userDetails.getUsername());
 		return "pages/ventas";
 	}
@@ -98,7 +98,7 @@ public class VentasController {
 
 	@PostMapping("ventas/registarAdicional")
 	public String registrarAdicional(Model model, @ModelAttribute Adicional adicional) {
-	
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -171,10 +171,7 @@ public class VentasController {
 		ingresos = ingresos.add(totalVentas).add(cierre.getValorApertura());
 		saldoFinal = ingresos.subtract(gastos);
 
-		System.out.print(totalVentas);
-		System.out.print(ingresos);
-		System.out.print(gastos);
-
+		
 		model.addAttribute("cierre", cierre);
 		model.addAttribute("saldoFinal", saldoFinal);
 		model.addAttribute("gastos", gastos);
@@ -220,18 +217,6 @@ public class VentasController {
 			BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 			model.addAttribute("total", total);
 			model.addAttribute("producto", producto);
-
-			List<Producto> listaProductos = this.productoService.buscarTodosProductos();
-
-			List<SubProducto> spl = this.subProductoService.buscarTodosSubProducto();
-
-			for (SubProducto i : spl) {
-				listaProductos.add(new Producto(i.getId(), i.getCodigoBarras(), i.getNombre(), i.getDescripcion(),
-						i.getCostoPromedio(), i.getPrecioVenta(), i.getStockActual(), i.getProveedor(), i.getImpuesto(),
-						i.getSeccion(), i.getMarca()));
-
-			}
-			model.addAttribute("listaProductos", listaProductos);
 
 			return "pages/ventaNueva";
 		} else {
@@ -448,7 +433,7 @@ public class VentasController {
 		if (carrito == null || carrito.size() <= 0) {
 			return "pages/ventaNueva";
 		}
-		
+
 		System.out.println(descuento.getTipoDesceunto());
 		System.out.println(descuento.getValorDesceunto());
 

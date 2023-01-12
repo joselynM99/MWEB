@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.repository.IProductoRepo;
 
 @Service
@@ -52,6 +53,11 @@ public class ProductoServiceImpl implements IProductoService{
 	@Override
 	public List<Producto> buscarProductoPorCategoria(String categoria) {
 		return this.productoRepo.buscarProductoPorCategoria(categoria);
+	}
+
+	@Override
+	public List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor) {
+		return this.productoRepo.buscarProductoPorNombreProv("%"+nombre+"%", proveedor);
 	}
 	
 	

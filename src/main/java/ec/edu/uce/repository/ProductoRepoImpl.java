@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 
 @Repository
 @Transactional
@@ -69,6 +70,23 @@ public class ProductoRepoImpl implements IProductoRepo {
 				.createQuery("SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre)", Producto.class);
 
 		myQuery.setParameter("nombre", nombre);
+		try {
+
+			return myQuery.getResultList();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Producto> buscarProductoPorNombreProv(String nombre,  Proveedor proveedor) {
+		TypedQuery<Producto> myQuery = this.entityManager
+				.createQuery("SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre) AND p.proveedor=:proveedor", Producto.class);
+
+		myQuery.setParameter("nombre", nombre);
+		
+		myQuery.setParameter("proveedor", proveedor);
 		try {
 
 			return myQuery.getResultList();
