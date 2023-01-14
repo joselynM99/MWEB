@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="../css/encabezado.css">
 	<link rel="stylesheet" href="../css/imagenes.css">
 	<link rel="stylesheet" href="../css/colores_pag.css">
-	
+
 
 </head>
 
@@ -72,9 +72,10 @@
 					</th>
 
 					<th>
-						<button type="button" class="btn btn-outline-warning"><img class="iconos"
-								src="../images/ic_compra.png" alt="Compras"><label
-								class="txt_ic">Compras</label></button>
+						<a href="#" th:href="@{/compras}">
+								<button type="button" class="btn btn-outline-warning"><img class="iconos"
+										src="../images/ic_compra.png" alt="Compras"><label
+										class="txt_ic">Compras</label></button></a>
 					</th>
 					<th>
 						<a href="#" th:href="@{/inventario/menu}"><button type="button"
@@ -85,12 +86,13 @@
 				<tr>
 					<th>
 						<a href="#" th:href="@{/clientes/menu}">
-						<button type="button" class="btn btn-outline-warning"><img class="iconos"
-								src="../images/ic_usuarios.png" alt="Administrar Usuarios"><label class="txt_ic">Gestión
-								Clientes</label></button></a>
+							<button type="button" class="btn btn-outline-warning"><img class="iconos"
+									src="../images/ic_usuarios.png" alt="Administrar Usuarios"><label
+									class="txt_ic">Gestión
+									Clientes</label></button></a>
 					</th>
 					<th>
-					
+
 						<button type="button" class="btn btn-outline-warning"><img class="iconos"
 								src="../images/ic_reportes.png" alt="Reportes"><label
 								class="txt_ic">Reportes</label></button></a>

@@ -25,10 +25,10 @@ public class Marca {
 	@Column(name = "marc_nombre", unique = true)
 	private String nombre;
 	
-	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "marca", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Producto> productos;
 	
-	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "marca", cascade ={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<SubProducto> subproductos;
 
 	public Integer getId() {

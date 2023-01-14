@@ -46,13 +46,13 @@ public class Proveedor {
 	@Column(name = "prov_direccion")
 	private String direccion;
 
-	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "proveedor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Producto> productos;
 
-	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "proveedor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<SubProducto> subproductos;
 
-	@OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "proveedor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Compra> compras;
 
 	public Integer getId() {

@@ -31,10 +31,10 @@ public class Seccion {
 	@Column(name = "secc_descripcion")
 	private String descripcion;
 	
-	@OneToMany(mappedBy = "seccion", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "seccion", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Producto> productos;
 	
-	@OneToMany(mappedBy = "seccion", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "seccion", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<SubProducto> subproductos;
 
 	public Integer getId() {

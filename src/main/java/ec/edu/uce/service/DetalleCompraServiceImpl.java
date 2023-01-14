@@ -17,6 +17,8 @@ public class DetalleCompraServiceImpl implements IDetalleCompraService {
 
 	@Override
 	public void insertarDetalleCompra(DetalleCompra detalleCompra) {
+		System.out.println("-----insertando");
+
 		this.detalleCompraRepo.insertarDetalleCompra(detalleCompra);
 	}
 

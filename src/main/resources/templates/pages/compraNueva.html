@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=>, initial-scale=1.0">
-	<title>Facturación</title>
+	<title>Pedidos a proveedor</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -26,6 +26,12 @@
 
 	<script src="jquery-3.6.0.min.js"></script>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+
 </head>
 
 <body id="ventasPag">
@@ -34,6 +40,7 @@
 	<div id="contenedor">
 
 		<div id="cont1" class=container my-5>
+
 
 			<div id="busqueda">
 				<label>Buscar por: </label>
@@ -45,9 +52,21 @@
 					th:text="${mensaje1}" id="mensaje1">
 				</div>
 			</div>
-			<form id="buscarNombre" style="display:none;" th:action="@{/ventas/buscarProducto}" th:object="${producto}"
+			<form id="buscarNombre" style="display:none;" th:action="@{/compras/buscarProducto}" th:object="${producto}"
 				th:method="get">
-				<div class="input-group mb-3">
+				<div>
+
+					<label>Seleccione Proveedor </label>
+
+					<select th:field="*{proveedor.id}" data-live-search="true" data-live-search-style="startsWith"
+						class="selectpicker">
+
+						<option th:each=" prov : ${listaProveedores}" th:value="${prov.id}"
+							th:text="${prov.nombreComercial}"></option>
+
+					</select>
+				</div>
+				<div>
 					<input autofocus autocomplete="off" th:field="*{nombre}" id="barraBusc"
 						placeholder="Escribe el nombre del producto" type="text" class="form-control">
 
@@ -55,9 +74,25 @@
 				</div>
 			</form>
 
-			<form id="buscarCodigo" th:object="${producto}" th:action="@{/ventas/agregar}" method="post">
-				<input autofocus autocomplete="off" th:field="*{codigoBarras}" id="buscadorC"
-					placeholder="Escanea el código" type="text" class="form-control">
+			<form id="buscarCodigo" th:object="${producto}" th:action="@{/compras/agregar}" method="post">
+
+				<div>
+
+					<label>Seleccione Proveedor </label>
+
+					<select th:field="*{proveedor.id}" data-live-search="true" data-live-search-style="startsWith"
+						class="selectpicker">
+
+						<option th:each=" prov : ${listaProveedores}" th:value="${prov.id}"
+							th:text="${prov.nombreComercial}"></option>
+
+					</select>
+				</div>
+				<div>
+					<input autofocus autocomplete="off" th:field="*{codigoBarras}" id="buscadorC"
+						placeholder="Escanea el código" type="text" class="form-control">
+					<div class="input-group-append"><input type="submit" class="btn btn-dark" value="Buscar"></div>
+				</div>
 
 			</form>
 
@@ -69,7 +104,8 @@
 							<th class="th-sm" scope="col">Nombre</th>
 							<th class="th-sm" scope="col">Codigo de barras</th>
 							<th class="th-sm" scope="col">Descripción</th>
-							<th class="th-sm" scope="col">Precio</th>
+							<th class="th-sm" scope="col">Costo</th>
+							<th class="th-sm" scope="col">Stock Actual</th>
 							<th class="th-sm" scope="col">Agregar</th>
 						</tr>
 					</thead>
@@ -77,15 +113,16 @@
 					<!----cuerpo de la tabla---->
 					<tbody>
 						<tr th:each=" prod : ${listaProductos}">
-							<form
-								th:action="@{/ventas/agregar2/{codigoBarras}(codigoBarras=${prod.codigoBarras})}"
+							<form th:action="@{/compras/agregar2/{codigoBarras}(codigoBarras=${prod.codigoBarras})}"
 								th:object=${prod} th:method="post">
 
 								<td th:text="${prod.nombre}"></td>
 								<td th:text="${prod.codigoBarras}"></td>
-								<td><input type="text" th:name="cantidad" value="1"></td>
-								<td th:text="${prod.precioVenta}"></td>
-								 <td>
+								<td th:text="${prod.descripcion}"></td>
+								<td th:text="${prod.stockActual}"></td>
+								<td th:text="${prod.costoPromedio}"></td>
+
+								<td>
 									<input type="submit" class="btn btn-dark" id="bot4" value="Agregar">
 								</td>
 							</form>
@@ -106,7 +143,7 @@
 							<th class="th-sm" scope="col">Cantidad</th>
 							<th class="th-sm" scope="col">Nombre</th>
 							<th class="th-sm" scope="col">Código</th>
-							<th class="th-sm" scope="col">Precio</th>
+							<th class="th-sm" scope="col">Costo</th>
 							<th class="th-sm" scope="col">Total</th>
 							<th class="th-sm" scope="col">Quitar de lista</th>
 						</tr>
@@ -116,11 +153,11 @@
 							<td th:text="${det.cantidad}"></td>
 							<td th:text="${det.producto.nombre}"></td>
 							<td th:text="${det.producto.codigoBarras}"></td>
-							<td th:text="${det.producto.precioVenta}"></td>
+							<td th:text="${det.producto.costoPromedio}"></td>
 
 							<td th:text="${det.total}"></td>
 							<td>
-								<form th:action="@{/ventas/borrar/} + ${iterador.index}" th:method="delete" ,
+								<form th:action="@{/compras/borrar/} + ${iterador.index}" th:method="delete" ,
 									th:object=${producto}>
 									<input type="submit" class="btn btn-dark" value="Eliminar" , id=bot1>
 									</button>
@@ -131,56 +168,41 @@
 				</table>
 			</div>
 			<div id="venta">
+
 				<table>
 					<thead>
 						<tr>
 							<h2 th:text="${'Total: ' + total}" id=total></h2>
 						</tr>
 						<tr>
-							<th><label class="tit-btn">Cobrar</label></th>
+							<th><label class="tit-btn">Registrar Compra</label></th>
 							<th><label class="tit-btn">Limpiar</label></th>
-							<th><label class="tit-btn">Cerrar Caja</label></th>
-							<th><label class="tit-btn">Adicionales</label></th>
+							<th><label class="tit-btn">Volver</label></th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
+
 							<td>
-								<form th:action="@{/ventas/cobrar}" th:method="get">
+								<form th:action="@{/compras/realizarCompraPedido}" th:method="post">
 									<input id="ic" type='image' class="btn btn-danger" src="../images/ic_cobrar.png">
 								</form>
 							</td>
 							<td>
-								<form th:action="@{/ventas/limpiar}" th:method="get">
+								<form th:action="@{/compras/limpiar}" th:method="get">
 									<input id="ic" type="image" class="btn btn-success" src="../images/ic_limpiar.png">
 								</form>
 							</td>
+
+
 							<td>
-								<form th:action="@{/ventas/cierreCaja}" th:method="get">
-									<input id="ic" type="image" class="btn btn-info" src="../images/ic_cerrar_caja.png">
-								</form>
-							</td>
-							<td>
-								<form th:action="@{/ventas/adicionales}" th:method="get">
-									<input id="ic" type="image" class="btn btn-info" src="../images/ic_adicionales.png">
-								</form>
-							</td>
-							<td>
-								<form th:action="@{/ventas}" th:method="get">
+								<form th:action="@{/compras}" th:method="get">
 									<input id="ic" type="image" class="btn btn-info" src="../images/ic_volver.png">
 								</form>
 							</td>
 						</tr>
-						<!--<tr>
-							<form th:action="@{/ventas/descuento}" th:object="${descuento}" th:method="get">
-								<label>Descuento</label>
-								<input type="radio" name="estado" th:value="true" th:fiel="*{tipoDesceunto}">Porcentaje
-								<input type="radio" name="estado" th:value="false" th:fiel="*{tipoDesceunto}">Valor
 
-								<input type="text" class="form-control" th:fiel="*{valorDesceunto}">
-								<input type="submit" class="btn btn-dark" value="Aplicar">
-							</form>
-						</tr>-->
 
 					</tbody>
 				</table>

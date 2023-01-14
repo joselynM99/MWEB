@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.repository.ISubProductoRepo;
 
@@ -53,6 +54,12 @@ public class SubProductoServiceImpl implements ISubProductoService {
 	@Override
 	public List<SubProducto> buscarSubProductoPorCategoria(String categoria) {
 		return this.subProductoRepo.buscarSubProductoPorCategoria(categoria);
+	}
+
+	@Override
+	public List<SubProducto> buscarSubProductoPorNombreProv(String nombre, Proveedor proveedor) {
+		
+		return this.subProductoRepo.buscarSubProductoPorNombreProv("%"+nombre+"%", proveedor);
 	}
 
 }

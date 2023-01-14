@@ -173,10 +173,7 @@ public class VentasController {
 		ingresos = ingresos.add(totalVentas).add(cierre.getValorApertura());
 		saldoFinal = ingresos.subtract(gastos);
 
-		System.out.print(totalVentas);
-		System.out.print(ingresos);
-		System.out.print(gastos);
-
+		
 		model.addAttribute("cierre", cierre);
 		model.addAttribute("saldoFinal", saldoFinal);
 		model.addAttribute("gastos", gastos);
@@ -228,6 +225,7 @@ public class VentasController {
 			List<SubProducto> spl = this.subProductoService.buscarTodosSubProducto();
 
 			model.addAttribute("listaProductos", listaProductos);
+
 
 			return "pages/ventaNueva";
 		} else {
@@ -447,8 +445,6 @@ public class VentasController {
 			return "pages/ventaNueva";
 		}
 
-		System.out.println(descuento.getTipoDesceunto());
-		System.out.println(descuento.getValorDesceunto());
 
 		this.ventaService.realizarVenta(carrito, descuento);
 		this.limpiarCarrito(request);

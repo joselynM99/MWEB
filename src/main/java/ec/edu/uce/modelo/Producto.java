@@ -44,29 +44,29 @@ public class Producto {
 	@Column(name = "prod_stock_actual")
 	private Integer stockActual;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prov_id")
 	private Proveedor proveedor;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "impu_id")
 	private Impuesto impuesto;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "secc_id")
 	private Seccion seccion;
 
-	@ManyToOne
-	@JoinColumn(name = "marc_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn( name = "marc_id")
 	private Marca marca;
 
-	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "producto", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<DetalleVenta> ventas;
 
-	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "producto", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<DetalleCompra> compras;
 
-	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "producto", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<SubProducto> subproductos;
 	
 	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 
 @Repository
 @Transactional
@@ -32,7 +33,9 @@ public class ProductoRepoImpl implements IProductoRepo {
 
 	@Override
 	public void actualizarProducto(Producto producto) {
+		System.out.println("-----actualizando repo");
 		this.entityManager.merge(producto);
+		System.out.println("-----actualizando repo fin");
 	}
 
 	@Override
@@ -62,6 +65,22 @@ public class ProductoRepoImpl implements IProductoRepo {
 			return null;
 		}
 	}
+	
+	@Override
+	public Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		TypedQuery<Producto> myQuery = this.entityManager
+				.createQuery("SELECT p FROM Producto p WHERE p.codigoBarras=:codigoBarras AND p.proveedor=:prov", Producto.class);
+
+		myQuery.setParameter("prov", prov);
+		myQuery.setParameter("codigoBarras", codigoBarras);
+		try {
+
+			return myQuery.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public List<Producto> buscarProductoPorNombre(String nombre) {
@@ -69,6 +88,23 @@ public class ProductoRepoImpl implements IProductoRepo {
 				.createQuery("SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre)", Producto.class);
 
 		myQuery.setParameter("nombre", nombre);
+		try {
+
+			return myQuery.getResultList();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Producto> buscarProductoPorNombreProv(String nombre,  Proveedor proveedor) {
+		TypedQuery<Producto> myQuery = this.entityManager
+				.createQuery("SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre) AND p.proveedor=:proveedor", Producto.class);
+
+		myQuery.setParameter("nombre", nombre);
+		
+		myQuery.setParameter("proveedor", proveedor);
 		try {
 
 			return myQuery.getResultList();

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,30 +46,28 @@ public class SubProducto {
 	@Column(name = "supr_stock_actual")
 	private Integer stockActual;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "impu_id")
 	private Impuesto impuesto;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prod_id")
 	private Producto producto;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prov_id")
 	private Proveedor proveedor;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "marc_id")
 	private Marca marca;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "secc_id")
 	private Seccion seccion;
-	
-	@OneToMany(mappedBy = "subProducto", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "subProducto", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	private List<DetalleVenta> ventas;
-	
-	
 
 	/**
 	 * 
@@ -144,7 +143,7 @@ public class SubProducto {
 	}
 
 	public Seccion getSeccion() {
-		
+
 		return seccion;
 	}
 
@@ -223,7 +222,5 @@ public class SubProducto {
 	public void setVentas(List<DetalleVenta> ventas) {
 		this.ventas = ventas;
 	}
-	
-	
 
 }

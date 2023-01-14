@@ -4,6 +4,7 @@ import java.util.List;
 
 import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 
 public interface IProductoService {
 
@@ -22,7 +23,10 @@ public interface IProductoService {
 	Producto buscarProductoPorCodigoBarras(String codigoBarras);
 
 	List<Producto> buscarProductoPorNombre(String nombre);
+	
+	List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor);
 
 	List<Producto> buscarProductoPorCategoria(String categoria);
+	Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov);
 
 }

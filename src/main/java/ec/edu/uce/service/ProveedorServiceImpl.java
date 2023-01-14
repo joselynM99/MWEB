@@ -26,6 +26,8 @@ public class ProveedorServiceImpl implements IProveedorService {
 
 	@Override
 	public List<Proveedor> buscarTodosProveedor() {
+		System.out.println("-----buscar proveedor");
+
 		return this.proveedorRepo.buscarTodosProveedor();
 	}
 

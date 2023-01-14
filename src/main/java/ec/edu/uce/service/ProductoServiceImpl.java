@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.repository.IProductoRepo;
 
 @Service
@@ -22,16 +23,20 @@ public class ProductoServiceImpl implements IProductoService {
 
 	@Override
 	public Producto buscarProducto(Integer id) {
+		
 		return this.productoRepo.buscarProducto(id);
 	}
 
 	@Override
 	public List<Producto> buscarTodosProductos() {
+		System.out.println("-----buscar productos");
 		return this.productoRepo.buscarTodosProductos();
 	}
 
 	@Override
 	public void actualizarProducto(Producto producto) {
+		System.out.println("-----actualizando service");
+
 		this.productoRepo.actualizarProducto(producto);
 	}
 
@@ -42,16 +47,19 @@ public class ProductoServiceImpl implements IProductoService {
 
 	@Override
 	public Producto buscarProductoPorCodigoBarras(String codigoBarras) {
+		System.out.println("-----buscar productos");
 		return this.productoRepo.buscarProductoPorCodigoBarras(codigoBarras);
 	}
 
 	@Override
 	public List<Producto> buscarProductoPorNombre(String nombre) {
+		System.out.println("-----buscar productos");
 		return this.productoRepo.buscarProductoPorNombre("%" + nombre + "%");
 	}
 
 	@Override
 	public List<Producto> buscarProductoPorCategoria(String categoria) {
+		System.out.println("-----buscar productos");
 		return this.productoRepo.buscarProductoPorCategoria(categoria);
 	}
 
@@ -60,5 +68,16 @@ public class ProductoServiceImpl implements IProductoService {
 		
 		return this.productoRepo.buscarTodosProductosDTO();
 	}
+	public List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor) {
+		System.out.println("-----buscar productos");
+		return this.productoRepo.buscarProductoPorNombreProv("%"+nombre+"%", proveedor);
+	}
+
+	@Override
+	public Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		System.out.println("-----buscar productos");
+		return this.productoRepo.buscarProductoPorCodigoBarrasProv(codigoBarras, prov);
+	}
+
 
 }
