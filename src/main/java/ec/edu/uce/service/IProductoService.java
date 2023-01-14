@@ -2,6 +2,7 @@ package ec.edu.uce.service;
 
 import java.util.List;
 
+import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
 
 public interface IProductoService {
@@ -11,6 +12,8 @@ public interface IProductoService {
 	Producto buscarProducto(Integer id);
 
 	List<Producto> buscarTodosProductos();
+
+	List<ProductoDTO> buscarTodosProductosDTO();
 
 	void actualizarProducto(Producto producto);
 

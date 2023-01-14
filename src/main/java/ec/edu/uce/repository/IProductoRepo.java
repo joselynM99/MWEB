@@ -2,6 +2,7 @@ package ec.edu.uce.repository;
 
 import java.util.List;
 
+import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
 
 public interface IProductoRepo {
@@ -12,8 +13,10 @@ public interface IProductoRepo {
 
 	List<Producto> buscarTodosProductos();
 
+	List<ProductoDTO> buscarTodosProductosDTO();
+
 	void actualizarProducto(Producto producto);
-	
+
 	void eliminarProducto(Integer id);
 
 	Producto buscarProductoPorCodigoBarras(String codigoBarras);

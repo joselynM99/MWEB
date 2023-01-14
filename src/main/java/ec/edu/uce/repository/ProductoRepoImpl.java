@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
 
 @Repository
@@ -28,7 +29,7 @@ public class ProductoRepoImpl implements IProductoRepo {
 	public Producto buscarProducto(Integer id) {
 		return this.entityManager.find(Producto.class, id);
 	}
-	
+
 	@Override
 	public void actualizarProducto(Producto producto) {
 		this.entityManager.merge(producto);
@@ -39,7 +40,6 @@ public class ProductoRepoImpl implements IProductoRepo {
 		Producto prodAEliminar = this.buscarProducto(id);
 		this.entityManager.remove(prodAEliminar);
 	}
-
 
 	@Override
 	public List<Producto> buscarTodosProductos() {
@@ -93,5 +93,13 @@ public class ProductoRepoImpl implements IProductoRepo {
 		}
 	}
 
-	
+	@Override
+	public List<ProductoDTO> buscarTodosProductosDTO() {
+		TypedQuery<ProductoDTO> myQuery = this.entityManager.createQuery(
+				"SELECT new  ec.edu.uce.controller.dto.ProductoDTO(p.id, p.codigoBarras, p.nombre, p.descripcion, p.costoPromedio, p.precioVenta, p.stockActual) from Producto p",
+				ProductoDTO.class);
+
+		return myQuery.getResultList();
+	}
+
 }

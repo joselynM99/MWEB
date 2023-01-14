@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.repository.IProductoRepo;
 
 @Service
-public class ProductoServiceImpl implements IProductoService{
-	
+public class ProductoServiceImpl implements IProductoService {
+
 	@Autowired
 	private IProductoRepo productoRepo;
 
@@ -46,14 +47,18 @@ public class ProductoServiceImpl implements IProductoService{
 
 	@Override
 	public List<Producto> buscarProductoPorNombre(String nombre) {
-		return this.productoRepo.buscarProductoPorNombre("%"+nombre+"%");
+		return this.productoRepo.buscarProductoPorNombre("%" + nombre + "%");
 	}
 
 	@Override
 	public List<Producto> buscarProductoPorCategoria(String categoria) {
 		return this.productoRepo.buscarProductoPorCategoria(categoria);
 	}
-	
-	
+
+	@Override
+	public List<ProductoDTO> buscarTodosProductosDTO() {
+		
+		return this.productoRepo.buscarTodosProductosDTO();
+	}
 
 }

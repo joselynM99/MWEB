@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.controller.dto.Adicional;
 import ec.edu.uce.controller.dto.DescuentoTO;
+import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
@@ -76,7 +78,7 @@ public class VentasController {
 
 	@GetMapping("/ventas")
 	public String obtenerMenuVentas(Model model) {
-		
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -84,7 +86,7 @@ public class VentasController {
 		} else {
 			return "pages/login";
 		}
-		
+
 		model.addAttribute("nombreUser", userDetails.getUsername());
 		return "pages/ventas";
 	}
@@ -98,7 +100,7 @@ public class VentasController {
 
 	@PostMapping("ventas/registarAdicional")
 	public String registrarAdicional(Model model, @ModelAttribute Adicional adicional) {
-	
+
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -202,7 +204,7 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/ventaNueva")
-	public String obtenerPaginaVentas(Producto producto, CierreCaja cierre, Model model, HttpServletRequest request,
+	public String obtenerPaginaVentas(ProductoDTO producto, CierreCaja cierre, Model model, HttpServletRequest request,
 			RedirectAttributes redirectAttributes) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -221,16 +223,10 @@ public class VentasController {
 			model.addAttribute("total", total);
 			model.addAttribute("producto", producto);
 
-			List<Producto> listaProductos = this.productoService.buscarTodosProductos();
+			List<ProductoDTO> listaProductos = this.productoService.buscarTodosProductosDTO();
 
 			List<SubProducto> spl = this.subProductoService.buscarTodosSubProducto();
 
-			for (SubProducto i : spl) {
-				listaProductos.add(new Producto(i.getId(), i.getCodigoBarras(), i.getNombre(), i.getDescripcion(),
-						i.getCostoPromedio(), i.getPrecioVenta(), i.getStockActual(), i.getProveedor(), i.getImpuesto(),
-						i.getSeccion(), i.getMarca()));
-
-			}
 			model.addAttribute("listaProductos", listaProductos);
 
 			return "pages/ventaNueva";
@@ -242,7 +238,7 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/abrirCaja")
-	public String abrirCaja(@ModelAttribute CierreCaja cierre, Producto producto, Model model) {
+	public String abrirCaja(@ModelAttribute CierreCaja cierre, ProductoDTO producto, Model model) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -259,7 +255,7 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/buscarProducto")
-	public String buscarProducto(@ModelAttribute Producto producto, Model model) {
+	public String buscarProducto(@ModelAttribute ProductoDTO producto, Model model) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -292,7 +288,7 @@ public class VentasController {
 	}
 
 	@PostMapping("/ventas/agregar")
-	public String agregarAlCarrito(Producto producto, HttpServletRequest request, RedirectAttributes redirectAttrs) {
+	public String agregarAlCarrito(ProductoDTO producto, HttpServletRequest request, RedirectAttributes redirectAttrs) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -344,9 +340,11 @@ public class VentasController {
 	}
 
 	@PostMapping("/ventas/agregar2/{codBarras}")
-	public String agregarAlCarrito2(@PathVariable("codBarras") String codBarras, Producto producto,
+	public String agregarAlCarrito2(@PathVariable("codBarras") String codBarras,
+	@RequestParam(name = "cantidad") String cantidad, ProductoDTO producto,
 			HttpServletRequest request, RedirectAttributes redirectAttrs, Model model) {
 
+				System.out.println("------------------------"+cantidad);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -388,8 +386,8 @@ public class VentasController {
 		}
 
 		if (!encontrado) {
-			carrito.add(new DetalleVenta(1,
-					this.detalleVentaService.calcularValor(1, productoBuscadoPorCodigo.getPrecioVenta()),
+			carrito.add(new DetalleVenta(Integer.parseInt(cantidad),
+					this.detalleVentaService.calcularValor(Integer.parseInt(cantidad), productoBuscadoPorCodigo.getPrecioVenta()),
 					productoBuscadoPorCodigo));
 		}
 
@@ -401,7 +399,7 @@ public class VentasController {
 
 	@PutMapping("ventas/cantidad")
 	public String establecerCantidad(HttpServletRequest request, RedirectAttributes redirectAttrs,
-			@ModelAttribute Producto producto, Model model) {
+			@ModelAttribute ProductoDTO producto, Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 
 		System.out.println("p" + producto.getCodigoBarras());
@@ -420,7 +418,7 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/cobrar")
-	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
+	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, ProductoDTO producto,
 			DescuentoTO descuento, Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 
@@ -433,7 +431,7 @@ public class VentasController {
 	}
 
 	@PostMapping("/ventas/realizarVenta")
-	public String terminarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
+	public String terminarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, ProductoDTO producto,
 			DescuentoTO descuento) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -448,7 +446,7 @@ public class VentasController {
 		if (carrito == null || carrito.size() <= 0) {
 			return "pages/ventaNueva";
 		}
-		
+
 		System.out.println(descuento.getTipoDesceunto());
 		System.out.println(descuento.getValorDesceunto());
 
@@ -461,7 +459,8 @@ public class VentasController {
 	}
 
 	@DeleteMapping("/ventas/borrar/{indice}")
-	public String quitarDelCarrito(@PathVariable int indice, Producto producto, HttpServletRequest request, Model model,
+	public String quitarDelCarrito(@PathVariable int indice, ProductoDTO producto, HttpServletRequest request,
+			Model model,
 			RedirectAttributes redirectAttrs) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -482,7 +481,7 @@ public class VentasController {
 	}
 
 	@GetMapping("/ventas/limpiar")
-	public String cancelarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto) {
+	public String cancelarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, ProductoDTO producto) {
 		this.limpiarCarrito(request);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -495,7 +494,7 @@ public class VentasController {
 		return "redirect:/ventas/ventaNueva";
 	}
 
-//Metodos de apoyo
+	// Metodos de apoyo
 	private List<DetalleVenta> obtenerCarrito(HttpServletRequest request) {
 		List<DetalleVenta> carrito = (List<DetalleVenta>) request.getSession().getAttribute("carrito");
 		if (carrito == null) {
@@ -517,4 +516,56 @@ public class VentasController {
 		this.guardarCarrito(new ArrayList<>(), request);
 	}
 
+	@PostMapping("/ventas/agregarv2/{codBarras}")
+	public String agregarAlCarritov2(@PathVariable("codBarras") String codBarras, Producto producto,
+			HttpServletRequest request, RedirectAttributes redirectAttrs, Model model) {
+
+		List<DetalleVenta> carrito = this.obtenerCarrito(request);
+
+		Producto productoBuscadoPorCodigo = this.productoService.buscarProductoPorCodigoBarras(codBarras);
+
+		if (productoBuscadoPorCodigo == null) {
+			SubProducto i = this.subProductoService.buscarProductoPorCodigoBarras(codBarras);
+
+			if (i != null) {
+				productoBuscadoPorCodigo = new Producto(i.getId(), i.getCodigoBarras(), i.getNombre(),
+						i.getDescripcion(), i.getCostoPromedio(), i.getPrecioVenta(), i.getStockActual(),
+						i.getProveedor(), i.getImpuesto(), i.getSeccion(), i.getMarca());
+
+				if (productoBuscadoPorCodigo.getStockActual() <= 0) {
+					redirectAttrs.addFlashAttribute("mensaje1", "El producto está agotado");
+				}
+			} else {
+				redirectAttrs.addFlashAttribute("mensaje1",
+						"El producto con el código " + producto.getCodigoBarras() + " no existe");
+			}
+
+		}
+
+		boolean encontrado = false;
+		for (DetalleVenta det : carrito) {
+			if (det.getProducto().getCodigoBarras().equals(productoBuscadoPorCodigo.getCodigoBarras())) {
+				det.setCantidad(det.getCantidad() + 1);
+				det.setTotal(det.getProducto().getPrecioVenta().multiply(new BigDecimal(det.getCantidad())));
+				encontrado = true;
+				break;
+			}
+		}
+
+		if (!encontrado) {
+			carrito.add(new DetalleVenta(1,
+					this.detalleVentaService.calcularValor(1, productoBuscadoPorCodigo.getPrecioVenta()),
+					productoBuscadoPorCodigo));
+		}
+
+		this.guardarCarrito(carrito, request);
+		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
+		redirectAttrs.addFlashAttribute("total", total);
+		return "redirect:/ventas/ventaNueva";
+	}
+
+	private ProductoDTO productoToProductoDTO(Producto i) {
+		return new ProductoDTO(i.getId(), i.getCodigoBarras(), i.getNombre(), i.getDescripcion(),
+				i.getCostoPromedio(), i.getPrecioVenta(), i.getStockActual());
+	}
 }

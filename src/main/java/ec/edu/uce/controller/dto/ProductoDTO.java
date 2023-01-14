@@ -2,6 +2,7 @@ package ec.edu.uce.controller.dto;
 
 import java.math.BigDecimal;
 
+import ec.edu.uce.modelo.Impuesto;
 
 public class ProductoDTO {
 
@@ -20,17 +21,17 @@ public class ProductoDTO {
 	private Integer stockActual;
 
 	private String proveedor;
-	
+
 	private String impuesto;
 
 	private String seccion;
 
 	private String marca;
 
-	
+	private Integer cantidad;
+
 	public ProductoDTO(Integer id, String codigoBarras, String nombre, String descripcion, BigDecimal costoPromedio,
-			BigDecimal precioVenta, Integer stockActual, String proveedor, String impuesto, String seccion,
-			String marca) {
+			BigDecimal precioVenta, Integer stockActual) {
 		this.id = id;
 		this.codigoBarras = codigoBarras;
 		this.nombre = nombre;
@@ -38,11 +39,7 @@ public class ProductoDTO {
 		this.costoPromedio = costoPromedio;
 		this.precioVenta = precioVenta;
 		this.stockActual = stockActual;
-		this.proveedor = proveedor;
-		this.impuesto = impuesto;
-		this.seccion = seccion;
-		this.marca = marca;
-	}
+			}
 
 	public Integer getId() {
 		return id;
@@ -131,6 +128,13 @@ public class ProductoDTO {
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
-	 
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
 
 }
