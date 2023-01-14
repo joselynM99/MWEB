@@ -24,4 +24,6 @@ public interface IProductoRepo {
 	List<Producto> buscarProductoPorCategoria(String categoria);
 
 	List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor);
+
+	Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov);
 }

@@ -26,6 +26,12 @@
 
 	<script src="jquery-3.6.0.min.js"></script>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+
 </head>
 
 <body id="ventasPag">
@@ -34,16 +40,7 @@
 	<div id="contenedor">
 
 		<div id="cont1" class=container my-5>
-			<div>
-				<label>Seleccione Proveedor </label>
 
-				<select class="selectpicker" data-show-subtext="true" data-live-search="true">
-					<form>
-					<option th:each=" prov : ${listaProveedores}" th:value="${prov.id}"
-						th:text="${prov.nombreComercial}"></option>
-					</form>
-				</select>
-			</div>
 
 			<div id="busqueda">
 				<label>Buscar por: </label>
@@ -57,7 +54,19 @@
 			</div>
 			<form id="buscarNombre" style="display:none;" th:action="@{/compras/buscarProducto}" th:object="${producto}"
 				th:method="get">
-				<div class="input-group mb-3">
+				<div>
+
+					<label>Seleccione Proveedor </label>
+
+					<select th:field="*{proveedor.id}" data-live-search="true" data-live-search-style="startsWith"
+						class="selectpicker">
+
+						<option th:each=" prov : ${listaProveedores}" th:value="${prov.id}"
+							th:text="${prov.nombreComercial}"></option>
+
+					</select>
+				</div>
+				<div>
 					<input autofocus autocomplete="off" th:field="*{nombre}" id="barraBusc"
 						placeholder="Escribe el nombre del producto" type="text" class="form-control">
 
@@ -66,8 +75,24 @@
 			</form>
 
 			<form id="buscarCodigo" th:object="${producto}" th:action="@{/compras/agregar}" method="post">
-				<input autofocus autocomplete="off" th:field="*{codigoBarras}" id="buscadorC"
-					placeholder="Escanea el código" type="text" class="form-control">
+
+				<div>
+
+					<label>Seleccione Proveedor </label>
+
+					<select th:field="*{proveedor.id}" data-live-search="true" data-live-search-style="startsWith"
+						class="selectpicker">
+
+						<option th:each=" prov : ${listaProveedores}" th:value="${prov.id}"
+							th:text="${prov.nombreComercial}"></option>
+
+					</select>
+				</div>
+				<div>
+					<input autofocus autocomplete="off" th:field="*{codigoBarras}" id="buscadorC"
+						placeholder="Escanea el código" type="text" class="form-control">
+					<div class="input-group-append"><input type="submit" class="btn btn-dark" value="Buscar"></div>
+				</div>
 
 			</form>
 
@@ -143,24 +168,24 @@
 				</table>
 			</div>
 			<div id="venta">
-				
+
 				<table>
 					<thead>
 						<tr>
 							<h2 th:text="${'Total: ' + total}" id=total></h2>
 						</tr>
 						<tr>
-							<th><label class="tit-btn">Cobrar</label></th>
+							<th><label class="tit-btn">Registrar Compra</label></th>
 							<th><label class="tit-btn">Limpiar</label></th>
-							<th><label class="tit-btn">Cerrar Caja</label></th>
-							<th><label class="tit-btn">Adicionales</label></th>
+							<th><label class="tit-btn">Volver</label></th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<input>
+
 							<td>
-								<form th:action="@{/compras/realizarCompraPedido}" th:method="get">
+								<form th:action="@{/compras/realizarCompraPedido}" th:method="post">
 									<input id="ic" type='image' class="btn btn-danger" src="../images/ic_cobrar.png">
 								</form>
 							</td>
@@ -177,16 +202,7 @@
 								</form>
 							</td>
 						</tr>
-						<!--<tr>
-							<form th:action="@{/ventas/descuento}" th:object="${descuento}" th:method="get">
-								<label>Descuento</label>
-								<input type="radio" name="estado" th:value="true" th:fiel="*{tipoDesceunto}">Porcentaje
-								<input type="radio" name="estado" th:value="false" th:fiel="*{tipoDesceunto}">Valor
 
-								<input type="text" class="form-control" th:fiel="*{valorDesceunto}">
-								<input type="submit" class="btn btn-dark" value="Aplicar">
-							</form>
-						</tr>-->
 
 					</tbody>
 				</table>

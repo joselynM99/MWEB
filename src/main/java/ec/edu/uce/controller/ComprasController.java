@@ -95,7 +95,7 @@ public class ComprasController {
 		model.addAttribute("producto", producto);
 
 		List<Proveedor> listaProveedores = this.proveedorService.buscarTodosProveedor();
-		
+
 		model.addAttribute("listaProveedores", listaProveedores);
 
 		return "pages/compraNueva";
@@ -112,9 +112,8 @@ public class ComprasController {
 		} else {
 			return "pages/login";
 		}
-		
-		
-		Proveedor p = this.proveedorService.buscarProveedor(compra.getProveedor().getId());
+
+		Proveedor p = this.proveedorService.buscarProveedor(producto.getProveedor().getId());
 
 		List<Producto> listaProductos = this.productoService.buscarProductoPorNombreProv(producto.getNombre(), p);
 
@@ -135,6 +134,10 @@ public class ComprasController {
 				model.addAttribute("listaProductos", listaProductos);
 			}
 		}
+
+		List<Proveedor> listaProveedores = this.proveedorService.buscarTodosProveedor();
+
+		model.addAttribute("listaProveedores", listaProveedores);
 		return "pages/compraNueva";
 	}
 
@@ -149,14 +152,19 @@ public class ComprasController {
 			return "pages/login";
 		}
 
+		List<Proveedor> listaProveedores = this.proveedorService.buscarTodosProveedor();
+
+		redirectAttrs.addFlashAttribute("listaProveedores", listaProveedores);
+		Proveedor p = this.proveedorService.buscarProveedor(producto.getProveedor().getId());
+
 		Producto productoBuscadoPorCodigo = this.productoService
-				.buscarProductoPorCodigoBarras(producto.getCodigoBarras());
+				.buscarProductoPorCodigoBarrasProv(producto.getCodigoBarras(), p);
 
 		SubProducto i = this.subProductoService.buscarProductoPorCodigoBarras(producto.getCodigoBarras());
 
 		if (productoBuscadoPorCodigo == null && i == null) {
 			redirectAttrs.addFlashAttribute("mensaje1",
-					"El producto con el código " + producto.getCodigoBarras() + " no existe");
+					"El producto con el código " + producto.getCodigoBarras() + " no existe o no pertenece al proveedor seleccionado");
 
 		} else {
 			if (i != null) {
@@ -198,6 +206,10 @@ public class ComprasController {
 		} else {
 			return "pages/login";
 		}
+
+		List<Proveedor> listaProveedores = this.proveedorService.buscarTodosProveedor();
+
+		redirectAttrs.addFlashAttribute("listaProveedores", listaProveedores);
 		List<DetalleCompra> carrito = this.obtenerCarrito(request);
 
 		Producto productoBuscadoPorCodigo = this.productoService.buscarProductoPorCodigoBarras(codBarras);
@@ -236,7 +248,7 @@ public class ComprasController {
 		this.guardarCarrito(carrito, request);
 		BigDecimal total = this.compraService.calcularValorAPagar(carrito);
 		redirectAttrs.addFlashAttribute("total", total);
-		return "redirect:/compras/ventaNueva";
+		return "redirect:/compras/compraNueva";
 	}
 
 	@GetMapping("/compras/registrar")
@@ -251,7 +263,6 @@ public class ComprasController {
 		return "pages/cobrar";
 
 	}
-
 
 	@PostMapping("/compras/realizarCompraPedido")
 	public String terminarCompra(HttpServletRequest request, RedirectAttributes redirectAttrs, Producto producto,
@@ -270,7 +281,8 @@ public class ComprasController {
 			return "pages/compraNueva";
 		}
 
-		Proveedor p = this.proveedorService.buscarProveedor(compra.getProveedor().getId());
+		Proveedor p = carrito.get(0).getProducto().getProveedor();
+		System.out.println("compra cobrar antes de realixar");
 		this.compraService.realizarCompra(carrito, p, LocalDateTime.now());
 		this.limpiarCarrito(request);
 

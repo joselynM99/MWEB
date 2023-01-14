@@ -59,7 +59,7 @@ public class SubProductoServiceImpl implements ISubProductoService {
 	@Override
 	public List<SubProducto> buscarSubProductoPorNombreProv(String nombre, Proveedor proveedor) {
 		
-		return this.buscarSubProductoPorNombreProv("%"+nombre+"%", proveedor);
+		return this.subProductoRepo.buscarSubProductoPorNombreProv("%"+nombre+"%", proveedor);
 	}
 
 }

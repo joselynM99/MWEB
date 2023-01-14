@@ -63,6 +63,22 @@ public class ProductoRepoImpl implements IProductoRepo {
 			return null;
 		}
 	}
+	
+	@Override
+	public Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		TypedQuery<Producto> myQuery = this.entityManager
+				.createQuery("SELECT p FROM Producto p WHERE p.codigoBarras=:codigoBarras AND p.proveedor=:prov", Producto.class);
+
+		myQuery.setParameter("prov", prov);
+		myQuery.setParameter("codigoBarras", codigoBarras);
+		try {
+
+			return myQuery.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public List<Producto> buscarProductoPorNombre(String nombre) {

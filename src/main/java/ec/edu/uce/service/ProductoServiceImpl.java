@@ -59,6 +59,12 @@ public class ProductoServiceImpl implements IProductoService{
 	public List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor) {
 		return this.productoRepo.buscarProductoPorNombreProv("%"+nombre+"%", proveedor);
 	}
+
+	@Override
+	public Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		
+		return this.productoRepo.buscarProductoPorCodigoBarrasProv(codigoBarras, prov);
+	}
 	
 	
 

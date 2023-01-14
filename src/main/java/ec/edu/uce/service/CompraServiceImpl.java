@@ -82,20 +82,18 @@ public class CompraServiceImpl implements ICompraService {
 
 		for (DetalleCompra d : detalles) {
 			Producto p = d.getProducto();
-
-//			p.setCantidad(p.getCantidad() + d.getCantidad());
-
+			p.setStockActual(p.getStockActual() + d.getCantidad());
 			p.setId(p.getId());
-
 			this.productoService.actualizarProducto(p);
+		System.out.println("compra");
 
-//			d.setTotal(this.detalleCompraService.calcularValorCompra(d.getCantidad(), p.getCostoBruto()));
+			d.setTotal(this.detalleCompraService.calcularValorCompra(d.getCantidad(), p.getCostoPromedio()));
 			this.detalleCompraService.insertarDetalleCompra(d);
 
 		}
 		Compra compra = new Compra();
 		compra.setDetalles(detalles);
-//		compra.setValorCompra(this.calcularValorAPagar(detalles));
+		compra.setTotal(this.calcularValorAPagar(detalles));
 		compra.setFecha(fecha);
 		compra.setProveedor(proveedor);
 
