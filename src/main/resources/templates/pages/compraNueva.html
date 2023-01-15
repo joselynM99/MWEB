@@ -40,8 +40,6 @@
 	<div id="contenedor">
 
 		<div id="cont1" class=container my-5>
-
-
 			<div id="busqueda">
 				<label>Buscar por: </label>
 				<button id="btncambiarModoBusquedaCodigo" type="menu" class="btn btn-dark"
@@ -52,6 +50,8 @@
 					th:text="${mensaje1}" id="mensaje1">
 				</div>
 			</div>
+
+
 			<form id="buscarNombre" style="display:none;" th:action="@{/compras/buscarProducto}" th:object="${producto}"
 				th:method="get">
 				<div>
@@ -66,6 +66,8 @@
 
 					</select>
 				</div>
+
+
 				<div>
 					<input autofocus autocomplete="off" th:field="*{nombre}" id="barraBusc"
 						placeholder="Escribe el nombre del producto" type="text" class="form-control">

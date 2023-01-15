@@ -39,7 +39,13 @@ public class ClienteRepoImpl implements IClienteRepo {
 	public Cliente buscarClienteIdentificacion(String identificacion) {
 		TypedQuery<Cliente> myQuery = this.entityManager.createQuery("SELECT c FROM Cliente c WHERE c.identificacion=:identificacion", Cliente.class);
 		myQuery.setParameter("identificacion", identificacion);
-		return myQuery.getSingleResult();
+	
+		try {
+			return myQuery.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 

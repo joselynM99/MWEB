@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import ec.edu.uce.controller.dto.DescuentoTO;
+import ec.edu.uce.modelo.Cliente;
 import ec.edu.uce.modelo.Compra;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Venta;
@@ -29,6 +30,8 @@ public interface IVentaService {
 	
 	List<Venta> buscarPorVentasCaja(Integer caja, LocalDateTime fechaCajaAbierta);
 
-	void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento);
+//	void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento);
+
+	void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento, Cliente cliente);
 
 }

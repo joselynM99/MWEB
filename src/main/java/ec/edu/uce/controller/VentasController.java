@@ -25,15 +25,18 @@ import ec.edu.uce.controller.dto.DescuentoTO;
 import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
+import ec.edu.uce.modelo.Cliente;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.GastoAdicional;
 import ec.edu.uce.modelo.IngresoAdicional;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.modelo.Usuario;
 import ec.edu.uce.modelo.Venta;
 import ec.edu.uce.service.ICajaService;
 import ec.edu.uce.service.ICierreCajaService;
+import ec.edu.uce.service.IClienteService;
 import ec.edu.uce.service.IDetalleVentaService;
 import ec.edu.uce.service.IGastoAdicionalService;
 import ec.edu.uce.service.IIngresoAdicionalService;
@@ -76,6 +79,9 @@ public class VentasController {
 	@Autowired
 	private IGastoAdicionalService gastoAdicionalService;
 
+	@Autowired
+	IClienteService clienteService;
+
 	@GetMapping("/ventas")
 	public String obtenerMenuVentas(Model model) {
 
@@ -111,7 +117,6 @@ public class VentasController {
 
 		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
 
-		Caja caja = usuario.getCaja();
 		CierreCaja cierre = this.cierreCajaService.obtenerCierreCajaActivo(usuario);
 
 		if (adicional.getNombre().contains("Ingreso")) {
@@ -173,7 +178,6 @@ public class VentasController {
 		ingresos = ingresos.add(totalVentas).add(cierre.getValorApertura());
 		saldoFinal = ingresos.subtract(gastos);
 
-		
 		model.addAttribute("cierre", cierre);
 		model.addAttribute("saldoFinal", saldoFinal);
 		model.addAttribute("gastos", gastos);
@@ -220,12 +224,8 @@ public class VentasController {
 			model.addAttribute("total", total);
 			model.addAttribute("producto", producto);
 
-			List<ProductoDTO> listaProductos = this.productoService.buscarTodosProductosDTO();
-
-			List<SubProducto> spl = this.subProductoService.buscarTodosSubProducto();
-
-			model.addAttribute("listaProductos", listaProductos);
-
+			List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+			model.addAttribute("listaClientes", listaClientes);
 
 			return "pages/ventaNueva";
 		} else {
@@ -280,13 +280,18 @@ public class VentasController {
 
 				}
 				model.addAttribute("listaProductos", listaProductos);
+
 			}
 		}
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		model.addAttribute("listaClientes", listaClientes);
+		model.addAttribute("producto", producto);
 		return "pages/ventaNueva";
 	}
 
 	@PostMapping("/ventas/agregar")
-	public String agregarAlCarrito(ProductoDTO producto, HttpServletRequest request, RedirectAttributes redirectAttrs) {
+	public String agregarAlCarrito(ProductoDTO producto, HttpServletRequest request, RedirectAttributes redirectAttrs,
+			Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -333,16 +338,19 @@ public class VentasController {
 			}
 		}
 
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		redirectAttrs.addFlashAttribute("listaClientes", listaClientes);
+
 		this.guardarCarrito(carrito, request);
 		return "redirect:/ventas/ventaNueva";
 	}
 
 	@PostMapping("/ventas/agregar2/{codBarras}")
 	public String agregarAlCarrito2(@PathVariable("codBarras") String codBarras,
-	@RequestParam(name = "cantidad") String cantidad, ProductoDTO producto,
-			HttpServletRequest request, RedirectAttributes redirectAttrs, Model model) {
+			@RequestParam(name = "cantidad") String cantidad, ProductoDTO producto, HttpServletRequest request,
+			RedirectAttributes redirectAttrs, Model model) {
 
-				System.out.println("------------------------"+cantidad);
+		System.out.println("------------------------" + cantidad);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -384,14 +392,17 @@ public class VentasController {
 		}
 
 		if (!encontrado) {
-			carrito.add(new DetalleVenta(Integer.parseInt(cantidad),
-					this.detalleVentaService.calcularValor(Integer.parseInt(cantidad), productoBuscadoPorCodigo.getPrecioVenta()),
-					productoBuscadoPorCodigo));
+			carrito.add(new DetalleVenta(Integer.parseInt(cantidad), this.detalleVentaService.calcularValor(
+					Integer.parseInt(cantidad), productoBuscadoPorCodigo.getPrecioVenta()), productoBuscadoPorCodigo));
 		}
 
 		this.guardarCarrito(carrito, request);
 		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 		redirectAttrs.addFlashAttribute("total", total);
+
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		redirectAttrs.addFlashAttribute("listaClientes", listaClientes);
+		redirectAttrs.addFlashAttribute("producto", producto);
 		return "redirect:/ventas/ventaNueva";
 	}
 
@@ -411,7 +422,8 @@ public class VentasController {
 		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 		model.addAttribute("total", total);
 		this.guardarCarrito(carrito, request);
-
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		model.addAttribute("listaClientes", listaClientes);
 		return "pages/ventaNueva";
 	}
 
@@ -424,6 +436,9 @@ public class VentasController {
 
 		model.addAttribute("total", total);
 		model.addAttribute("descuento", descuento);
+		model.addAttribute("producto", producto);
+		
+		System.out.println("Cliente 1"+producto.getCliente());
 		return "pages/cobrar";
 
 	}
@@ -445,10 +460,13 @@ public class VentasController {
 			return "pages/ventaNueva";
 		}
 
+		Cliente c = this.clienteService.buscarClienteIdentificacion(producto.getCliente());
 
-		this.ventaService.realizarVenta(carrito, descuento);
+		System.out.println("Cliente"+producto.getCliente());
+		this.ventaService.realizarVenta(carrito, descuento, c);
 		this.limpiarCarrito(request);
-
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		redirectAttrs.addFlashAttribute("listaClientes", listaClientes);
 		redirectAttrs.addFlashAttribute("mensaje1", "Venta realizada correctamente");
 		return "redirect:/ventas/ventaNueva";
 
@@ -456,8 +474,7 @@ public class VentasController {
 
 	@DeleteMapping("/ventas/borrar/{indice}")
 	public String quitarDelCarrito(@PathVariable int indice, ProductoDTO producto, HttpServletRequest request,
-			Model model,
-			RedirectAttributes redirectAttrs) {
+			Model model, RedirectAttributes redirectAttrs) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -473,6 +490,9 @@ public class VentasController {
 
 		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 		redirectAttrs.addFlashAttribute("total", total);
+
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		redirectAttrs.addFlashAttribute("listaClientes", listaClientes);
 		return "redirect:/ventas/ventaNueva";
 	}
 
@@ -486,6 +506,8 @@ public class VentasController {
 		} else {
 			return "pages/login";
 		}
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		redirectAttrs.addFlashAttribute("listaClientes", listaClientes);
 		redirectAttrs.addFlashAttribute("mensaje1", "Venta cancelada");
 		return "redirect:/ventas/ventaNueva";
 	}
@@ -560,8 +582,4 @@ public class VentasController {
 		return "redirect:/ventas/ventaNueva";
 	}
 
-	private ProductoDTO productoToProductoDTO(Producto i) {
-		return new ProductoDTO(i.getId(), i.getCodigoBarras(), i.getNombre(), i.getDescripcion(),
-				i.getCostoPromedio(), i.getPrecioVenta(), i.getStockActual());
-	}
 }

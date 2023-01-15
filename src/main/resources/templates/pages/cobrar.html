@@ -26,6 +26,7 @@
 					<div class="form-group">
 						<label>Total: </label>
 						<input id="total" class="form-control" th:value=${total} placeholder="0.00" readonly>
+						<input type="hidden" id="cliente" th:field="${producto.cliente}" th:value="${producto.cliente}">
 					</div>
 
 					<div class="form-group">

@@ -29,9 +29,29 @@ public class ProductoDTO {
 	private String marca;
 
 	private Integer cantidad;
+	
+	private String cliente;
 
+	
+	/**
+	 * @param id
+	 * @param codigoBarras
+	 * @param nombre
+	 * @param descripcion
+	 * @param costoPromedio
+	 * @param precioVenta
+	 * @param stockActual
+	 * @param proveedor
+	 * @param impuesto
+	 * @param seccion
+	 * @param marca
+	 * @param cantidad
+	 * @param cliente
+	 */
 	public ProductoDTO(Integer id, String codigoBarras, String nombre, String descripcion, BigDecimal costoPromedio,
-			BigDecimal precioVenta, Integer stockActual) {
+			BigDecimal precioVenta, Integer stockActual, String proveedor, String impuesto, String seccion,
+			String marca, Integer cantidad, String cliente) {
+		super();
 		this.id = id;
 		this.codigoBarras = codigoBarras;
 		this.nombre = nombre;
@@ -39,7 +59,15 @@ public class ProductoDTO {
 		this.costoPromedio = costoPromedio;
 		this.precioVenta = precioVenta;
 		this.stockActual = stockActual;
-			}
+		this.proveedor = proveedor;
+		this.impuesto = impuesto;
+		this.seccion = seccion;
+		this.marca = marca;
+		this.cantidad = cantidad;
+		this.cliente = cliente;
+	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -135,6 +163,14 @@ public class ProductoDTO {
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public String getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 
 }

@@ -42,7 +42,7 @@
 
 #venta {
     position: absolute;
-    top: 400px;
+    top: 440px;
 
 }
 
@@ -68,4 +68,11 @@
 #cont{
 	background-color: aliceblue;
 }
+
+.cant{
+	width: 35px;
+	border-radius: 5px;
+}
+
+
 

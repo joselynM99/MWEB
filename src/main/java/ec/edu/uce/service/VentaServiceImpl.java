@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ec.edu.uce.controller.dto.DescuentoTO;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
+import ec.edu.uce.modelo.Cliente;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.SubProducto;
@@ -36,15 +37,18 @@ public class VentaServiceImpl implements IVentaService {
 
 	@Autowired
 	private ISubProductoService subProductoService;
-	
+
 	@Autowired
 	private IUsuarioService usuarioService;
-	
+
 	@Autowired
 	private ICierreCajaService cierreCajaService;
-	
+
 	@Autowired
 	private ICajaService cajaService;
+	
+	@Autowired
+	private IClienteService clienteService;
 
 	@Override
 	public void insertarVenta(Venta venta) {
@@ -73,7 +77,7 @@ public class VentaServiceImpl implements IVentaService {
 
 		for (DetalleVenta d : ventas) {
 			Producto p = d.getProducto();
-//			p.setCantidad(p.getCantidad() + d.getCantidad());
+			p.setStockActual(p.getStockActual() + d.getCantidad());
 			this.productoService.actualizarProducto(p);
 		}
 		this.ventaRepo.eliminarVenta(id);
@@ -92,7 +96,7 @@ public class VentaServiceImpl implements IVentaService {
 
 	@Override
 	@Transactional(value = TxType.REQUIRED)
-	public void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento) {
+	public void realizarVenta(List<DetalleVenta> detalles, DescuentoTO descuento, Cliente cliente) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
@@ -102,8 +106,7 @@ public class VentaServiceImpl implements IVentaService {
 
 		Usuario usuario = this.usuarioService.buscarUsuarioPorNombreUsuario(userDetails.getUsername());
 		CierreCaja cierreCajaAbierto = this.cierreCajaService.obtenerCierreCajaActivo(usuario);
-		
-		
+
 		for (DetalleVenta d : detalles) {
 			Producto p = d.getProducto();
 			SubProducto s = this.subProductoService.buscarProductoPorCodigoBarras(p.getCodigoBarras());
@@ -136,39 +139,46 @@ public class VentaServiceImpl implements IVentaService {
 		Venta venta = new Venta();
 		venta.setDetalles(detalles);
 		venta.setFecha(LocalDateTime.now());
-		
-		
-		if(descuento == null || descuento.getValorDesceunto()==null || descuento.getValorDesceunto()==0) {
+		venta.setCliente(cliente);
+
+		if (descuento == null || descuento.getValorDesceunto() == null || descuento.getValorDesceunto() == 0) {
 			venta.setTotal(calcularValorAPagar(detalles));
-		}else {
+		} else {
 			BigDecimal total = this.calcularValorAPagar(detalles);
-			
+
 			if (descuento.getTipoDesceunto()) {
 				total = total.subtract(
-						total.multiply(new BigDecimal(descuento.getValorDesceunto())).divide(new BigDecimal(100)));			
-				
+						total.multiply(new BigDecimal(descuento.getValorDesceunto())).divide(new BigDecimal(100)));
+
 			} else {
-				total = total.subtract(new BigDecimal(descuento.getValorDesceunto()));				
-			
+				total = total.subtract(new BigDecimal(descuento.getValorDesceunto()));
+
 			}
-			
+
 			venta.setTotal(total);
 		}
-		
+
 		Caja caja = cierreCajaAbierto.getCaja();
-		
+
 		List<Venta> listaV = caja.getVentas();
 		listaV.add(venta);
-		
+
 		caja.setVentas(listaV);
 		caja.setId(caja.getId());
-		
+
 		venta.setCaja(caja);
 
-		this.insertarVenta(venta);
-		
+		if (cliente == null || cliente.getId()==0) {
+			cliente = this.clienteService.buscarCliente(0);
+			venta.setCliente(cliente);
+			this.insertarVenta(venta);
+		}else {
+			venta.setCliente(cliente);
+			this.insertarVenta(venta);
+		}
+
 		this.cajaService.actualizarCaja(caja);
-		
+
 		for (DetalleVenta d : detalles) {
 			d.setVenta(venta);
 			this.detalleVentaService.actualizarVenta(d);
