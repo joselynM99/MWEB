@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.modelo.SubProducto;
 
@@ -54,6 +55,22 @@ public class SubProductoRepoImpl implements ISubProductoRepo{
 		TypedQuery<SubProducto> myQuery = this.entityManager
 				.createQuery("SELECT p FROM SubProducto p WHERE p.codigoBarras=:codigoBarras", SubProducto.class);
 
+		myQuery.setParameter("codigoBarras", codigoBarras);
+		try {
+
+			return myQuery.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public SubProducto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		TypedQuery<SubProducto> myQuery = this.entityManager.createQuery(
+				"SELECT p FROM SubProducto p WHERE p.codigoBarras=:codigoBarras AND p.proveedor=:prov", SubProducto.class);
+
+		myQuery.setParameter("prov", prov);
 		myQuery.setParameter("codigoBarras", codigoBarras);
 		try {
 

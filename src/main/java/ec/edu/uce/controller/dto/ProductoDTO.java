@@ -18,7 +18,7 @@ public class ProductoDTO {
 
 	private BigDecimal precioVenta;
 
-	private Integer stockActual;
+	private Double stockActual;
 
 	private String proveedor;
 
@@ -28,7 +28,7 @@ public class ProductoDTO {
 
 	private String marca;
 
-	private Integer cantidad;
+	private Double cantidad;
 	
 	private String cliente;
 
@@ -49,8 +49,8 @@ public class ProductoDTO {
 	 * @param cliente
 	 */
 	public ProductoDTO(Integer id, String codigoBarras, String nombre, String descripcion, BigDecimal costoPromedio,
-			BigDecimal precioVenta, Integer stockActual, String proveedor, String impuesto, String seccion,
-			String marca, Integer cantidad, String cliente) {
+			BigDecimal precioVenta, Double stockActual, String proveedor, String impuesto, String seccion,
+			String marca, Double cantidad, String cliente) {
 		super();
 		this.id = id;
 		this.codigoBarras = codigoBarras;
@@ -117,11 +117,11 @@ public class ProductoDTO {
 		this.precioVenta = precioVenta;
 	}
 
-	public Integer getStockActual() {
+	public Double getStockActual() {
 		return stockActual;
 	}
 
-	public void setStockActual(Integer stockActual) {
+	public void setStockActual(Double stockActual) {
 		this.stockActual = stockActual;
 	}
 
@@ -157,11 +157,11 @@ public class ProductoDTO {
 		this.marca = marca;
 	}
 
-	public Integer getCantidad() {
+	public Double getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 

@@ -45,6 +45,10 @@ public class SubProductoServiceImpl implements ISubProductoService {
 		
 		return this.subProductoRepo.buscarProductoPorCodigoBarras(codigoBarras);
 	}
+	@Override
+	public SubProducto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
+		return this.subProductoRepo.buscarProductoPorCodigoBarrasProv(codigoBarras, prov);
+	}
 
 	@Override
 	public List<SubProducto> buscarSubProductoPorNombre(String nombre) {

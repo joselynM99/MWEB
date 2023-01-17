@@ -103,11 +103,11 @@
 					<!----cabezera de la tabla---->
 					<thead>
 						<tr>
+							<th class="th-sm" scope="col">Cantidad</th>
 							<th class="th-sm" scope="col">Nombre</th>
 							<th class="th-sm" scope="col">Codigo de barras</th>
-							<th class="th-sm" scope="col">Descripción</th>
-							<th class="th-sm" scope="col">Costo</th>
 							<th class="th-sm" scope="col">Stock Actual</th>
+							<th class="th-sm" scope="col">Costo</th>
 							<th class="th-sm" scope="col">Agregar</th>
 						</tr>
 					</thead>
@@ -117,10 +117,9 @@
 						<tr th:each=" prod : ${listaProductos}">
 							<form th:action="@{/compras/agregar2/{codigoBarras}(codigoBarras=${prod.codigoBarras})}"
 								th:object=${prod} th:method="post">
-
+								<td><input class="cant" type="text" th:name="cantidad" value="1"></td>
 								<td th:text="${prod.nombre}"></td>
 								<td th:text="${prod.codigoBarras}"></td>
-								<td th:text="${prod.descripcion}"></td>
 								<td th:text="${prod.stockActual}"></td>
 								<td th:text="${prod.costoPromedio}"></td>
 

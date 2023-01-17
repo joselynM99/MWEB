@@ -1,6 +1,7 @@
 package ec.edu.uce.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Impuesto;
+import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.repository.IDetalleVentaRepo;
 
 @Service
@@ -42,10 +44,20 @@ public class DetalleVentaServiceImpl implements IDetalleVentaService {
 	}
 
 	@Override
-	public BigDecimal calcularValor(Integer cantidad, BigDecimal precio) {
-		
+	public BigDecimal calcularValor(Double cantidad, BigDecimal precio) {
+
 		return precio.multiply(new BigDecimal(cantidad));
 	}
 
+	@Override
+	public List<DetalleVenta> buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin,
+			Producto producto) {
+		return this.detalleVentaRepo.buscarDetalleVentaProductoFecha(producto, fechaInicio, fechaFin);
+	}
+	
+	@Override
+	public List<DetalleVenta> listaProdVendidosFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+		return this.detalleVentaRepo.buscarDetalleVentaFecha(fechaInicio, fechaFin);
+	}
 
 }

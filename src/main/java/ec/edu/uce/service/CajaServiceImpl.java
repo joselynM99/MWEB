@@ -10,7 +10,7 @@ import ec.edu.uce.repository.ICajaRepo;
 
 @Service
 public class CajaServiceImpl implements ICajaService {
-	
+
 	@Autowired
 	private ICajaRepo cajaRepo;
 
@@ -21,6 +21,9 @@ public class CajaServiceImpl implements ICajaService {
 
 	@Override
 	public Caja buscarCaja(Integer id) {
+		if (id == null) {
+			return null;
+		}
 		return this.cajaRepo.buscarCaja(id);
 	}
 

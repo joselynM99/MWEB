@@ -3,6 +3,7 @@ package ec.edu.uce.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -27,7 +28,15 @@ public class CajaRepoImpl implements ICajaRepo {
 
 	@Override
 	public Caja buscarCaja(Integer id) {
-		return this.entityManager.find(Caja.class, id);
+		
+		try {
+
+			return this.entityManager.find(Caja.class, id);
+
+		} catch (NoResultException e) {
+			return null;
+		}
+		 
 	}
 
 	@Override

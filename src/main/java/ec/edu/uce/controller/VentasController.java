@@ -328,8 +328,8 @@ public class VentasController {
 			}
 
 			if (!encontrado) {
-				carrito.add(new DetalleVenta(1,
-						this.detalleVentaService.calcularValor(1, productoBuscadoPorCodigo.getPrecioVenta()),
+				carrito.add(new DetalleVenta((double) 1,
+						this.detalleVentaService.calcularValor((double) 1, productoBuscadoPorCodigo.getPrecioVenta()),
 						productoBuscadoPorCodigo));
 			}
 
@@ -350,7 +350,6 @@ public class VentasController {
 			@RequestParam(name = "cantidad") String cantidad, ProductoDTO producto, HttpServletRequest request,
 			RedirectAttributes redirectAttrs, Model model) {
 
-		System.out.println("------------------------" + cantidad);
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = null;
 		if (principal instanceof UserDetails) {
@@ -392,8 +391,8 @@ public class VentasController {
 		}
 
 		if (!encontrado) {
-			carrito.add(new DetalleVenta(Integer.parseInt(cantidad), this.detalleVentaService.calcularValor(
-					Integer.parseInt(cantidad), productoBuscadoPorCodigo.getPrecioVenta()), productoBuscadoPorCodigo));
+			carrito.add(new DetalleVenta(Double.parseDouble(cantidad), this.detalleVentaService.calcularValor(
+					Double.parseDouble(cantidad), productoBuscadoPorCodigo.getPrecioVenta()), productoBuscadoPorCodigo));
 		}
 
 		this.guardarCarrito(carrito, request);
@@ -571,8 +570,8 @@ public class VentasController {
 		}
 
 		if (!encontrado) {
-			carrito.add(new DetalleVenta(1,
-					this.detalleVentaService.calcularValor(1, productoBuscadoPorCodigo.getPrecioVenta()),
+			carrito.add(new DetalleVenta((double) 1,
+					this.detalleVentaService.calcularValor((double) 1, productoBuscadoPorCodigo.getPrecioVenta()),
 					productoBuscadoPorCodigo));
 		}
 

@@ -79,13 +79,11 @@ public class CompraServiceImpl implements ICompraService {
 	@Override
 	@Transactional(value = TxType.REQUIRED)
 	public void realizarCompra(List<DetalleCompra> detalles, Proveedor proveedor, LocalDateTime fecha) {
-		System.out.println("-----antes del ford");
 		for (DetalleCompra d : detalles) {
 			Producto p = d.getProducto();
 			p.setStockActual(p.getStockActual() + d.getCantidad());
 			p.setId(p.getId());
 			this.productoService.actualizarProducto(p);
-			System.out.println("-------actualizar des");
 
 			d.setTotal(this.detalleCompraService.calcularValorCompra(d.getCantidad(), p.getCostoPromedio()));
 			this.detalleCompraService.insertarDetalleCompra(d);

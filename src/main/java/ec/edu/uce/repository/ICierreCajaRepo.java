@@ -1,7 +1,9 @@
 package ec.edu.uce.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.Usuario;
 
@@ -20,5 +22,9 @@ public interface ICierreCajaRepo {
 	boolean buscarCierreCajaActivo(Usuario usuario);
 
 	CierreCaja obtenerCierreCajaActivo(Usuario usuario);
+
+
+	List<CierreCaja> buscarCierreCajas(LocalDateTime fechaInicio, LocalDateTime fechaFin, Caja caja, Boolean estado,
+			Usuario usuario);
 
 }

@@ -17,6 +17,7 @@ public interface IDetalleCompraService {
 
 	void eliminarDetalleCompra(Integer id);
 
-	BigDecimal calcularValorCompra(Integer cantidad, BigDecimal precio);
+
+	BigDecimal calcularValorCompra(Double cantidad, BigDecimal precio);
 
 }

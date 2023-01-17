@@ -23,7 +23,7 @@ public class DetalleCompra {
 	private Integer id;
 
 	@Column(name = "deco_cantidad")
-	private Integer cantidad;
+	private Double cantidad;
 
 	@Column(name = "deco_total")
 	private BigDecimal total;
@@ -50,7 +50,7 @@ public class DetalleCompra {
 	 * @param total
 	 * @param producto
 	 */
-	public DetalleCompra(Integer cantidad, BigDecimal total, Producto producto) {
+	public DetalleCompra(Double cantidad, BigDecimal total, Producto producto) {
 		super();
 		this.cantidad = cantidad;
 		this.total = total;
@@ -65,11 +65,11 @@ public class DetalleCompra {
 		this.id = id;
 	}
 
-	public Integer getCantidad() {
+	public Double getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 

@@ -1,5 +1,6 @@
 package ec.edu.uce.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,8 +10,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import ec.edu.uce.modelo.DetalleCompra;
 import ec.edu.uce.modelo.DetalleVenta;
+import ec.edu.uce.modelo.Producto;
 
 @Transactional
 @Repository
@@ -45,6 +46,35 @@ public class DetalleVentaRepoImpl implements IDetalleVentaRepo {
 	public void eliminarDetalleVenta(Integer id) {
 		DetalleVenta detalleVenta = this.buscarDetalleVenta(id);
 		this.entityManager.remove(detalleVenta);
+	}
+
+	@Override
+	public List<DetalleVenta> buscarDetalleVentaProductoFecha(Producto producto, LocalDateTime fechaInicio,
+			LocalDateTime fechaFin) {
+		TypedQuery<DetalleVenta> myQuery = this.entityManager
+				.createQuery("SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
+						+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin AND d.producto=:producto", DetalleVenta.class);
+		
+		myQuery.setParameter("producto",producto );
+		myQuery.setParameter("fechaInicio",fechaInicio );
+		myQuery.setParameter("fechaFin",fechaFin );
+
+		
+		return myQuery.getResultList();
+	}
+	
+	@Override
+	public List<DetalleVenta> buscarDetalleVentaFecha(LocalDateTime fechaInicio,
+			LocalDateTime fechaFin) {
+		TypedQuery<DetalleVenta> myQuery = this.entityManager
+				.createQuery("SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
+						+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin", DetalleVenta.class);
+		
+		myQuery.setParameter("fechaInicio",fechaInicio );
+		myQuery.setParameter("fechaFin",fechaFin );
+
+		
+		return myQuery.getResultList();
 	}
 
 }

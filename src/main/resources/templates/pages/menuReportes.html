@@ -32,7 +32,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/ventas}">Ventas</a>
 			</li>
-
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/registro}">Registro</a>
+			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/compras}">Compras</a>
 			</li>
@@ -40,15 +42,10 @@
 				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inventario</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Clientes </a>
+				<a class="nav-link" href="#" th:href="@{/clientes/menu}">Clientes</a>
 			</li>
-
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/registro}">Registro de Usuarios</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/reportes/menu}">Reportes</a>
+				<a class="nav-link active" aria-current="page">Reportes </a>
 			</li>
 
 		</ul>
@@ -67,17 +64,17 @@
 				<tr>
 
 					<th>
-						<a href="#" th:href="@{/clientes/registroCliente}">
+						<a href="#" th:href="@{/reportes/historialCierreCajas}">
 							<button type="button" class="btn btn-outline-warning"><img class="iconos"
-									src="../images/ic_agregar_user.png" alt="Gestión SubProductos"><label
-									class="txt_ic">Registrar Clientes</label></button></a>
+									src="../images/ic_reportes.png"><label
+									class="txt_ic">Reporte Cierres de Caja</label></button></a>
 					</th>
 
 					<th>
-						<a href="#" th:href="@{/gestionUsuarios/modificarCliente}">
+						<a href="#" th:href="@{/reportes/productoVendidos}">
 							<button type="button" class="btn btn-outline-warning"><img class="iconos"
-									src="../images/ic_modificar_user.png" alt="Gestión Proveedores"><label
-									class="txt_ic">Modificar Clientes</label></button></a>
+									src="../images/ic_reportes.png" alt="Gestión Proveedores"><label
+									class="txt_ic">Productos más vendidos</label></button></a>
 					</th>
 
 				</tr>

@@ -21,6 +21,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public Usuario buscarUsuario(Integer id) {
+		if(id==null) {
+			return null;
+		}
 		return this.usuarioRepo.buscarUsuario(id);
 	}
 

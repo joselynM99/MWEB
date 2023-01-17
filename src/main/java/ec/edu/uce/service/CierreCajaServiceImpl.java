@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.Usuario;
 import ec.edu.uce.repository.ICierreCajaRepo;
@@ -83,5 +84,11 @@ public class CierreCajaServiceImpl implements ICierreCajaService {
 		this.actualizarCierreCaja(cierreNuevo);
 
 	}
+	@Override
+	public List<CierreCaja> buscarCierreCajas(LocalDateTime fechaInicio, LocalDateTime fechaFin, Caja caja, Boolean estado,
+			Usuario usuario){
+		return this.cierreCajaRepo.buscarCierreCajas(fechaInicio, fechaFin, caja, estado, usuario);
+	}
+
 
 }

@@ -42,7 +42,7 @@ public class Producto {
 	private BigDecimal precioVenta;
 
 	@Column(name = "prod_stock_actual")
-	private Integer stockActual;
+	private Double stockActual;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prov_id")
@@ -92,7 +92,7 @@ public class Producto {
 	 * @param marca
 	 */
 	public Producto(Integer id, String codigoBarras, String nombre, String descripcion, BigDecimal costoPromedio,
-			BigDecimal precioVenta, Integer stockActual, Proveedor proveedor, Impuesto impuesto, Seccion seccion,
+			BigDecimal precioVenta, Double stockActual, Proveedor proveedor, Impuesto impuesto, Seccion seccion,
 			Marca marca) {
 		super();
 		this.id = id;
@@ -156,11 +156,11 @@ public class Producto {
 		this.precioVenta = precioVenta;
 	}
 
-	public Integer getStockActual() {
+	public Double getStockActual() {
 		return stockActual;
 	}
 
-	public void setStockActual(Integer stockActual) {
+	public void setStockActual(Double stockActual) {
 		this.stockActual = stockActual;
 	}
 

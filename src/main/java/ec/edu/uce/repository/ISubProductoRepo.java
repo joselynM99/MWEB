@@ -25,4 +25,8 @@ public interface ISubProductoRepo {
 
 	List<SubProducto> buscarSubProductoPorNombreProv(String nombre, Proveedor proveedor);
 
+	SubProducto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov);
+	
+	
+
 }

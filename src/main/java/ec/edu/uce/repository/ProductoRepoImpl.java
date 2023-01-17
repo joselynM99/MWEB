@@ -65,11 +65,11 @@ public class ProductoRepoImpl implements IProductoRepo {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov) {
-		TypedQuery<Producto> myQuery = this.entityManager
-				.createQuery("SELECT p FROM Producto p WHERE p.codigoBarras=:codigoBarras AND p.proveedor=:prov", Producto.class);
+		TypedQuery<Producto> myQuery = this.entityManager.createQuery(
+				"SELECT p FROM Producto p WHERE p.codigoBarras=:codigoBarras AND p.proveedor=:prov", Producto.class);
 
 		myQuery.setParameter("prov", prov);
 		myQuery.setParameter("codigoBarras", codigoBarras);
@@ -96,14 +96,15 @@ public class ProductoRepoImpl implements IProductoRepo {
 			return null;
 		}
 	}
-	
+
 	@Override
-	public List<Producto> buscarProductoPorNombreProv(String nombre,  Proveedor proveedor) {
-		TypedQuery<Producto> myQuery = this.entityManager
-				.createQuery("SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre) AND p.proveedor=:proveedor", Producto.class);
+	public List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor) {
+		TypedQuery<Producto> myQuery = this.entityManager.createQuery(
+				"SELECT p FROM Producto p WHERE UPPER(p.nombre) LIKE UPPER(:nombre) AND p.proveedor=:proveedor",
+				Producto.class);
 
 		myQuery.setParameter("nombre", nombre);
-		
+
 		myQuery.setParameter("proveedor", proveedor);
 		try {
 

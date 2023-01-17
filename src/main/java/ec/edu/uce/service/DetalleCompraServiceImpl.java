@@ -43,7 +43,7 @@ public class DetalleCompraServiceImpl implements IDetalleCompraService {
 	}
 	
 	@Override
-	public BigDecimal calcularValorCompra(Integer cantidad, BigDecimal precio) {
+	public BigDecimal calcularValorCompra(Double cantidad, BigDecimal precio) {
 		return precio.multiply(new BigDecimal(cantidad));
 	}
 
