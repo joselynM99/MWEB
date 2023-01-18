@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
 
 @Transactional
 @Repository
@@ -81,6 +82,16 @@ public class CierreCajaRepoImpl implements ICierreCajaRepo {
 		this.entityManager.remove(c);
 	}
 
+	@Override
+	public CierreCaja buscarCierreCaja(Venta venta, Caja caja) {
+		TypedQuery<CierreCaja> myQuery = this.entityManager.createQuery(
+				"SELECT c FROM CierreCaja c WHERE c.venta=:venta AND c.caja=:caja",
+				CierreCaja.class);
+
+		myQuery.setParameter("venta", venta);
+		myQuery.setParameter("caja", caja);
+		return myQuery.getSingleResult();
+	}
 	@Override
 	public List<CierreCaja> buscarCierreCajas(LocalDateTime fechaInicio, LocalDateTime fechaFin, Caja caja,
 			Boolean estado, Usuario usuario) {

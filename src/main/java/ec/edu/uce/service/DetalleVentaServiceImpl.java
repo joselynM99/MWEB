@@ -54,10 +54,16 @@ public class DetalleVentaServiceImpl implements IDetalleVentaService {
 			Producto producto) {
 		return this.detalleVentaRepo.buscarDetalleVentaProductoFecha(producto, fechaInicio, fechaFin);
 	}
-	
+
 	@Override
 	public List<DetalleVenta> listaProdVendidosFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-		return this.detalleVentaRepo.buscarDetalleVentaFecha(fechaInicio, fechaFin);
+		List<DetalleVenta> list = this.detalleVentaRepo.buscarDetalleVentaFecha(fechaInicio, fechaFin);
+		System.out.println("listaProdVendidosFecha");
+		for(DetalleVenta d: list) {
+			
+			System.out.println(d.getProducto().getNombre());
+		}
+		return list;
 	}
 
 }

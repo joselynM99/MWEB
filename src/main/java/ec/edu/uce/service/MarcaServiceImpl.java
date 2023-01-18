@@ -39,4 +39,9 @@ public class MarcaServiceImpl implements IMarcaService {
 		this.marcaRepo.eliminarMarca(id);
 	}
 
+	@Override
+	public Marca buscarMarcaPorNombre(String nombreMarca) {
+		return this.marcaRepo.buscarMarcaPorNombre(nombreMarca);
+	}
+
 }

@@ -18,89 +18,106 @@
 	<link rel="stylesheet" href="../css/encabezado.css">
 	<link rel="stylesheet" href="../css/imagenes.css">
 	<link rel="stylesheet" href="../css/colores_pag.css">
+	<link rel="stylesheet" href="../css/contenedores.css">
 
 
 </head>
 
-<body>
-	<div style="background-color: linen;">
-		<div id="cont1" class=container my-5>
+<body style="background-color:crimson;">
+	<div style="background-color: crimson;">
+		<div style="background-color: linen;" class=container my-5>
 
 
 			<form id="buscarNombre" th:action="@{/reportes/buscarCierres}" th:object="${cierreCaja}" th:method="get">
-				<label>Fecha Inicio</label>
-				<input class='form-control' required="" type="datetime-local" th:field="*{fechaApertura}"></input>
-				<label>Fecha Fin</label>
-				<input class='form-control' required="" type="datetime-local" th:field="*{fechaCierre}"></input>
+				<div class="contfechas">
+					<label>Fecha Inicio</label>
+					<input id="fec" class='form-control' required="" type="datetime-local"
+						th:field="*{fechaApertura}"></input>
+				</div>
+				<div class="contfechas">
+					<label>Fecha Fin</label>
+					<input id="fec" class='form-control' required="" type="datetime-local"
+						th:field="*{fechaCierre}"></input>
+				</div><a href="#" th:href="@{/reportes/menu}">
+					<button type="button" class="btn btn-outline-warning"><img class="iconos2"
+							src="../images/ic_volver.png" alt="Volver"><label class="txt_ic">
+							Volver</label></button></a>
+				<div class=container my-5>
+					<div class="contfechas">
+						<label>Usuario</label>
+						<select class='form-control' th:field="*{usuario}">
+							<option th:value=null th:text="Select" selected></option>
+							<option th:each=" user : ${usuarios}" th:value="${user.id}" th:text="${user.email}">
+							</option>
 
-				<label>Usuario</label>
-				<select th:field="*{usuario}">
-					<option th:value=null th:text="Select" selected></option>
-					<option th:each=" user : ${usuarios}" th:value="${user.id}" th:text="${user.email}">
-					</option>
+						</select>
+					</div>
+					<div class="contfechas">
+						<label>Caja</label>
+						<select class='form-control' th:field="*{caja}">
+							<option th:value=null th:text="Select" selected></option>
+							<option th:each=" c : ${cajas}" th:value="${c.id}" th:text="${c.nombre}"></option>
 
-				</select>
-				<label>Caja</label>
-				<select th:field="*{caja}">
-					<option th:value=null th:text="Select" selected></option>
-					<option th:each=" c : ${cajas}" th:value="${c.id}" th:text="${c.nombre}"></option>
+						</select>
+					</div>
+					<div class="contfechas">
+						<label>Estado</label>
+						<select class='form-control' th:field="*{estado}" data-live-search="true"
+							data-live-search-style="startsWith">
 
-				</select>
-
-				<label>Estado</label>
-				<select th:field="*{estado}" data-live-search="true" data-live-search-style="startsWith"
-					class="selectpicker">
-					<option th:value=true th:text="Select" selected></option>
-					<option th:value=true>En progreso</option>
-					<option th:value=false>Cerrada</option>
+							<option th:value=true>En progreso</option>
+							<option th:value=false>Cerrada</option>
 
 
-				</select>
-
-				<input type="submit" class="btn btn-dark" value="Buscar">
+						</select>
+					</div>
+					<input type="submit" class="btn btn-dark" value="Buscar">
 
 
 			</form>
-
-
-			<div class=" table-wrapper-scroll-y my-custom-scrollbar">
-				<table class="table table-bordered  table-striped mb-0" , id="tab_busqueda">
-					<!----cabezera de la tabla---->
-					<thead>
-						<tr>
-							<th class="th-sm" scope="col">Caja</th>
-							<th class="th-sm" scope="col">Usuario</th>
-							<th class="th-sm" scope="col">Fecha de Apertura</th>
-							<th class="th-sm" scope="col">Fecha de Cierre</th>
-							<th class="th-sm" scope="col">Valor de Apertura</th>
-							<th class="th-sm" scope="col">Valor de Cierre</th>
-							<th class="th-sm" scope="col">Valor Contable</th>
-							<th class="th-sm" scope="col">Diferencia</th>
-
-						</tr>
-					</thead>
-
-					<!----cuerpo de la tabla---->
-					<tbody>
-						<tr th:each=" cierre : ${cierres}">
-							<form th:action="@{/reportes/ventasFecha}" th:object=${cierreCaja} th:method="post">
-								<td th:text="${cierre.caja.nombre}"></td>
-								<td th:text="${cierre.usuario.email}"></td>
-								<td th:text="${cierre.fechaApertura}"></td>
-								<td th:text="${cierre.fechaCierre}"></td>
-								<td th:text="${cierre.valorApertura}"></td>
-								<td th:text="${cierre.valorCierre}"></td>
-								<td th:text="${cierre.valorContable}"></td>
-								<td th:text="${cierre.diferencia}"></td>
-
-							</form>
-
-						</tr>
-					</tbody>
-				</table>
-			</div>
 		</div>
+
+		<div class=" table-wrapper-scroll-y my-custom-scrollbar">
+			<table class="table table-bordered  table-striped mb-0" , id="tab_busqueda">
+				<!----cabezera de la tabla---->
+				<thead>
+					<tr>
+						<th class="th-sm" scope="col">Caja</th>
+						<th class="th-sm" scope="col">Usuario</th>
+						<th class="th-sm" scope="col">Fecha de Apertura</th>
+						<th class="th-sm" scope="col">Fecha de Cierre</th>
+						<th class="th-sm" scope="col">Valor de Apertura</th>
+						<th class="th-sm" scope="col">Valor de Cierre</th>
+						<th class="th-sm" scope="col">Valor Contable</th>
+						<th class="th-sm" scope="col">Diferencia</th>
+
+					</tr>
+				</thead>
+
+				<!----cuerpo de la tabla---->
+				<tbody>
+					<tr th:each=" cierre : ${cierres}">
+						<form th:action="@{/reportes/ventasFecha}" th:object=${cierreCaja} th:method="post">
+							<td th:text="${cierre.caja.nombre}"></td>
+							<td th:text="${cierre.usuario.email}"></td>
+							<td th:text="${cierre.fechaApertura}"></td>
+							<td th:text="${cierre.fechaCierre}"></td>
+							<td th:text="${cierre.valorApertura}"></td>
+							<td th:text="${cierre.valorCierre}"></td>
+							<td th:text="${cierre.valorContable}"></td>
+							<td th:text="${cierre.diferencia}"></td>
+
+						</form>
+
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+
 	</div>
+
 </body>
 
 </html>

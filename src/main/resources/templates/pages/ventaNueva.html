@@ -109,7 +109,8 @@
 		<div id="cont2" class=container my-5>
 			<div class=" table-wrapper-scroll-y my-custom-scrollbar">
 				<label>Seleccione Cliente </label>
-				<select id="seC" onchange="cliente()" data-live-search="true" data-live-search-style="startsWith" class="selectpicker">
+				<select id="seC" onchange="cliente()" data-live-search="true" data-live-search-style="startsWith"
+					class="selectpicker">
 					<option th:value=null th:text="Select" selected></option>
 					<option th:each=" clie : ${listaClientes}" th:value="${clie.identificacion}"
 						th:text="${clie.nombres} +' '+ ${clie.apellidos}"></option>
@@ -156,40 +157,50 @@
 							<th><label class="tit-btn">Limpiar</label></th>
 							<th><label class="tit-btn">Cerrar Caja</label></th>
 							<th><label class="tit-btn">Adicionales</label></th>
+							<th><label class="tit-btn">Consultar Precio</label></th>
+							<th><label class="tit-btn">Volver</label></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>
 								<form th:action="@{/ventas/cobrar}" th:object="${producto}" th:method="get">
-								<input type="hidden" id="cliente" th:field="*{cliente}">
-									<input id="ic" type='image' class="btn btn-danger" src="../images/ic_cobrar.png">
+									<input type="hidden" id="cliente" th:field="*{cliente}">
+									<input id="icv" type='image' class="btn btn-danger" src="../images/ic_cobrar.png">
 								</form>
 
 							</td>
 
 							<td>
 								<form th:action="@{/ventas/limpiar}" th:method="get">
-									<input id="ic" type="image" class="btn btn-success" src="../images/ic_limpiar.png">
+									<input id="icv" type="image" class="btn btn-success" src="../images/ic_limpiar.png">
 								</form>
 							</td>
 							<td>
 								<form th:action="@{/ventas/cierreCaja}" th:method="get">
-									<input id="ic" type="image" class="btn btn-info" src="../images/ic_cerrar_caja.png">
+									<input id="icv" type="image" class="btn btn-info" src="../images/ic_cerrar_caja.png">
 								</form>
 							</td>
 							<td>
 								<form th:action="@{/ventas/adicionales}" th:method="get">
-									<input id="ic" type="image" class="btn btn-info" src="../images/ic_adicionales.png">
+									<input id="icv" type="image" class="btn btn-info" src="../images/ic_adicionales.png">
 								</form>
 							</td>
 							<td>
+								<form th:action="@{/ventas/buscarProductoPrecio}" th:method="get"
+									th:object="${producto}">
+									<input type="text" class="from-control" th:value="*{codigoBarras}"
+										th:field="*{codigoBarras}">
+									<input type="submit" class="btn btn-info">
+								</form>
+								<label th:text="${precio}" />
+							</td>
+							<td>
 								<form th:action="@{/ventas}" th:method="get">
-									<input id="ic" type="image" class="btn btn-info" src="../images/ic_volver.png">
+									<input id="icv" type="image" class="btn btn-info" src="../images/ic_volver.png">
 								</form>
 							</td>
-
-
+							
 
 					</tbody>
 				</table>

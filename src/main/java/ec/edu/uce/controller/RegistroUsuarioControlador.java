@@ -3,6 +3,8 @@ package ec.edu.uce.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +20,17 @@ import ec.edu.uce.service.UsuarioServicio;
 @Controller
 @RequestMapping("/registro")
 public class RegistroUsuarioControlador {
-	
+
 	@Autowired
 	private ICajaService cajaService;
 
-	
 	private UsuarioServicio usuarioServicio;
 
 	public RegistroUsuarioControlador(UsuarioServicio usuarioServicio) {
 		super();
 		this.usuarioServicio = usuarioServicio;
 	}
-	
+
 	@ModelAttribute("usuario")
 	public UsuarioRegistroDTO retornarNuevoUsuarioRegistroDTO() {
 		return new UsuarioRegistroDTO();
@@ -37,15 +38,25 @@ public class RegistroUsuarioControlador {
 
 	@GetMapping
 	public String mostrarFormularioDeRegistro(Model model) {
-		
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+
+		model.addAttribute("nombreUser", userDetails.getUsername());
+
 		List<Caja> cajas = this.cajaService.buscarTodosCaja();
 		model.addAttribute("cajas", cajas);
 		return "pages/registro";
 	}
-	
+
 	@PostMapping
 	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
-		
+
 		this.usuarioServicio.guardar(registroDTO);
 		return "redirect:/registro?exito";
 	}

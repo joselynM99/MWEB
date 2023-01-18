@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
 import ec.edu.uce.repository.ICierreCajaRepo;
 
 @Service
@@ -84,11 +85,20 @@ public class CierreCajaServiceImpl implements ICierreCajaService {
 		this.actualizarCierreCaja(cierreNuevo);
 
 	}
+	
+
 	@Override
 	public List<CierreCaja> buscarCierreCajas(LocalDateTime fechaInicio, LocalDateTime fechaFin, Caja caja, Boolean estado,
 			Usuario usuario){
 		return this.cierreCajaRepo.buscarCierreCajas(fechaInicio, fechaFin, caja, estado, usuario);
 	}
+
+	@Override
+	public CierreCaja buscarCierreCaja(Venta venta, Caja caja) {
+		return this.cierreCajaRepo.buscarCierreCaja(venta, caja);
+	}
+	
+	
 
 
 }

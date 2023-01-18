@@ -29,18 +29,27 @@
 				<a class="nav-link" href="#" th:href="@{/gestionUsuarios}">Inicio</a>
 			</li>
 			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/ventas}">Ventas</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/compras}">Compras</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inventario</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/clientes/menu}">Clientes</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link active" aria-current="page">Registrar Usuario</a>
 			</li>
-			<!--<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/gestionUsuarios/modificarUsuario}">Modificar Usuario</a>
-			</li>-->
-
-
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/reportes/menu}">Reportes</a>
+			</li>
 		</ul>
-		<div id="user_ic">
-			<span id="us" class="bi bi-file-person-fill">Usuario</span>
-			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
-		</div>
+
 	</nav>
 
 	<div class="container">

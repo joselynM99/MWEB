@@ -47,6 +47,14 @@ public class LogginController {
 
 		return "index";
 	}
+	
+	@GetMapping("/accesoRestringido")
+	public String verPaginaDeAccesoRestringido(Model model) {
+
+
+
+		return "pages/accesoRestringido";
+	}
 
 	@GetMapping("/gestionUsuarios")
 	public String menuGestionUsuarios(Model model) {

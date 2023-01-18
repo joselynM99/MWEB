@@ -18,22 +18,26 @@
 	<link rel="stylesheet" href="../css/encabezado.css">
 	<link rel="stylesheet" href="../css/imagenes.css">
 	<link rel="stylesheet" href="../css/colores_pag.css">
+	<link rel="stylesheet" href="../css/contenedores.css">
 
 
 </head>
 
-<body>
-	<div style="background-color: linen;">
-		<div id="cont1" class=container my-5>
+<body style="background-color: linen;">
+	<div id="contR" style="background-color: linen;">
+		<div style="background-color: linen;" class=container my-5>
 
 
 			<form id="buscarNombre" th:action="@{/reportes/buscarProductosMasVendidos}" th:object="${cierreCaja}"
 				th:method="get">
-				<label>Fecha Inicio</label>
-				<input class='form-control' required="" type="datetime-local" th:field="*{fechaApertura}"></input>
-				<label>Fecha Fin</label>
-				<input class='form-control' required="" type="datetime-local" th:field="*{fechaCierre}"></input>
-
+				<div class="contfechas">
+					<label>Fecha Inicio</label>
+					<input class='form-control' required="" type="datetime-local" th:field="*{fechaApertura}"></input>
+				</div>
+				<div class="contfechas">
+					<label>Fecha Fin</label>
+					<input class='form-control' required="" type="datetime-local" th:field="*{fechaCierre}"></input>
+				</div>
 
 
 				<input type="submit" class="btn btn-dark" value="Buscar">
@@ -43,7 +47,7 @@
 
 
 			<div class=" table-wrapper-scroll-y my-custom-scrollbar">
-				<table class="table table-bordered  table-striped mb-0" , id="tab_busqueda">
+				<table class="table table-bordered  table-striped mb-0" id="tab_busqueda">
 					<!----cabezera de la tabla---->
 					<thead>
 						<tr>

@@ -14,6 +14,7 @@ import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
 
 @Service
 public class ReportesServiceImpl implements IReportesService {
@@ -50,7 +51,10 @@ public class ReportesServiceImpl implements IReportesService {
 		List<DetalleVenta> detalles = this.detalleVentaService.buscarProductosMasVendidos(fechaInicio, fechaFin,
 				producto);
 		ProdMasVendido p = new ProdMasVendido();
+		p.setCantidad(0.0);
+		System.out.println("buscarProductosMasVendidos");
 		for (DetalleVenta d : detalles) {
+			System.out.println(d.getCantidad());
 			p.setCantidad(p.getCantidad() + d.getCantidad());
 			
 		}
@@ -68,13 +72,25 @@ public class ReportesServiceImpl implements IReportesService {
 		List<ProdMasVendido> vendidos = new ArrayList<ProdMasVendido>();
 		
 		List<DetalleVenta> detalles = this.detalleVentaService.listaProdVendidosFecha(fechaInicio, fechaFin);
-		
-		for(DetalleVenta d: detalles) {
+		System.out.println("hacerListaProdMasVendidos");
+		for(DetalleVenta d: detalles) {			
+			
 			vendidos.add(this.buscarProductosMasVendidos(fechaInicio, fechaFin, d.getProducto()));
 		}
 		
-		vendidos.sort(Comparator.comparing(ProdMasVendido::getCantidad));
+		vendidos.sort(Comparator.comparing(ProdMasVendido::getCantidad).reversed());
+		
+		
 		return vendidos;
+		
+	}
+	
+	@Override
+	public void borrarProductoVenta(DetalleVenta detalle) {
+		Venta v = detalle.getVenta();
+		v.setTotal(v.getTotal().subtract(detalle.getTotal()));
+		this.detalleVentaService.eliminarDetalleVenta(detalle.getId());
+		this.ventaService.actualizarVenta(v);
 		
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ec.edu.uce.controller.dto.ProdMasVendido;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
+import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.Usuario;
 
@@ -24,6 +25,9 @@ public interface IReportesService {
 
 
 	List<ProdMasVendido> hacerListaProdMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+
+
+	void borrarProductoVenta(DetalleVenta detalle);
 	
 	
 

@@ -45,6 +45,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/registro}">Registro de Usuarios</a>
 			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" th:href="@{/reportes/menu}">Reportes</a>
+			</li>
 		</ul>
 		<div id="user_ic">
 			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
@@ -67,18 +70,19 @@
 					</th>
 
 					<th>
-					<a href="#" th:href="@{/compras/compraNuevaSinProv}">
-						<button type="button" class="btn btn-outline-warning"><img class="iconos"
-								src="../images/ic_cierre_caja.png" alt="Compras sin Pedido"><label
-								class="txt_ic">Ingreso sin pedido</label></button>
+						<a href="#" th:href="@{/compras/compraNuevaSinProv}">
+							<button type="button" class="btn btn-outline-warning"><img class="iconos"
+									src="../images/ic_cierre_caja.png" alt="Compras sin Pedido"><label
+									class="txt_ic">Ingreso sin pedido</label></button></a>
 					</th>
-					
+
 				</tr>
 				<tr>
 					<th>
-						<button type="button" class="btn btn-outline-warning"><img class="iconos"
-								src="../images/ic_volver.png" alt="Volver"><label class="txt_ic">
-								Volver</label></button>
+						<a href="#" th:href="@{/}">
+							<button type="button" class="btn btn-outline-warning"><img class="iconos"
+									src="../images/ic_volver.png" alt="Volver"><label class="txt_ic">
+									Volver</label></button></a>
 					</th>
 
 

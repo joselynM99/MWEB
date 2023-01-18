@@ -7,6 +7,7 @@ import java.util.List;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
 
 public interface ICierreCajaService {
 	void insertarCierreCaja(CierreCaja cierreCaja);
@@ -18,18 +19,19 @@ public interface ICierreCajaService {
 	void actualizarCierreCaja(CierreCaja cierreCaja);
 
 	void eliminarCierreCaja(Integer id);
-	
+
 	boolean buscarCierreCajaActivo(Usuario usuario);
 
 	void abrirCaja(Usuario usuario, BigDecimal valorInicial);
 
 	CierreCaja obtenerCierreCajaActivo(Usuario usuario);
 
-
 	void cerrarCaja(Usuario usuario, BigDecimal diferencia, BigDecimal valorContable, BigDecimal valorCierre);
 
 	List<CierreCaja> buscarCierreCajas(LocalDateTime fechaInicio, LocalDateTime fechaFin, Caja caja, Boolean estado,
 			Usuario usuario);
 
+	CierreCaja buscarCierreCaja(Venta venta, Caja caja);
 
+	
 }

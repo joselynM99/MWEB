@@ -4,6 +4,12 @@
 
 }
 
+.iconos2 {
+    width: 30px;
+    height: 30px;
+
+}
+
 .fondos {
     width: 500px;
     height: 100vh;
@@ -13,6 +19,14 @@
 #ic {
     width: 110px;
     height: 110px;
+    text-align: center;
+    margin: 4px;
+
+}
+
+#icv {
+    width: 80px;
+    height: 80px;
     text-align: center;
     margin: 4px;
 

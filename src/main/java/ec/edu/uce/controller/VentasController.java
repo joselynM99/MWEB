@@ -289,6 +289,35 @@ public class VentasController {
 		return "pages/ventaNueva";
 	}
 
+	@GetMapping("/ventas/buscarProductoPrecio")
+	public String buscarProductoPrecio(@ModelAttribute ProductoDTO producto, Model model) {
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = null;
+		if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+		} else {
+			return "pages/login";
+		}
+
+		Producto p = this.productoService.buscarProductoPorCodigoBarras(producto.getCodigoBarras());
+		SubProducto sp = this.subProductoService.buscarProductoPorCodigoBarras(producto.getCodigoBarras());
+
+		if ((p == null) && (sp == null)) {
+			model.addAttribute("mensaje1", "No se pudo encontrar un producto que coincida");
+		} else if (sp == null) {
+			model.addAttribute("precio", p.getPrecioVenta());
+		} else {
+			model.addAttribute("precio", sp.getPrecioVenta());
+
+		}
+
+		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
+		model.addAttribute("listaClientes", listaClientes);
+		model.addAttribute("producto", producto);
+		return "pages/ventaNueva";
+	}
+
 	@PostMapping("/ventas/agregar")
 	public String agregarAlCarrito(ProductoDTO producto, HttpServletRequest request, RedirectAttributes redirectAttrs,
 			Model model) {
@@ -391,8 +420,9 @@ public class VentasController {
 		}
 
 		if (!encontrado) {
-			carrito.add(new DetalleVenta(Double.parseDouble(cantidad), this.detalleVentaService.calcularValor(
-					Double.parseDouble(cantidad), productoBuscadoPorCodigo.getPrecioVenta()), productoBuscadoPorCodigo));
+			carrito.add(new DetalleVenta(Double.parseDouble(cantidad), this.detalleVentaService
+					.calcularValor(Double.parseDouble(cantidad), productoBuscadoPorCodigo.getPrecioVenta()),
+					productoBuscadoPorCodigo));
 		}
 
 		this.guardarCarrito(carrito, request);
@@ -436,8 +466,8 @@ public class VentasController {
 		model.addAttribute("total", total);
 		model.addAttribute("descuento", descuento);
 		model.addAttribute("producto", producto);
-		
-		System.out.println("Cliente 1"+producto.getCliente());
+
+		System.out.println("Cliente 1" + producto.getCliente());
 		return "pages/cobrar";
 
 	}
@@ -461,7 +491,7 @@ public class VentasController {
 
 		Cliente c = this.clienteService.buscarClienteIdentificacion(producto.getCliente());
 
-		System.out.println("Cliente"+producto.getCliente());
+		System.out.println("Cliente" + producto.getCliente());
 		this.ventaService.realizarVenta(carrito, descuento, c);
 		this.limpiarCarrito(request);
 		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();

@@ -16,4 +16,6 @@ public interface IMarcaRepo {
 
 	void eliminarMarca(Integer id);
 
+	Marca buscarMarcaPorNombre(String nombreMarca);
+
 }

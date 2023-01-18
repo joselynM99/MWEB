@@ -15,4 +15,6 @@ public interface IMarcaService {
 	void actualizarMarca(Marca marca);
 
 	void eliminarMarca(Integer id);
+	
+	Marca buscarMarcaPorNombre(String nombreMarca);
 }

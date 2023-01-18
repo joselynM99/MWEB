@@ -3,12 +3,14 @@ package ec.edu.uce.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.Compra;
 import ec.edu.uce.modelo.Marca;
 
@@ -44,6 +46,22 @@ public class MarcaRepoImpl implements IMarcaRepo {
 	public void eliminarMarca(Integer id) {
 		Marca m = this.buscarMarca(id);
 		this.entityManager.remove(m);
+	}
+	
+	@Override
+	public Marca buscarMarcaPorNombre(String nombreMarca) {
+		TypedQuery<Marca> myQuery = this.entityManager.createQuery("SELECT c FROM Marca c WHERE c.nombre=:nombreMarca",
+				Marca.class);
+
+		myQuery.setParameter("nombreMarca", nombreMarca);
+
+		try {
+
+			return myQuery.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 }

@@ -2,21 +2,29 @@ package ec.edu.uce.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.uce.controller.dto.CierreCajaTO;
 import ec.edu.uce.controller.dto.ProdMasVendido;
+import ec.edu.uce.controller.dto.VentaTO;
 import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Usuario;
+import ec.edu.uce.modelo.Venta;
 import ec.edu.uce.service.ICajaService;
 import ec.edu.uce.service.ICierreCajaService;
 import ec.edu.uce.service.ICompraService;
@@ -67,7 +75,7 @@ public class ReportesController {
 		} else {
 			return "pages/login";
 		}
-		
+
 		model.addAttribute("nombreUser", userDetails.getUsername());
 
 		return "pages/menuReportes";
@@ -156,5 +164,67 @@ public class ReportesController {
 		model.addAttribute("vendidos", vendidos);
 		model.addAttribute("cierreCaja", cierreCaja);
 		return "pages/productosMasVendidos";
+	}
+
+	@GetMapping("/reporteVentas")
+	public String obtenerPaginaReporteVentas(VentaTO ventaTO, Venta venta, RedirectAttributes redirectAttributes,
+			Model model) {
+
+		model.addAttribute("venta", venta);
+		model.addAttribute("ventaTO", ventaTO);
+		return "pages/reporteVentas";
+
+	}
+
+	@GetMapping("/buscarVentas")
+	public String buscarVentas(VentaTO ventaTO, Venta venta, RedirectAttributes redirectAttributes, Model model) {
+
+		List<Venta> ventas = this.ventaService.buscarPorFechaTO(ventaTO.getFechaInicio(), ventaTO.getFechaFin());
+
+		model.addAttribute("ventas", ventas);
+		model.addAttribute("ventaTO", ventaTO);
+
+		return "pages/reporteVentas";
+
+	}
+
+	@DeleteMapping("/borrarVenta/{indice}")
+	public String borrarVenta(@PathVariable Integer indice, VentaTO ventaTO, Venta venta, HttpServletRequest request,
+			Model model) {
+		this.ventaService.eliminarVenta(indice);
+
+		List<Venta> ventas = this.ventaService.buscarPorFechaTO(ventaTO.getFechaInicio(), ventaTO.getFechaFin());
+
+		model.addAttribute("ventas", ventas);
+		model.addAttribute("ventaTO", ventaTO);
+
+		return "pages/reporteVentas";
+	}
+
+	@PutMapping("/actualizarVenta/{indice}")
+	public String actualizarVenta(@PathVariable Integer indice, VentaTO ventaTO, Venta venta,
+			HttpServletRequest request, Model model) {
+
+		Venta v = this.ventaService.buscarVenta(indice);
+
+		List<DetalleVenta> detalles = v.getDetalles();
+
+		model.addAttribute("venta", v);
+		model.addAttribute("detalles", detalles);
+		model.addAttribute("ventaTO", ventaTO);
+		return "pages/reporteVentas";
+
+	}
+
+	@PutMapping("/borrarProductoVenta/{indice}")
+	public String borrarDetalleVenta(Model model, @PathVariable Integer indice, DetalleVenta detalle, VentaTO ventaTO,
+			Venta venta) {
+
+		this.reportesService.borrarProductoVenta(this.detalleVentaService.buscarDetalleVenta(indice));
+
+		model.addAttribute("ventaTO", ventaTO);
+		model.addAttribute("venta", venta);
+		return "pages/reporteVentas";
+
 	}
 }

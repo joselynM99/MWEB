@@ -12,9 +12,9 @@
 	<groupId>ec.edu.uce</groupId>
 	<artifactId>MWEB_1</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
-	<name>MWEB_1</name>
+	<name>MWEB</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>

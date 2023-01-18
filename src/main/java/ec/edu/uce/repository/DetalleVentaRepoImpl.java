@@ -52,29 +52,34 @@ public class DetalleVentaRepoImpl implements IDetalleVentaRepo {
 	public List<DetalleVenta> buscarDetalleVentaProductoFecha(Producto producto, LocalDateTime fechaInicio,
 			LocalDateTime fechaFin) {
 		TypedQuery<DetalleVenta> myQuery = this.entityManager
-				.createQuery("SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
-						+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin AND d.producto=:producto", DetalleVenta.class);
-		
-		myQuery.setParameter("producto",producto );
-		myQuery.setParameter("fechaInicio",fechaInicio );
-		myQuery.setParameter("fechaFin",fechaFin );
+				.createQuery(
+						"SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
+								+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin AND d.producto=:producto",
+						DetalleVenta.class);
 
-		
+		myQuery.setParameter("producto", producto);
+		myQuery.setParameter("fechaInicio", fechaInicio);
+		myQuery.setParameter("fechaFin", fechaFin);
+
 		return myQuery.getResultList();
 	}
-	
+
 	@Override
-	public List<DetalleVenta> buscarDetalleVentaFecha(LocalDateTime fechaInicio,
-			LocalDateTime fechaFin) {
+	public List<DetalleVenta> buscarDetalleVentaFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		TypedQuery<DetalleVenta> myQuery = this.entityManager
 				.createQuery("SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
 						+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin", DetalleVenta.class);
-		
-		myQuery.setParameter("fechaInicio",fechaInicio );
-		myQuery.setParameter("fechaFin",fechaFin );
 
-		
-		return myQuery.getResultList();
+		myQuery.setParameter("fechaInicio", fechaInicio);
+		myQuery.setParameter("fechaFin", fechaFin);
+
+		List<DetalleVenta> list = myQuery.getResultList();
+		System.out.println("buscarDetalleVentaFecha");
+		for (DetalleVenta d : list) {
+			
+			System.out.println(d.getProducto().getNombre());
+		}
+		return list;
 	}
 
 }

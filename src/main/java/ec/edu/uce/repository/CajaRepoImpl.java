@@ -28,7 +28,7 @@ public class CajaRepoImpl implements ICajaRepo {
 
 	@Override
 	public Caja buscarCaja(Integer id) {
-		
+
 		try {
 
 			return this.entityManager.find(Caja.class, id);
@@ -36,7 +36,7 @@ public class CajaRepoImpl implements ICajaRepo {
 		} catch (NoResultException e) {
 			return null;
 		}
-		 
+
 	}
 
 	@Override
@@ -44,13 +44,21 @@ public class CajaRepoImpl implements ICajaRepo {
 		TypedQuery<Caja> myQuery = this.entityManager.createQuery("SELECT c FROM Caja c", Caja.class);
 		return myQuery.getResultList();
 	}
-	
+
 	@Override
 	public Caja buscarCajaPorNombre(String nombreCaja) {
-		TypedQuery<Caja> myQuery = this.entityManager.createQuery("SELECT c FROM Caja c WHERE c.nombre=:nombreCaja", Caja.class);
-		
+		TypedQuery<Caja> myQuery = this.entityManager.createQuery("SELECT c FROM Caja c WHERE c.nombre=:nombreCaja",
+				Caja.class);
+
 		myQuery.setParameter("nombreCaja", nombreCaja);
-		return myQuery.getSingleResult();
+
+		try {
+
+			return myQuery.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	@Override
