@@ -39,6 +39,7 @@
 				</tr>
 				<tr>
 					<th>Producto</th>
+					<th>Subproducto</th>
 					<th>Cantidad</th>
 					<th>Subtotal</th>
 					<th>Eliminar</th>
@@ -46,7 +47,10 @@
 				</thead>
 				<tbody>
 					<tr th:each=" detalle: ${venta.detalles}">
-						<td th:text="${detalle.producto.nombre}"></td>
+						<td th:text="${detalle.producto ==null} ? '***': ${detalle.producto.nombre}">
+						</td>
+						<td th:text="${detalle.subProducto ==null} ? '***' : ${detalle.subProducto.nombre}">
+						</td>
 						<td th:text="${detalle.cantidad}"></td>
 						<td th:text="${detalle.total}"></td>
 

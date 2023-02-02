@@ -71,44 +71,47 @@
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{codigoBarras}" /></td>
 						</tr>
-						<tr>
-							<td><label>Costo promedio</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" step="any" type="number"
-									th:field="*{costoPromedio}" /></td>
-						</tr>
-						<tr>
-							<td><label>Descripcion:</label></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
-						</tr>
+
+
 						<tr>
 							<td><label>Nombre:</label></td>
 						</tr>
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
 						</tr>
-						<tr>
-							<td><label>Precio venta:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="number" step="any"
-									th:field="*{precioVenta}" /></td>
-						</tr>
-						<tr>
-							<td><label>Stock actual:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
-						</tr>
 
 
-					</tbody>
-				</table>
-				<table width="50%">
-					<tbody>
+						<tr>
+							<td><label>Producto:</label></td>
+						</tr>
+						<tr>
+							<td><select class="form-select" name="listProductos" id="listProductos"
+									th:field="*{producto}">
+
+									<option th:value=null th:text="Select" selected></option>
+									<option th:each=" prod : ${listProductos}" th:value="${prod.id}"
+										th:text="${prod.nombre} + ' => COSTO: '+ ${prod.costoPromedio}">
+										
+									</option>
+								</select></td>
+						</tr>
+						<tr>
+							<td><label>Cantidad Relacionada:</label></td>
+						</tr>
+						<tr>
+							<td><input onkeyup="calcularPrecioSubProducto()" id="cantidadR" class="form-control"
+									required="" type="text" value= "#" th:field="*{cantidadRelacionada}" th:value="*{cantidadRelacionada}" />
+							</td>
+						</tr>
+
+						<tr>
+							<td><label>Costo promedio</label></td>
+						</tr>
+						<tr>
+							<td><input onkeyup="calcularPrecioVenta()" id="costo" class="form-control" required="" step="any" type="number"
+									th:field="*{costoPromedio}" th:value="*{costoPromedio}" /></td>
+						</tr>
+
 						<tr>
 							<td><label>Impuesto:</label></td>
 						</tr>
@@ -117,6 +120,26 @@
 									<option th:each=" impu : ${listImpuestos}" th:value="${impu.id}"
 										th:text="${impu.TipoImpuesto}"></option>
 								</select></td>
+						</tr>
+						<tr>
+							<td><label>Precio venta:</label></td>
+						</tr>
+						<tr>
+							<td><input id="precioV" class="form-control" required="" type="number" step="any"
+									th:field="*{precioVenta}" /></td>
+						</tr>
+
+
+					</tbody>
+				</table>
+				<table width="50%">
+					<tbody>
+
+						<tr>
+							<td><label>Stock actual:</label></td>
+						</tr>
+						<tr>
+							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
 						</tr>
 						<tr>
 							<td><label>Marca:</label></td>
@@ -132,25 +155,13 @@
 						</tr>
 						<tr>
 							<td><select class="form-select" name="proveedor" id="listProveedores">
+									<option th:value=null th:text="Select" selected></option>
 									<option th:each=" prov : ${listProveedores}" th:value="${prov.id}"
 										th:text="${prov.nombreComercial}"></option>
 								</select></td>
 						</tr>
-						<tr>
-							<td><label>Producto:</label></td>
-						</tr>
-						<tr>
-							<td><select class="form-select" name="listProductos" id="listProductos" th:field="*{producto}">
-									<option th:each=" prod : ${listProductos}" th:value="${prod.id}"
-										th:text="${prod.nombre}"></option>
-								</select></td>
-						</tr>
-						<tr>
-							<td><label>Cantidad Relacionada:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="text" th:field="*{cantidadRelacionada}" /></td>
-						</tr>
+
+
 						<tr>
 							<td><label>Sección:</label></td>
 						</tr>
@@ -159,6 +170,12 @@
 									<option th:each=" seccion : ${listSeccion}" th:value="${seccion.id}"
 										th:text="${seccion.categoria}"></option>
 								</select></td>
+						</tr>
+						<tr>
+							<td><label>Descripcion:</label></td>
+						</tr>
+						<tr>
+							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
 						</tr>
 
 

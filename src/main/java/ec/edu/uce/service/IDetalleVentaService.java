@@ -8,6 +8,7 @@ import ec.edu.uce.controller.dto.ProdMasVendido;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Impuesto;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.SubProducto;
 
 public interface IDetalleVentaService {
 
@@ -23,8 +24,9 @@ public interface IDetalleVentaService {
 
 	BigDecimal calcularValor(Double cantidad, BigDecimal precio);
 
-	List<DetalleVenta> buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin, Producto producto);
-
 	List<DetalleVenta> listaProdVendidosFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+
+	List<DetalleVenta> buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin, Producto producto,
+			SubProducto subProducto);
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.SubProducto;
 
 @Transactional
 @Repository
@@ -49,15 +50,17 @@ public class DetalleVentaRepoImpl implements IDetalleVentaRepo {
 	}
 
 	@Override
-	public List<DetalleVenta> buscarDetalleVentaProductoFecha(Producto producto, LocalDateTime fechaInicio,
+	public List<DetalleVenta> buscarDetalleVentaProductoFecha(Producto producto, SubProducto subProducto, LocalDateTime fechaInicio,
 			LocalDateTime fechaFin) {
 		TypedQuery<DetalleVenta> myQuery = this.entityManager
 				.createQuery(
 						"SELECT d FROM DetalleVenta d JOIN FETCH d.venta v WHERE "
-								+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin AND d.producto=:producto",
+								+ "v.fecha>=:fechaInicio AND v.fecha<=:fechaFin AND (d.producto=:producto OR d.subProducto=:subProducto)",
 						DetalleVenta.class);
-
+		
+		
 		myQuery.setParameter("producto", producto);
+		myQuery.setParameter("subProducto", subProducto);
 		myQuery.setParameter("fechaInicio", fechaInicio);
 		myQuery.setParameter("fechaFin", fechaFin);
 
@@ -75,10 +78,7 @@ public class DetalleVentaRepoImpl implements IDetalleVentaRepo {
 
 		List<DetalleVenta> list = myQuery.getResultList();
 		System.out.println("buscarDetalleVentaFecha");
-		for (DetalleVenta d : list) {
-			
-			System.out.println(d.getProducto().getNombre());
-		}
+		
 		return list;
 	}
 

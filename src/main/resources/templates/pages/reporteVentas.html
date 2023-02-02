@@ -75,6 +75,8 @@
 					<tr>
 						<th>Fecha de Venta</th>
 						<th>Valor de venta</th>
+						<th>Caja</th>
+
 						<th>Productos</th>
 						<th>Eliminar</th>
 
@@ -84,19 +86,27 @@
 					<tr th:each="venta, iterador : ${ventas}">
 						<td th:text="${venta.fecha}"></td>
 						<td th:text="${venta.total}"></td>
+						<td th:text="${venta.caja.nombre}"></td>
+
+
 
 						<td>
 							<table class="table table-bordered">
 								<thead>
 									<tr>
 										<th>Producto</th>
+										<th>Subproducto</th>
 										<th>Cantidad</th>
 										<th>Subtotal</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each=" detalle: ${venta.detalles}">
-										<td th:text="${detalle.producto.nombre}"></td>
+										<td th:text="${detalle.producto ==null} ? '***': ${detalle.producto.nombre}">
+										</td>
+										<td
+											th:text="${detalle.subProducto ==null} ? '***' : ${detalle.subProducto.nombre}">
+										</td>
 										<td th:text="${detalle.cantidad}"></td>
 										<td th:text="${detalle.total}"></td>
 									</tr>
@@ -108,13 +118,13 @@
 							<form th:action="@{/reportes/borrarVenta/{id}(id=${venta.id})}" th:method="delete" ,
 								th:object=${venta}>
 								<input type="submit" class="btn btn-dark" value="Eliminar" , id=bot1>
-								
+
 							</form>
-							
+
 							<form th:action="@{/reportes/actualizarVenta/{id}(id=${venta.id})}" th:method="put" ,
 								th:object=${venta}>
 								<input type="submit" class="btn btn-dark" value="Actualizar" , id=bot1>
-								
+
 							</form>
 						</td>
 

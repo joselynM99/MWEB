@@ -71,13 +71,7 @@
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{codigoBarras}" /></td>
 						</tr>
-						<tr>
-							<td><label>Costo promedio</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" step="any" type="number"
-									th:field="*{costoPromedio}" /></td>
-						</tr>
+
 						<tr>
 							<td><label>Descripcion:</label></td>
 						</tr>
@@ -91,24 +85,14 @@
 							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
 						</tr>
 						<tr>
-							<td><label>Precio venta:</label></td>
+							<td><label>Costo promedio</label></td>
 						</tr>
 						<tr>
-							<td><input class="form-control" required="" type="number" step="any"
-									th:field="*{precioVenta}" /></td>
-						</tr>
-						<tr>
-							<td><label>Stock actual:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
+							<td><input id="costo" onkeyup="calcularPrecioVenta()" class="form-control" required=""
+									step="any" type="number" th:field="*{costoPromedio}" /></td>
 						</tr>
 
 
-					</tbody>
-				</table>
-				<table width="50%">
-					<tbody>
 						<tr>
 							<td><label>Impuesto:</label></td>
 						</tr>
@@ -118,6 +102,27 @@
 										th:text="${impu.TipoImpuesto}"></option>
 								</select></td>
 						</tr>
+						<tr>
+							<td><label>Precio venta con impuestos:</label></td>
+						</tr>
+						<tr>
+							<td><input id="precioV" class="form-control" required="" type="number" step="any"
+									th:field="*{precioVenta}" /></td>
+
+						</tr>
+
+
+					</tbody>
+				</table>
+				<table width="50%">
+					<tbody>
+						<tr>
+							<td><label>Stock actual:</label></td>
+						</tr>
+						<tr>
+							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
+						</tr>
+
 						<tr>
 							<td><label>Marca:</label></td>
 						</tr>
@@ -151,6 +156,8 @@
 				</table>
 				<input type="submit" class="btn btn-dark" id="btn_agr_producto" value="Guardar">
 			</form>
+
+
 		</div>
 	</div>
 </body>

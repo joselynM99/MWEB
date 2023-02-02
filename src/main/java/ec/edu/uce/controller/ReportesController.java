@@ -212,7 +212,7 @@ public class ReportesController {
 		model.addAttribute("venta", v);
 		model.addAttribute("detalles", detalles);
 		model.addAttribute("ventaTO", ventaTO);
-		return "pages/reporteVentas";
+		return "pages/actualizarVenta";
 
 	}
 

@@ -17,7 +17,7 @@
     height: 100%;
     flex: 1;
     border: double #582733;
-    background-color: #f4c397;
+    background-color: aliceblue;
 
 }
 
@@ -25,7 +25,7 @@
     height: 100%;
     flex: 1;
     border: double #582733;
-    background-color: #f4c397;
+    background-color: aliceblue;
 
 
 }
@@ -42,7 +42,7 @@
 
 #venta {
     position: absolute;
-    top: 440px;
+    bottom: 5%;
 
 }
 

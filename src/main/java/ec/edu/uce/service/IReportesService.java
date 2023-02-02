@@ -11,6 +11,7 @@ import ec.edu.uce.modelo.Caja;
 import ec.edu.uce.modelo.CierreCaja;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.modelo.Usuario;
 
 
@@ -20,14 +21,16 @@ public interface IReportesService {
 			Usuario usuario);
 
 
-	ProdMasVendido buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin,
-			Producto producto);
-
+	
 
 	List<ProdMasVendido> hacerListaProdMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin);
 
 
 	void borrarProductoVenta(DetalleVenta detalle);
+
+
+	ProdMasVendido buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin, Producto producto,
+			SubProducto subProducto);
 	
 	
 

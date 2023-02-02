@@ -98,3 +98,31 @@ function cliente() {
 	document.getElementById("cliente").value = document.getElementById("seC").value
 }
 
+
+function calcularPrecioVenta(){
+	
+	let impuesto = document.getElementById("list_impuesto").value
+	let costo = document.getElementById("costo").value
+	console.log(impuesto)
+	console.log(costo)
+	if(impuesto==1){
+		document.getElementById("precioV").value= parseFloat(costo) + parseFloat(costo*12/100)
+		
+		console.log(costo*12/100)
+	}else{
+		document.getElementById("precioV").value=costo
+	}
+	
+}
+
+function calcularPrecioSubProducto(){
+	let costoProducto= document.getElementById("costoProd").value
+	let cantidadR = document.getElementById("cantidadR").value
+	console.log("cantidadR")
+	console.log("costoProd")
+	if(costoProducto!=null){
+		document.getElementById("costo").value=parseFloat(costoProducto)/parseFloat(cantidadR)
+	}
+	
+	calcularPrecioVenta()
+}

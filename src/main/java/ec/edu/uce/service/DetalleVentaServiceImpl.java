@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.Impuesto;
 import ec.edu.uce.modelo.Producto;
+import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.repository.IDetalleVentaRepo;
 
 @Service
@@ -51,18 +52,15 @@ public class DetalleVentaServiceImpl implements IDetalleVentaService {
 
 	@Override
 	public List<DetalleVenta> buscarProductosMasVendidos(LocalDateTime fechaInicio, LocalDateTime fechaFin,
-			Producto producto) {
-		return this.detalleVentaRepo.buscarDetalleVentaProductoFecha(producto, fechaInicio, fechaFin);
+			Producto producto, SubProducto subProducto) {
+		return this.detalleVentaRepo.buscarDetalleVentaProductoFecha(producto, subProducto, fechaInicio, fechaFin);
 	}
 
 	@Override
 	public List<DetalleVenta> listaProdVendidosFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		List<DetalleVenta> list = this.detalleVentaRepo.buscarDetalleVentaFecha(fechaInicio, fechaFin);
 		System.out.println("listaProdVendidosFecha");
-		for(DetalleVenta d: list) {
-			
-			System.out.println(d.getProducto().getNombre());
-		}
+		
 		return list;
 	}
 
