@@ -23,9 +23,9 @@
 
 </head>
 
-<body style="background-color:#ff5850;">
-	<div style="background-color: linen;">
-		<div style="background-color: linen;" class=container my-5>
+<body style="background-color:#952f57;">
+	<div style="background-color: #952f57;">
+		<div style="background-color: #f1f1f1;" class=container my-5>
 
 			<form th:action="@{/reportes/buscarVentas}" th:object="${ventaTO}" method="get">
 				<table class="table-primary">
@@ -70,13 +70,12 @@
 	</div>
 	<div class=container my-5>
 		<div class="card-body">
-			<table class="table table-bordered" id=tabla1>
+			<table class="table table-danger" id=tabla1>
 				<thead>
 					<tr>
 						<th>Fecha de Venta</th>
 						<th>Valor de venta</th>
 						<th>Caja</th>
-
 						<th>Productos</th>
 						<th>Eliminar</th>
 
@@ -91,7 +90,7 @@
 
 
 						<td>
-							<table class="table table-bordered">
+							<table class="table table-secondary">
 								<thead>
 									<tr>
 										<th>Producto</th>

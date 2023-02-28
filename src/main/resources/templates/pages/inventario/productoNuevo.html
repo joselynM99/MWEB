@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=>, initial-scale=1.0">
-	<title>Subproducto Nuevo</title>
+	<title>Producto Nuevo</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -29,8 +29,8 @@
 
 </head>
 
-<body id="productoNuevoPag">
-	<header></header>
+<body>
+
 	<nav class="nav">
 
 		<ul class="nav nav-tabs">
@@ -39,16 +39,16 @@
 				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Registrar SubProducto</a>
+				<a class="nav-link active" aria-current="page">Registrar Producto</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/inventario/actualizarSubProducto}">Actualizar SubProducto</a>
+				<a class="nav-link" href="#" th:href="@{/inventario/actualizarProducto}">Actualizar Producto</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/inventario/listaSubProductos}">Lista de subproductos </a>
+				<a class="nav-link" href="#" th:href="@{/inventario/listaProductos}">Lista de productos </a>
 			</li>
 		</ul>
-		<div id="user_ic">
+		<div id="user_ic1">
 			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
 			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
 		</div>
@@ -61,7 +61,7 @@
 			</div>
 
 
-			<form id="datos_producto" th:object="${subproductoDTO}" th:action="@{/inventario/agregarSubProducto}"
+			<form id="datos_producto" th:object="${productoDTO}" th:action="@{/inventario/agregarProducto}"
 				method="post">
 				<table style="float: left;width: 50%;">
 					<tbody>
@@ -72,45 +72,26 @@
 							<td><input class="form-control" required="" type="text" th:field="*{codigoBarras}" /></td>
 						</tr>
 
-
+						<tr>
+							<td><label>Descripcion:</label></td>
+						</tr>
+						<tr>
+							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
+						</tr>
 						<tr>
 							<td><label>Nombre:</label></td>
 						</tr>
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
 						</tr>
-
-
-						<tr>
-							<td><label>Producto:</label></td>
-						</tr>
-						<tr>
-							<td><select class="form-select" name="listProductos" id="listProductos"
-									th:field="*{producto}">
-
-									<option th:value=null th:text="Select" selected></option>
-									<option th:each=" prod : ${listProductos}" th:value="${prod.id}"
-										th:text="${prod.nombre} + ' => COSTO: '+ ${prod.costoPromedio}">
-										
-									</option>
-								</select></td>
-						</tr>
-						<tr>
-							<td><label>Cantidad Relacionada:</label></td>
-						</tr>
-						<tr>
-							<td><input onkeyup="calcularPrecioSubProducto()" id="cantidadR" class="form-control"
-									required="" type="text" value= "#" th:field="*{cantidadRelacionada}" th:value="*{cantidadRelacionada}" />
-							</td>
-						</tr>
-
 						<tr>
 							<td><label>Costo promedio</label></td>
 						</tr>
 						<tr>
-							<td><input onkeyup="calcularPrecioVenta()" id="costo" class="form-control" required="" step="any" type="number"
-									th:field="*{costoPromedio}" th:value="*{costoPromedio}" /></td>
+							<td><input id="costo" onkeyup="calcularPrecioVenta()" class="form-control" required=""
+									step="any" type="number" th:field="*{costoPromedio}" /></td>
 						</tr>
+
 
 						<tr>
 							<td><label>Impuesto:</label></td>
@@ -122,11 +103,12 @@
 								</select></td>
 						</tr>
 						<tr>
-							<td><label>Precio venta:</label></td>
+							<td><label>Precio venta con impuestos:</label></td>
 						</tr>
 						<tr>
 							<td><input id="precioV" class="form-control" required="" type="number" step="any"
 									th:field="*{precioVenta}" /></td>
+
 						</tr>
 
 
@@ -134,13 +116,13 @@
 				</table>
 				<table width="50%">
 					<tbody>
-
 						<tr>
 							<td><label>Stock actual:</label></td>
 						</tr>
 						<tr>
 							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
 						</tr>
+
 						<tr>
 							<td><label>Marca:</label></td>
 						</tr>
@@ -155,13 +137,10 @@
 						</tr>
 						<tr>
 							<td><select class="form-select" name="proveedor" id="listProveedores">
-									<option th:value=null th:text="Select" selected></option>
 									<option th:each=" prov : ${listProveedores}" th:value="${prov.id}"
 										th:text="${prov.nombreComercial}"></option>
 								</select></td>
 						</tr>
-
-
 						<tr>
 							<td><label>Sección:</label></td>
 						</tr>
@@ -171,18 +150,14 @@
 										th:text="${seccion.categoria}"></option>
 								</select></td>
 						</tr>
-						<tr>
-							<td><label>Descripcion:</label></td>
-						</tr>
-						<tr>
-							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
-						</tr>
 
 
 					</tbody>
 				</table>
 				<input type="submit" class="btn btn-dark" id="btn_agr_producto" value="Guardar">
 			</form>
+
+
 		</div>
 	</div>
 </body>

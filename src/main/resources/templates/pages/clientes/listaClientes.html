@@ -38,18 +38,18 @@
 				<a class="nav-link" href="#" th:href="@{/clientes/menu}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Registrar Cliente</a>
+				<a class="nav-link" href="#" th:href="@{/clientes/registroCliente}">Registrar Cliente</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#" th:href="@{/clientes/actualizarCliente}">Modificar Cliente</a>
 			</li>
-			
+
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/clientes/listaClientes}">Lista de Clientes </a>
+				<a class="nav-link active" aria-current="page">Lista de Clientes </a>
 			</li>
 
 		</ul>
-		<div id="user_ic">
+		<div id="user_ic1">
 			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
 			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
 		</div>
@@ -59,7 +59,7 @@
 
 			<div class=container my-5>
 				<div class="card-body">
-					<table class="table table-dark table-hover" id=tabla1>
+					<table class="table table-danger table-hover" id=tabla1>
 						<thead>
 							<tr>
 								<th>Nombres</th>
@@ -67,7 +67,7 @@
 								<th>Tipo de Identificación</th>
 								<th>Identificación</th>
 								<th>Correo</th>
-								<th>Dirección</th>								
+								<th>Dirección</th>
 								<th>Teléfono</th>
 								<th>Eliminar</th>
 								<th>Actualizar</th>

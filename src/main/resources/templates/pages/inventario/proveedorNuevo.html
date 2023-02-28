@@ -36,21 +36,19 @@
 		<ul class="nav nav-tabs">
 			<label id="titulo_sis">MARK WEB</label>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/clientes/menu}">Inicio</a>
+				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Registrar Cliente</a>
+				<a class="nav-link active" aria-current="page">Registrar Proveedor</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/clientes/actualizarCliente}">Modificar Cliente</a>
+				<a class="nav-link" href="#" th:href="@{/inventario/actualizarProveedor}">Actualizar Proveedor</a>
 			</li>
-			
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/clientes/listaClientes}">Lista de Clientes </a>
+				<a class="nav-link" href="#" th:href="@{/inventario/listaProveedores}">Lista de Proveedores </a>
 			</li>
-
 		</ul>
-		<div id="user_ic">
+		<div id="user_ic1">
 			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
 			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
 		</div>
@@ -60,7 +58,7 @@
 
 		<div id="cont1" class=container my-5>
 
-			<form id="datos_proveedor" th:object="${cliente}" th:action="@{/clientes/agregarCliente}"
+			<form id="datos_proveedor" th:object="${proveedor}" th:action="@{/inventario/agregarProveedor}"
 				method="post">
 				<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
 					th:text="${mensaje}" class="alert">
@@ -68,17 +66,17 @@
 				<table style="width: 50%;">
 					<tbody>
 						<tr>
-							<td><label for="nombres">Nombres:</label></td>
+							<td><label for="nombreComercial">Nombre Comercial:</label></td>
 						</tr>
 						<tr>
-							<td><input class='form-control' id="nombres" required="" type="text" th:field="*{nombres}" />
+							<td><input class='form-control' id="nombreComercial" required="" type="text" th:field="*{nombreComercial}" />
 							</td>
 						</tr>
 						<tr>
-							<td><label   for="apellidos">Apellidos:</label></td>
+							<td><label   for="razonSocial">Razon Social:</label></td>
 						</tr>
 						<tr>
-							<td><input class='form-control' required="" id="apellidos" type="text" th:field="*{apellidos}" /></td>
+							<td><input class='form-control' required="" id="razonSocial" type="text" th:field="*{razonSocial}" /></td>
 						</tr>
 						<tr>
 							<td><label for="tipo_identificacion">Tipo identificación:</label></td>
@@ -97,23 +95,16 @@
 							</td>
 						</tr>
 						<tr>
-							<td><label for="identificacion">Fecha de Nacimiento:</label></td>
-						</tr>
-						<tr>
-							<td><input class='form-control' required="" id="fechaNacimiento" type="datetime-local" th:field="*{fechaNacimiento}"></input>
-							</td>
-						</tr>
-						<tr>
 							<td><label for="telefono">Telefono:</label></td>
 						</tr>
 						<tr>
 							<td><input class='form-control' required="" id="telefono" type="text" th:field="*{telefono}" /></td>
 						</tr>
 						<tr>
-							<td><label for="direccionFacturacion">Direccion:</label></td>
+							<td><label for="direccion">Direccion:</label></td>
 						</tr>
 						<tr>
-							<td><input class='form-control' required="" id="direccionFacturacion" type="text" th:field="*{direccionFacturacion}" /></td>
+							<td><input class='form-control' required="" id="direccion" type="text" th:field="*{direccion}" /></td>
 						</tr>
 						<tr>
 							<td><label for="correo">Correo:</label></td>
@@ -123,7 +114,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-dark" id="btn_agr_cliente" value="Guardar">
+				<input type="submit" class="btn btn-dark" id="btn_agr_proveedor" value="Guardar">
 			</form>
 		</div>
 	</div>

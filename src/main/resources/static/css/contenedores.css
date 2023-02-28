@@ -17,7 +17,7 @@
     height: 100%;
     flex: 1;
     border: double #582733;
-    background-color: aliceblue;
+    background-color: #f1f1f1;
 
 }
 
@@ -25,7 +25,7 @@
     height: 100%;
     flex: 1;
     border: double #582733;
-    background-color: aliceblue;
+    background-color: #f1f1f1;
 
 
 }
@@ -48,7 +48,7 @@
 
 .my-custom-scrollbar {
     position: relative;
-    height: 500px;
+    height: 70%;
     overflow: auto;
     font-size: 13px;
 }
@@ -66,7 +66,7 @@
 }
 
 #cont{
-	background-color: aliceblue;
+	background-color: #f1f1f1;
 }
 
 .cant{
@@ -93,4 +93,9 @@
 	right: 100px;
 }
 
+#cliente{
+	margin-bottom: 20px;
+	margin-top: 10px;
+	display: inline-flex;
+}
 

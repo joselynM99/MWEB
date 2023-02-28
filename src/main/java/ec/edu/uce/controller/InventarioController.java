@@ -71,7 +71,7 @@ public class InventarioController {
 		}
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
-		return "pages/inventario";
+		return "pages/inventario/inventario";
 	}
 
 	@GetMapping("/productoNuevo")
@@ -90,7 +90,7 @@ public class InventarioController {
 		model.addAttribute("listMarcas", this.marcaService.buscarTodosMarca());
 		model.addAttribute("listSeccion", this.seccionService.buscarTodosSeccion());
 		model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
-		return "pages/productoNuevo";
+		return "pages/inventario/productoNuevo";
 
 	}
 
@@ -102,7 +102,7 @@ public class InventarioController {
 		return "redirect:/inventario/productoNuevo";
 	}
 
-	/***/
+
 
 	@GetMapping("/listaProductos")
 	public String obtenerPaginaReporteProductos(Producto producto, RedirectAttributes redirectAttributes, Model model) {
@@ -118,7 +118,7 @@ public class InventarioController {
 
 		model.addAttribute("productos", productos);
 		model.addAttribute("producto", producto);
-		return "pages/listaProductos";
+		return "pages/inventario/listaProductos";
 
 	}
 
@@ -178,7 +178,7 @@ public class InventarioController {
 		model.addAttribute("listSeccion", this.seccionService.buscarTodosSeccion());
 		model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 
-		return "pages/productoActualizar";
+		return "pages/inventario/productoActualizar";
 
 	}
 
@@ -206,7 +206,7 @@ public class InventarioController {
 			model.addAttribute("listSeccion", this.seccionService.buscarTodosSeccion());
 			model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 
-			return "pages/productoActualizar";
+			return "pages/inventario/productoActualizar";
 		}
 
 	}
@@ -215,14 +215,10 @@ public class InventarioController {
 	public String actualizarProducto(Producto producto, Model modelo, RedirectAttributes redirectAttributes) {
 
 		Proveedor proveedor = this.proveedorService.buscarProveedor(producto.getProveedor().getId());
-		System.out.println(producto.getProveedor().getId());
 		Impuesto i = this.impuestoService.buscarImpuesto(producto.getImpuesto().getId());
-		System.out.println(producto.getImpuesto().getId());
 		Seccion s = this.seccionService.buscarSeccion(producto.getSeccion().getId());
-		System.out.println(producto.getSeccion().getId());
 		
 		Marca m = this.marcaService.buscarMarca(producto.getMarca().getId());
-		System.out.println(producto.getMarca().getId());
 		
 		producto.setProveedor(proveedor);
 		producto.setImpuesto(i);
@@ -262,7 +258,7 @@ public class InventarioController {
 		model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 		model.addAttribute("listProductos", this.productoService.buscarTodosProductos());
 		model.addAttribute("subproductoDTO", subproductoDTO);
-		return "pages/subproductoNuevo";
+		return "pages/inventario/subproductoNuevo";
 
 	}
 
@@ -289,7 +285,7 @@ public class InventarioController {
 
 		model.addAttribute("subproductos", subproductos);
 		model.addAttribute("subproducto", subproducto);
-		return "pages/listaSubProductos";
+		return "pages/inventario/listaSubProductos";
 
 	}
 
@@ -355,7 +351,7 @@ public class InventarioController {
 		model.addAttribute("subproducto",subproducto);
 		
 
-		return "pages/subproductoActualizar";
+		return "pages/inventario/subproductoActualizar";
 
 	}
 
@@ -384,7 +380,7 @@ public class InventarioController {
 			model.addAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 			model.addAttribute("listProductos", this.productoService.buscarTodosProductos());
 
-			return "pages/subproductoActualizar";
+			return "pages/inventario/subproductoActualizar";
 		}
 
 	}
@@ -430,7 +426,7 @@ public class InventarioController {
 		}
 		model.addAttribute("nombreUser", userDetails.getUsername());
 		
-		return "pages/proveedorNuevo";
+		return "pages/inventario/proveedorNuevo";
 	}
 
 	@PostMapping("/agregarProveedor")
@@ -455,7 +451,7 @@ public class InventarioController {
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
 
-		return "pages/proveedorActualizar";
+		return "pages/inventario/proveedorActualizar";
 
 	}
 
@@ -469,7 +465,7 @@ public class InventarioController {
 		} else {
 			modelo.addAttribute("proveedor", p);
 
-			return "pages/proveedorActualizar";
+			return "pages/inventario/proveedorActualizar";
 		}
 
 	}
@@ -509,7 +505,7 @@ public class InventarioController {
 
 		model.addAttribute("proveedores", proveedores);
 
-		return "pages/listaProveedores";
+		return "pages/inventario/listaProveedores";
 
 	}
 

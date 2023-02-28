@@ -41,16 +41,16 @@
 				<a class="nav-link" href="#" th:href="@{/inventario/menu}">Inicio</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/inventario/subproductoNuevo}">Registrar SubProducto</a>
+				<a class="nav-link" href="#" th:href="@{/inventario/productoNuevo}">Registrar Producto</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Actualizar SubProducto</a>
+				<a class="nav-link active" aria-current="page">Actualizar Producto</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" th:href="@{/inventario/listaSubProductos}">Lista de Subproductos </a>
+				<a class="nav-link" href="#" th:href="@{/inventario/listaProductos}">Lista de productos </a>
 			</li>
 		</ul>
-		<div id="user_ic">
+		<div id="user_ic1">
 			<span id="us" class="bi bi-file-person-fill"><label th:text="${nombreUser}"></label></span>
 			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Cerrar sesi&oacute;n</a></li>
 		</div>
@@ -59,7 +59,7 @@
 	<div class=container my-5 style="text-align:center;">
 		<div class="card-body">
 
-			<form th:action="@{/inventario/busquedaSubProducto}" th:object="${subproducto}" th:method="get">
+			<form th:action="@{/inventario/busquedaProducto}" th:object="${producto}" th:method="get">
 				<table class="table-primary" id=tabla2>
 					<tr>
 						<td>
@@ -90,49 +90,53 @@
 	</div>
 	<div class=container my-5>
 		<div class="card-body">
-			<form th:action="@{/inventario/actualizarSubProd}" th:object="${subproducto}" th:method="put">
+			<form th:action="@{/inventario/actualizarProd}" th:object="${producto}" th:method="put">
 				<table style="float: left;width: 50%;">
 					<tbody>
 						<tr>
-							<td><label for="name">Codigo de barras:</label></td>
+							<td><label>Codigo de barras:</label></td>
 						</tr>
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{codigoBarras}" /></td>
 						</tr>
+
 						<tr>
-							<td><input class="form-control" required="" type="hidden" th:field="*{id}" /></td>
-						</tr>
-						<tr>
-							<td><label for="name">Costo promedio</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" step="any" type="number"
-									th:field="*{costoPromedio}" /></td>
-						</tr>
-						<tr>
-							<td><label for="name">Descripcion:</label></td>
+							<td><label>Descripcion:</label></td>
 						</tr>
 						<tr>
 							<td><textarea class="form-control" th:field="*{descripcion}"></textarea></td>
 						</tr>
 						<tr>
-							<td><label for="name">Nombre:</label></td>
+							<td><label>Nombre:</label></td>
 						</tr>
 						<tr>
 							<td><input class="form-control" required="" type="text" th:field="*{nombre}" /></td>
 						</tr>
 						<tr>
-							<td><label for="name">Precio venta:</label></td>
+							<td><label>Costo promedio</label></td>
 						</tr>
 						<tr>
-							<td><input class="form-control" required="" type="number" step="any"
+							<td><input id="costo" onkeyup="calcularPrecioVenta()" class="form-control" required=""
+									step="any" type="number" th:field="*{costoPromedio}" /></td>
+						</tr>
+
+
+						<tr>
+							<td><label>Impuesto:</label></td>
+						</tr>
+						<tr>
+							<td><select class="form-select" name="impuesto" id="list_impuesto">
+									<option th:each=" impu : ${listImpuestos}" th:value="${impu.id}"
+										th:text="${impu.TipoImpuesto}"></option>
+								</select></td>
+						</tr>
+						<tr>
+							<td><label>Precio venta con impuestos:</label></td>
+						</tr>
+						<tr>
+							<td><input id="precioV" class="form-control" required="" type="number" step="any"
 									th:field="*{precioVenta}" /></td>
-						</tr>
-						<tr>
-							<td><label for="name">Stock actual:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
+
 						</tr>
 
 
@@ -141,79 +145,47 @@
 				<table width="50%">
 					<tbody>
 						<tr>
-							<td><label for="name">Impuesto:</label></td>
+							<td><label>Stock actual:</label></td>
 						</tr>
 						<tr>
-							<td><select th:name="listImpuestos" id="listImpuestos" class="form-select "
-									th:field="*{impuesto.id}">
-									<option th:each="option : ${listImpuestos}" th:value="${option.id}"
-										th:text="${option.TipoImpuesto}">
-									</option>
+							<td><input class="form-control" required="" type="number" th:field="*{stockActual}" /></td>
+						</tr>
+
+						<tr>
+							<td><label>Marca:</label></td>
+						</tr>
+						<tr>
+							<td><select name="marca" id="listMarcas" class="form-select">
+									<option th:each=" marca : ${listMarcas}" th:value="${marca.id}"
+										th:text="${marca.nombre}"></option>
 								</select></td>
 						</tr>
 						<tr>
-							<td><label for="name">Marca:</label></td>
+							<td><label>Proveedor:</label></td>
 						</tr>
 						<tr>
-							<td><select th:name="listMarcas" id="listMarcas" class="form-select"
-									th:field="*{marca.id}">
-									<option th:each="option : ${listMarcas}" th:value="${option.id}"
-										th:text="${option.nombre}">
-									</option>
+							<td><select class="form-select" name="proveedor" id="listProveedores">
+									<option th:each=" prov : ${listProveedores}" th:value="${prov.id}"
+										th:text="${prov.nombreComercial}"></option>
 								</select></td>
 						</tr>
 						<tr>
-							<td><label for="name">Proveedor:</label></td>
+							<td><label>Sección:</label></td>
 						</tr>
 						<tr>
-							<td>
-								<select th:name="listProveedores" id="listProveedores" class="form-select"
-									th:field="*{proveedor.id}">
-									<option th:each="option : ${listProveedores}" th:value="${option.id}"
-										th:text="${option.nombreComercial}">
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td><label for="name">Producto:</label></td>
-						</tr>
-						<tr>
-							<td>
-								<select th:name="listProductos" id="listProductos" class="form-select"
-									th:field="*{producto.id}">
-									<option th:each="option : ${listProductos}" th:value="${option.id}"
-										th:text="${option.nombre}">
-									</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td><label>Cantidad Relacionada:</label></td>
-						</tr>
-						<tr>
-							<td><input class="form-control" required="" type="text" th:field="*{cantidadRelacionada}" /></td>
-						</tr>
-						<tr>
-							<td><label for="name">Sección:</label></td>
-						</tr>
-						<tr>
-							<td><select th:name="listSeccion" id="listSeccion" class="form-select"
-									th:field="*{seccion.id}">
-									<option th:each="option : ${listSeccion}" th:value="${option.id}"
-										th:text="${option.categoria}">
-									</option>
+							<td><select class="form-select" name="seccion" id="listSeccion">
+									<option th:each=" seccion : ${listSeccion}" th:value="${seccion.id}"
+										th:text="${seccion.categoria}"></option>
 								</select></td>
 						</tr>
+
 
 					</tbody>
 				</table>
 				<input type="submit" class="btn btn-dark" id="boton2" value="Actualizar">
-
-
 			</form>
 
-			<form th:action="@{/inventario/eliminarSubProducto/{id}(id=${subproducto.id})}" th:object="${subproducto}"
+			<form th:action="@{/inventario/eliminarProducto/{id}(id=${producto.id})}" th:object="${producto}"
 				th:method="delete">
 				<table class="table-primary">
 					<input type="submit" class="btn btn-dark" id="boton1" value="Eliminar">

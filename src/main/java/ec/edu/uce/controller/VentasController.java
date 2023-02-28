@@ -94,13 +94,13 @@ public class VentasController {
 		}
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
-		return "pages/ventas";
+		return "pages/ventas/ventas";
 	}
 
 	@GetMapping("ventas/adicionales")
 	public String obtenerVentanaAdicionales(Model model, Adicional adicional) {
 
-		return "pages/adicionales";
+		return "pages/ventas/adicionales";
 
 	}
 
@@ -183,7 +183,7 @@ public class VentasController {
 		model.addAttribute("gastos", gastos);
 		model.addAttribute("ingresos", ingresos);
 		model.addAttribute("totalVentas", totalVentas);
-		return "pages/cerrarCaja";
+		return "pages/ventas/cerrarCaja";
 	}
 
 	@PutMapping("/ventas/cerrarCaja")
@@ -227,10 +227,10 @@ public class VentasController {
 			List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
 			model.addAttribute("listaClientes", listaClientes);
 
-			return "pages/ventaNueva";
+			return "pages/ventas/ventaNueva";
 		} else {
 			model.addAttribute("cierre", cierre);
-			return "pages/abrirCaja";
+			return "pages/ventas/abrirCaja";
 		}
 
 	}
@@ -286,7 +286,7 @@ public class VentasController {
 		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
 		model.addAttribute("listaClientes", listaClientes);
 		model.addAttribute("producto", producto);
-		return "pages/ventaNueva";
+		return "pages/ventas/ventaNueva";
 	}
 
 	@GetMapping("/ventas/buscarProductoPrecio")
@@ -315,7 +315,7 @@ public class VentasController {
 		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
 		model.addAttribute("listaClientes", listaClientes);
 		model.addAttribute("producto", producto);
-		return "pages/ventaNueva";
+		return "pages/ventas/ventaNueva";
 	}
 
 	@PostMapping("/ventas/agregar")
@@ -453,7 +453,7 @@ public class VentasController {
 		this.guardarCarrito(carrito, request);
 		List<Cliente> listaClientes = this.clienteService.buscarTodosCliente();
 		model.addAttribute("listaClientes", listaClientes);
-		return "pages/ventaNueva";
+		return "pages/ventas/ventaNueva";
 	}
 
 	@GetMapping("/ventas/cobrar")
@@ -468,7 +468,7 @@ public class VentasController {
 		model.addAttribute("producto", producto);
 
 		System.out.println("Cliente 1" + producto.getCliente());
-		return "pages/cobrar";
+		return "pages/ventas/cobrar";
 
 	}
 
@@ -486,7 +486,7 @@ public class VentasController {
 
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
 		if (carrito == null || carrito.size() <= 0) {
-			return "pages/ventaNueva";
+			return "pages/ventas/ventaNueva";
 		}
 
 		Cliente c = this.clienteService.buscarClienteIdentificacion(producto.getCliente());
@@ -541,28 +541,6 @@ public class VentasController {
 		return "redirect:/ventas/ventaNueva";
 	}
 
-	// Metodos de apoyo
-	private List<DetalleVenta> obtenerCarrito(HttpServletRequest request) {
-		List<DetalleVenta> carrito = (List<DetalleVenta>) request.getSession().getAttribute("carrito");
-		if (carrito == null) {
-			carrito = new ArrayList<>();
-		}
-		return carrito;
-	}
-
-	private DescuentoTO obtenerDescuento(HttpServletRequest request) {
-		DescuentoTO descuento = (DescuentoTO) request.getSession().getAttribute("descuento");
-		return descuento;
-	}
-
-	private void guardarCarrito(List<DetalleVenta> carrito, HttpServletRequest request) {
-		request.getSession().setAttribute("carrito", carrito);
-	}
-
-	private void limpiarCarrito(HttpServletRequest request) {
-		this.guardarCarrito(new ArrayList<>(), request);
-	}
-
 	@PostMapping("/ventas/agregarv2/{codBarras}")
 	public String agregarAlCarritov2(@PathVariable("codBarras") String codBarras, Producto producto,
 			HttpServletRequest request, RedirectAttributes redirectAttrs, Model model) {
@@ -611,4 +589,20 @@ public class VentasController {
 		return "redirect:/ventas/ventaNueva";
 	}
 
+	// Metodos de apoyo
+	private List<DetalleVenta> obtenerCarrito(HttpServletRequest request) {
+		List<DetalleVenta> carrito = (List<DetalleVenta>) request.getSession().getAttribute("carrito");
+		if (carrito == null) {
+			carrito = new ArrayList<>();
+		}
+		return carrito;
+	}
+
+	private void guardarCarrito(List<DetalleVenta> carrito, HttpServletRequest request) {
+		request.getSession().setAttribute("carrito", carrito);
+	}
+
+	private void limpiarCarrito(HttpServletRequest request) {
+		this.guardarCarrito(new ArrayList<>(), request);
+	}
 }

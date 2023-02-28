@@ -32,6 +32,12 @@
 
 }
 
+#icCli{
+	margin-left: 20px;
+	width: 45px;
+    height: 40px;
+}
+
 .tit-btn {
     text-align: center;
     margin: auto 10px;

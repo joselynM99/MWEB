@@ -78,7 +78,7 @@ public class ReportesController {
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
 
-		return "pages/menuReportes";
+		return "pages/reportes/menuReportes";
 	}
 
 	@GetMapping("/historialCierreCajas")
@@ -99,7 +99,7 @@ public class ReportesController {
 
 		model.addAttribute("cierreCaja", cierreCaja);
 
-		return "pages/reporteCierresCaja";
+		return "pages/reportes/reporteCierresCaja";
 	}
 
 	@GetMapping("/buscarCierres")
@@ -130,7 +130,7 @@ public class ReportesController {
 
 		model.addAttribute("cierres", cierres);
 
-		return "pages/reporteCierresCaja";
+		return "pages/reportes/reporteCierresCaja";
 
 	}
 
@@ -145,7 +145,7 @@ public class ReportesController {
 		}
 		model.addAttribute("nombreUser", userDetails.getUsername());
 		model.addAttribute("cierreCaja", cierreCaja);
-		return "pages/productosMasVendidos";
+		return "pages/reportes/productosMasVendidos";
 	}
 
 	@GetMapping("/buscarProductosMasVendidos")
@@ -163,7 +163,7 @@ public class ReportesController {
 
 		model.addAttribute("vendidos", vendidos);
 		model.addAttribute("cierreCaja", cierreCaja);
-		return "pages/productosMasVendidos";
+		return "pages/reportes/productosMasVendidos";
 	}
 
 	@GetMapping("/reporteVentas")
@@ -172,7 +172,7 @@ public class ReportesController {
 
 		model.addAttribute("venta", venta);
 		model.addAttribute("ventaTO", ventaTO);
-		return "pages/reporteVentas";
+		return "pages/reportes/reporteVentas";
 
 	}
 
@@ -184,7 +184,7 @@ public class ReportesController {
 		model.addAttribute("ventas", ventas);
 		model.addAttribute("ventaTO", ventaTO);
 
-		return "pages/reporteVentas";
+		return "pages/reportes/reporteVentas";
 
 	}
 
@@ -198,7 +198,7 @@ public class ReportesController {
 		model.addAttribute("ventas", ventas);
 		model.addAttribute("ventaTO", ventaTO);
 
-		return "pages/reporteVentas";
+		return "pages/reportes/reporteVentas";
 	}
 
 	@PutMapping("/actualizarVenta/{indice}")
@@ -224,7 +224,7 @@ public class ReportesController {
 
 		model.addAttribute("ventaTO", ventaTO);
 		model.addAttribute("venta", venta);
-		return "pages/reporteVentas";
+		return "pages/reportes/reporteVentas";
 
 	}
 }

@@ -13,6 +13,10 @@
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
 		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	
+	
+	<link rel="stylesheet" href="../css/colores_pag.css">
+	
 </head>
 
 <body>
@@ -39,14 +43,14 @@
 						<input id="cambio" class="form-control" placeholder="0.00" readonly>
 					</div>
 					<div class="form-group">
-						<label>Descuento</label>
+						<label>Descuento: </label>
 						<label><input type="radio" id="porDes" name="estado" value='true' th:value="true"
 								th:field="*{tipoDesceunto}">Porcentaje</label>
 						<label for=""><input id="cantDes" type="radio" name="estado" value='false' th:value="false"
 								th:field="*{tipoDesceunto}">Valor</label>
 
 						<input id='valDes' type="text" class="form-control" th:field="*{valorDesceunto}">
-						<input onclick="descuento()" id='aplicarD' type="button" class="btn btn-dark" value="Aplicar">
+						<input onclick="descuento()" id='aplicarD' type="button" class="btn btn-success" value="Aplicar">
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Terminar Venta</button>
@@ -55,7 +59,7 @@
 				<div class="form-group">
 					<label>Efectivo: </label>
 					<input id="entrada" onkeyup="cambio()" name="entrega" type="text" class="form-control" required
-						autofocus="autofocus" placeholder="0.00">
+						autofocus="autofocus" placeholder="Ingrese la cantidad de efectivo recibido">
 				</div>
 
 			</div>

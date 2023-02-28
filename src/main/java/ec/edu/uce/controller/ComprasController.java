@@ -71,7 +71,7 @@ public class ComprasController {
 		}
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
-		return "pages/compras";
+		return "pages/compras/compras";
 	}
 
 	@GetMapping("/compras/compraNueva")
@@ -97,7 +97,7 @@ public class ComprasController {
 
 		model.addAttribute("listaProveedores", listaProveedores);
 
-		return "pages/compraNueva";
+		return "pages/compras/compraNueva";
 
 	}
 
@@ -120,7 +120,7 @@ public class ComprasController {
 		model.addAttribute("total", total);
 		model.addAttribute("producto", producto);
 
-		return "pages/compraNuevaSinProv";
+		return "pages/compras/compraNuevaSinProv";
 
 	}
 
@@ -160,7 +160,7 @@ public class ComprasController {
 		List<Proveedor> listaProveedores = this.proveedorService.buscarTodosProveedor();
 
 		model.addAttribute("listaProveedores", listaProveedores);
-		return "pages/compraNueva";
+		return "pages/compras/compraNueva";
 	}
 
 	@GetMapping("/compras/buscarProductoG")
@@ -193,7 +193,7 @@ public class ComprasController {
 			}
 		}
 
-		return "pages/compraNuevaSinProv";
+		return "pages/compras/compraNuevaSinProv";
 	}
 
 	@PostMapping("/compras/agregar")
@@ -426,7 +426,7 @@ public class ComprasController {
 
 		List<DetalleCompra> carrito = this.obtenerCarrito(request);
 		if (carrito == null || carrito.size() <= 0) {
-			return "pages/compraNueva";
+			return "pages/compras/compraNueva";
 		}
 		Proveedor p = carrito.get(0).getProducto().getProveedor();
 		this.compraService.realizarCompra(carrito, p, LocalDateTime.now());
@@ -451,7 +451,7 @@ public class ComprasController {
 
 		List<DetalleCompra> carrito = this.obtenerCarrito(request);
 		if (carrito == null || carrito.size() <= 0) {
-			return "pages/compraNueva";
+			return "pages/compras/compraNueva";
 		}
 
 		this.compraService.realizarCompra(carrito, null, LocalDateTime.now());
@@ -538,18 +538,17 @@ public class ComprasController {
 		if (carrito == null) {
 			carrito = new ArrayList<>();
 		}
-		System.out.println("-----obtener carrito");
+		
 		return carrito;
 	}
 
 	private void guardarCarrito(List<DetalleCompra> carrito, HttpServletRequest request) {
-		System.out.println("-----guardar carrito");
+		
 		request.getSession().setAttribute("carrito", carrito);
 	}
 
 	private void limpiarCarrito(HttpServletRequest request) {
-		System.out.println("-----carrito");
-
+	
 		this.guardarCarrito(new ArrayList<>(), request);
 	}
 

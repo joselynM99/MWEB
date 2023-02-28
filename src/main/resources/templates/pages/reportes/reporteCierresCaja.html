@@ -23,28 +23,31 @@
 
 </head>
 
-<body style="background-color:crimson;">
-	<div style="background-color: crimson;">
-		<div style="background-color: linen;" class=container my-5>
+<body style="background-color:#952f57;">
+	<div style="background-color: #952f57;">
+		<div style="background-color: #f1f1f1;" class=container my-5>
 
 
 			<form id="buscarNombre" th:action="@{/reportes/buscarCierres}" th:object="${cierreCaja}" th:method="get">
 				<div class="contfechas">
-					<label>Fecha Inicio</label>
+					<label>Fecha Inicio:</label>
 					<input id="fec" class='form-control' required="" type="datetime-local"
 						th:field="*{fechaApertura}"></input>
 				</div>
 				<div class="contfechas">
-					<label>Fecha Fin</label>
+					<label>Fecha Fin:</label>
 					<input id="fec" class='form-control' required="" type="datetime-local"
 						th:field="*{fechaCierre}"></input>
-				</div><a href="#" th:href="@{/reportes/menu}">
-					<button type="button" class="btn btn-outline-warning"><img class="iconos2"
+				</div>
+
+				<a href="#" th:href="@{/reportes/menu}">
+					<button type="button" class="btn btn-outline-danger"><img class="iconos2"
 							src="../images/ic_volver.png" alt="Volver"><label class="txt_ic">
-							Volver</label></button></a>
+							Volver</label></button>
+				</a>
 				<div class=container my-5>
 					<div class="contfechas">
-						<label>Usuario</label>
+						<label>Usuario:</label>
 						<select class='form-control' th:field="*{usuario}">
 							<option th:value=null th:text="Select" selected></option>
 							<option th:each=" user : ${usuarios}" th:value="${user.id}" th:text="${user.email}">
@@ -53,7 +56,7 @@
 						</select>
 					</div>
 					<div class="contfechas">
-						<label>Caja</label>
+						<label>Caja:</label>
 						<select class='form-control' th:field="*{caja}">
 							<option th:value=null th:text="Select" selected></option>
 							<option th:each=" c : ${cajas}" th:value="${c.id}" th:text="${c.nombre}"></option>
@@ -61,7 +64,7 @@
 						</select>
 					</div>
 					<div class="contfechas">
-						<label>Estado</label>
+						<label>Estado:</label>
 						<select class='form-control' th:field="*{estado}" data-live-search="true"
 							data-live-search-style="startsWith">
 
@@ -78,7 +81,7 @@
 		</div>
 
 		<div class=" table-wrapper-scroll-y my-custom-scrollbar">
-			<table class="table table-bordered  table-striped mb-0" , id="tab_busqueda">
+			<table class="table table-danger  table-striped mb-0" , id="tab_busqueda">
 				<!----cabezera de la tabla---->
 				<thead>
 					<tr>

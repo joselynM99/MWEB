@@ -39,7 +39,7 @@ public class ClienteController {
 		}
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
-		return "pages/menuClientes";
+		return "pages/clientes/menuClientes";
 	}
 
 	@GetMapping("/registroCliente")
@@ -53,7 +53,7 @@ public class ClienteController {
 		}
 		model.addAttribute("nombreUser", userDetails.getUsername());
 
-		return "pages/clienteNuevo";
+		return "pages/clientes/clienteNuevo";
 	}
 
 	@PostMapping("/agregarCliente")
@@ -78,7 +78,7 @@ public class ClienteController {
 
 		model.addAttribute("nombreUser", userDetails.getUsername());
 
-		return "pages/clienteActualizar";
+		return "pages/clientes/clienteActualizar";
 
 	}
 
@@ -92,7 +92,7 @@ public class ClienteController {
 		} else {
 			modelo.addAttribute("cliente", p);
 
-			return "pages/clienteActualizar";
+			return "pages/clientes/clienteActualizar";
 		}
 
 	}
@@ -132,7 +132,7 @@ public class ClienteController {
 
 		model.addAttribute("clientes", clientes);
 
-		return "pages/listaClientes";
+		return "pages/clientes/listaClientes";
 
 	}
 
