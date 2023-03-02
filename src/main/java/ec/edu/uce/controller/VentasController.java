@@ -460,15 +460,23 @@ public class VentasController {
 	public String pantallaVenta(HttpServletRequest request, RedirectAttributes redirectAttrs, ProductoDTO producto,
 			DescuentoTO descuento, Model model) {
 		List<DetalleVenta> carrito = this.obtenerCarrito(request);
+		
+		if(carrito.isEmpty()) {
+			redirectAttrs.addFlashAttribute("mensaje1", "Venta vacía");
+			return "redirect:/ventas/ventaNueva";
+			
+		}else {
+			BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
 
-		BigDecimal total = this.ventaService.calcularValorAPagar(carrito);
+			model.addAttribute("total", total);
+			model.addAttribute("descuento", descuento);
+			model.addAttribute("producto", producto);
 
-		model.addAttribute("total", total);
-		model.addAttribute("descuento", descuento);
-		model.addAttribute("producto", producto);
+			System.out.println("Cliente 1" + producto.getCliente());
+			return "pages/ventas/cobrar";
+		}
 
-		System.out.println("Cliente 1" + producto.getCliente());
-		return "pages/ventas/cobrar";
+		
 
 	}
 
