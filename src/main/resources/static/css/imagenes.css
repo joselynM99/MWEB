@@ -42,3 +42,16 @@
     text-align: center;
     margin: auto 10px;
 }
+
+#logo{
+	width: 40px;
+    height: 35px;
+    margin-left: 20px;
+    margin-top: 0px;
+    
+}
+
+#restringido{
+	width: 300px;
+    height: 300px;
+}

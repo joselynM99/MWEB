@@ -91,13 +91,11 @@
 							<td><input id="costo" onkeyup="calcularPrecioVenta()" class="form-control" required=""
 									step="any" type="number" th:field="*{costoPromedio}" /></td>
 						</tr>
-
-
 						<tr>
 							<td><label>Impuesto:</label></td>
 						</tr>
 						<tr>
-							<td><select class="form-select" name="impuesto" id="list_impuesto">
+							<td><select onclick="calcularPrecioVenta()" class="form-select" name="impuesto" id="list_impuesto">
 									<option th:each=" impu : ${listImpuestos}" th:value="${impu.id}"
 										th:text="${impu.TipoImpuesto}"></option>
 								</select></td>
@@ -108,9 +106,7 @@
 						<tr>
 							<td><input id="precioV" class="form-control" required="" type="number" step="any"
 									th:field="*{precioVenta}" /></td>
-
 						</tr>
-
 
 					</tbody>
 				</table>

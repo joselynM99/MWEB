@@ -88,7 +88,7 @@
 								</td>
 								<td>
 									<form th:action="@{/inventario/actualizacionProducto/{id}(id=${producto.id})}"
-										th:method="get" , th:object=${producto}>
+										th:method="get" th:object=${producto}>
 										<input type="submit" class="btn btn-dark" value="Actualizar" , id=bot1>
 										</button>
 									</form>

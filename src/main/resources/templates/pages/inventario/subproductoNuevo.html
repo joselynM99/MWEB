@@ -116,7 +116,7 @@
 							<td><label>Impuesto:</label></td>
 						</tr>
 						<tr>
-							<td><select class="form-select" name="impuesto" id="list_impuesto">
+							<td><select onclick="calcularPrecioVenta()" class="form-select" name="impuesto" id="list_impuesto">
 									<option th:each=" impu : ${listImpuestos}" th:value="${impu.id}"
 										th:text="${impu.TipoImpuesto}"></option>
 								</select></td>

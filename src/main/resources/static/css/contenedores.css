@@ -99,3 +99,13 @@
 	display: inline-flex;
 }
 
+.form-select{
+	height: 40px;
+	font-size: 12px;
+}
+
+#accR{
+	margin: 100px auto;
+	text-align: center;
+}
+

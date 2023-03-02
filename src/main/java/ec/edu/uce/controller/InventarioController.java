@@ -130,7 +130,7 @@ public class InventarioController {
 
 		redirectAttributes.addFlashAttribute("productos", productos);
 
-		return "redirect:/inventario/actualizarProducto";
+		return "redirect:/inventario/listaProductos";
 	}
 
 	@GetMapping("/actualizacionProducto/{indice}")
@@ -297,15 +297,15 @@ public class InventarioController {
 
 		redirectAttributes.addFlashAttribute("subproductos", subproductos);
 
-		return "redirect:/inventario/actualizarSubProducto";
+		return "redirect:/inventario/listaSubProductos";
 	}
 
-	@GetMapping("/actualizacionSubProducto/{indice}")
-	public String obtenerSubProductoPorNombre(@PathVariable Integer indice, SubProducto subproducto, Model model,
+	@GetMapping("/actualizacionSubProducto/{id}")
+	public String obtenerSubProductoPorNombre(@PathVariable Integer id, SubProducto subproducto, Model model,
 			RedirectAttributes redirectAttributes) {
 
-		SubProducto s = this.subProductoService.buscarSubProducto(indice);
-		System.out.println(indice);
+		SubProducto s = this.subProductoService.buscarSubProducto(id);
+		System.out.println(id);
 		System.out.println(s.getNombre());
 		if (s == null || s.getId().equals(null)) {
 			redirectAttributes.addFlashAttribute("error", "Subproducto no encontrado");
@@ -325,6 +325,8 @@ public class InventarioController {
 			redirectAttributes.addFlashAttribute("listProveedores", this.proveedorService.buscarTodosProveedor());
 			redirectAttributes.addFlashAttribute("listProductos", this.productoService.buscarTodosProductos());
 			redirectAttributes.addFlashAttribute("subproducto", s);
+			System.out.println(s.getCodigoBarras());
+			
 
 			return "redirect:/inventario/actualizarSubProducto";
 		}
@@ -332,7 +334,7 @@ public class InventarioController {
 	}
 
 	@GetMapping("/actualizarSubProducto")
-	public String obtenerPaginaActualizarSubProducto(@ModelAttribute SubProducto subproducto, Model model) {
+	public String obtenerPaginaActualizarSubProducto(SubProducto subproducto, Model model) {
 
 		System.out.println(subproducto.getId());
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -400,6 +402,8 @@ public class InventarioController {
 		subproducto.setSeccion(s);
 		subproducto.setProducto(p);
 		subproducto.setId(subproducto.getId());
+		System.out.println(subproducto.getId());
+
 		this.subProductoService.actualizarSubProducto(subproducto);
 		redirectAttributes.addFlashAttribute("mensaje", "Subproducto actualizado");
 		return "redirect:/inventario/actualizarSubProducto";

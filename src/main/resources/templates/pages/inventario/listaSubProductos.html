@@ -43,7 +43,7 @@
 				<a class="nav-link" href="#" th:href="@{/inventario/actualizarSubProducto}">Actualizar SubProducto</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link active" aria-current="page">Lista de productos </a>
+				<a class="nav-link active" aria-current="page">Lista de Subproductos </a>
 			</li>
 		</ul>
 		<div id="user_ic1">
@@ -90,8 +90,8 @@
 								</td>
 								<td>
 									<form th:action="@{/inventario/actualizacionSubProducto/{id}(id=${subproducto.id})}"
-										th:method="get" , th:object=${subproducto}>
-										<input type="hidden" class="form-control" id="id" th:field="*{id}">
+										th:method="get" th:object=${subproducto}>
+									<input type="hidden" th:value=${subproducto.id}>									
 										<input type="submit" class="btn btn-dark" value="Actualizar" , id=bot1>
 										</button>
 									</form>
