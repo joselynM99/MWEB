@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ec.edu.uce.controller.dto.DescuentoTO;
 import ec.edu.uce.modelo.Compra;
 import ec.edu.uce.modelo.DetalleCompra;
 import ec.edu.uce.modelo.Producto;

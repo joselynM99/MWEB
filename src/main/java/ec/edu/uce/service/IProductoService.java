@@ -2,7 +2,6 @@ package ec.edu.uce.service;
 
 import java.util.List;
 
-import ec.edu.uce.controller.dto.ProductoDTO;
 import ec.edu.uce.modelo.Producto;
 import ec.edu.uce.modelo.Proveedor;
 
@@ -14,7 +13,7 @@ public interface IProductoService {
 
 	List<Producto> buscarTodosProductos();
 
-	List<ProductoDTO> buscarTodosProductosDTO();
+	//List<ProductoDTO> buscarTodosProductosDTO();
 
 	void actualizarProducto(Producto producto);
 
@@ -27,6 +26,7 @@ public interface IProductoService {
 	List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor);
 
 	List<Producto> buscarProductoPorCategoria(String categoria);
+	
 	Producto buscarProductoPorCodigoBarrasProv(String codigoBarras, Proveedor prov);
 
 }

@@ -30,7 +30,6 @@ import ec.edu.uce.modelo.DetalleVenta;
 import ec.edu.uce.modelo.GastoAdicional;
 import ec.edu.uce.modelo.IngresoAdicional;
 import ec.edu.uce.modelo.Producto;
-import ec.edu.uce.modelo.Proveedor;
 import ec.edu.uce.modelo.SubProducto;
 import ec.edu.uce.modelo.Usuario;
 import ec.edu.uce.modelo.Venta;

@@ -63,11 +63,11 @@ public class ProductoServiceImpl implements IProductoService {
 		return this.productoRepo.buscarProductoPorCategoria(categoria);
 	}
 
-	@Override
+	/*@Override
 	public List<ProductoDTO> buscarTodosProductosDTO() {
 		
 		return this.productoRepo.buscarTodosProductosDTO();
-	}
+	}*/
 	public List<Producto> buscarProductoPorNombreProv(String nombre, Proveedor proveedor) {
 		System.out.println("-----buscar productos");
 		return this.productoRepo.buscarProductoPorNombreProv("%"+nombre+"%", proveedor);

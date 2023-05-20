@@ -14,7 +14,7 @@ public interface IProductoRepo {
 
 	List<Producto> buscarTodosProductos();
 
-	List<ProductoDTO> buscarTodosProductosDTO();
+	//List<ProductoDTO> buscarTodosProductosDTO();
 
 	void actualizarProducto(Producto producto);
 

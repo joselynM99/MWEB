@@ -130,13 +130,13 @@ public class ProductoRepoImpl implements IProductoRepo {
 		}
 	}
 
-	@Override
+	/*@Override
 	public List<ProductoDTO> buscarTodosProductosDTO() {
 		TypedQuery<ProductoDTO> myQuery = this.entityManager.createQuery(
 				"SELECT new  ec.edu.uce.controller.dto.ProductoDTO(p.id, p.codigoBarras, p.nombre, p.descripcion, p.costoPromedio, p.precioVenta, p.stockActual) from Producto p",
 				ProductoDTO.class);
 
 		return myQuery.getResultList();
-	}
+	}*/
 
 }
